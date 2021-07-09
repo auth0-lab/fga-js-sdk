@@ -1,0 +1,47 @@
+{
+  "name": "sandcastle-sdk",
+  "version": "0.0.1",
+  "description": "Sandcastle SDK for JavaScript",
+  "author": "Auth0Lab",
+  "keywords": [
+    "authorization",
+    "fga",
+    "fine-grained-authorization",
+    "sandcastle",
+    "sandcastle-sdk",
+    "sandcastle-api-client",
+    "zanzibar"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "rm -r dist/ && npm run build",
+    "test": "jest --config ./tests/jest.config.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.11.5",
+    "jest": "^27.0.6",
+    "nock": "^13.1.1",
+    "ts-jest": "^27.0.3",
+    "typescript": "^3.6.4"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:auth0-lab/sandcastle-js-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/auth0-lab/sandcastle-js-sdk/issues"
+  },
+  "homepage": "https://github.com/auth0-lab/sandcastle-js-sdk#readme"
+}
