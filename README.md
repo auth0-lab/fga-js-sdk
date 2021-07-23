@@ -44,13 +44,13 @@ Please note:
 Using [npm](https://npmjs.org):
 
 ```shell
-npm install sandcastle-sdk@0.0.1
+npm install sandcastle-sdk
 ```
 
 Using [yarn](https://yarnpkg.com):
 
 ```shell
-yarn add sandcastle-sdk@0.0.1
+yarn add sandcastle-sdk
 ```
 
 ## Getting Started
@@ -75,6 +75,7 @@ const sandcastleApi = new SandcastleApi({
 #### Write Namespaces Configuration
 
 > Note: To learn how to build namespace configurations, check the Sandcastle Playground tutorials at https://learn.sandcastle.cloud/intro
+
 > Note: The Sandcastle Playground uses an experimental friendly yaml syntax which gets translated to the API syntax seen below, let us know your feedback at https://discord.gg/8naAwJfWN6
 
 ```javascript

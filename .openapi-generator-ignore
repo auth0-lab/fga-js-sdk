@@ -1,2 +1,5 @@
 LICENSE
 .npmignore
+package.json
+package-lock.json
+CHANGELOG.md
