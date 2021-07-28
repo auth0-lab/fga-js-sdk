@@ -46,6 +46,7 @@ export interface ConfigurationParameters {
     clientSecret: string;
     apiTokenIssuer?: string;
     apiAudience?: string;
+    deploymentId?: string;
     baseOptions?: any;
 }
 
@@ -95,6 +96,13 @@ export class Configuration {
      */
     apiAudience?: string;
     /**
+     * Sandcastle Deployment ID
+     *
+     * @type {string}
+     * @memberof Configuration
+     */
+    deploymentId?: string;
+    /**
      * base options for axios calls
      *
      * @type {any}
@@ -112,7 +120,14 @@ export class Configuration {
         this.clientSecret = params.clientSecret;
         this.apiTokenIssuer = params.apiTokenIssuer || 'sandcastle-dev.us.auth0.com';
         this.apiAudience = params.apiAudience || 'https://api.staging.sandcastle.cloud';
-        this.baseOptions = params.baseOptions || {};
+        this.deploymentId  = params.deploymentId;
+        const baseOptions = params.baseOptions || {};
+        baseOptions.headers = baseOptions.headers || {};
+
+        if (this.deploymentId) {
+          baseOptions.headers['X-SANDCASTLE-DEPLOYMENT-ID'] = this.deploymentId;
+        }
+        this.baseOptions = baseOptions;
 
         const url = new URL(this.serverUrl);
         if (!['api.playground.sandcastle.cloud', 'localhost'].includes(url.hostname)) {
