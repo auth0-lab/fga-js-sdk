@@ -637,6 +637,15 @@ Name | Type | Description | Notes
 
 
 
+## Issue Reporting
+
+If you have found a bug or if you have a feature request, please report them at this repository [issues](https://github.com/auth0-lab/sandcastle-js-sdk/issues) section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+
+For auth0 related questions/support please use the [Support Center](https://support.auth0.com).
+
+## Author
+
+[Auth0Lab](https://github.com/auth0-lab)
 
 ## License
 
