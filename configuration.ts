@@ -30,6 +30,19 @@ export class RequiredError extends Error {
 
 /**
  *
+ * @export
+ * @class InvalidEnvironmentError
+ * @extends {Error}
+ */
+export class InvalidEnvironmentError extends Error {
+    name: "InvalidEnvironmentError" = "InvalidEnvironmentError";
+    constructor(public field: string, allowedEnvironments?: string[]) {
+        super(allowedEnvironments ? `environment is required and must be one of the following: ${allowedEnvironments.join(', ')}` : undefined);
+    }
+}
+
+/**
+ *
  * @throws {RequiredError}
  * @export
  */
@@ -39,16 +52,50 @@ export const assertParamExists = function (functionName: string, paramName: stri
     }
 }
 
-export interface ConfigurationParameters {
-    serverUrl?: string;
+export interface UserConfigurationParams {
     tenant: string;
     clientId: string;
     clientSecret: string;
-    apiTokenIssuer?: string;
-    apiAudience?: string;
+    environment: string;
     deploymentId?: string;
     baseOptions?: any;
 }
+
+export interface EnvironmentConfiguration {
+    host: string;
+    scheme: string;
+    apiTokenIssuer: string;
+    apiAudience: string;
+    deploymentId: string;
+    requireAuth?: boolean;
+}
+
+const environmentConfigurationString = `{"playground":{"host":"api.playground.sandcastle.cloud","scheme":"https","apiTokenIssuer":"sandcastle-dev.us.auth0.com","apiAudience":"https://api.playground.sandcastle.cloud"},"staging":{"host":"api.staging.sandcastle.cloud","scheme":"https","apiTokenIssuer":"sandcastle-dev.us.auth0.com","apiAudience":"https://api.staging.sandcastle.cloud","requireAuth":true}}`;
+
+/**
+ *
+ * @throws {InvalidEnvironmentError}
+ * @param environment - Environment from user config
+ * @return EnvironmentConfiguration
+ */
+const getEnvironmentConfiguration = function (environment: string): EnvironmentConfiguration {
+  let environmentConfigs;
+  try {
+    environmentConfigs = JSON.parse(environmentConfigurationString);
+  } catch (err) {
+    throw new InvalidEnvironmentError(environment);
+  }
+
+  const environmentConfig = environmentConfigs[environment];
+
+  if (environmentConfig) {
+    return environmentConfig;
+  }
+
+  const allowedEnvs = Object.keys(environmentConfigs);
+
+  throw new InvalidEnvironmentError(environment, allowedEnvs);
+};
 
 export class Configuration {
     private accessToken?: string;
@@ -110,32 +157,32 @@ export class Configuration {
      */
     baseOptions?: any;
 
-    constructor(params: ConfigurationParameters = {} as unknown as ConfigurationParameters, private axios: AxiosInstance = globalAxios) {
-
+    constructor(params: UserConfigurationParams = {} as unknown as UserConfigurationParams, private axios: AxiosInstance = globalAxios) {
         assertParamExists('Configuration', 'tenant', params.tenant);
+        assertParamExists('Configuration', 'environment', params.environment);
 
-        this.serverUrl = params.serverUrl || 'https://api.staging.sandcastle.cloud';
+        const environmentConfiguration = getEnvironmentConfiguration(params.environment);
+
         this.tenant = params.tenant;
         this.clientId = params.clientId;
         this.clientSecret = params.clientSecret;
-        this.apiTokenIssuer = params.apiTokenIssuer || 'sandcastle-dev.us.auth0.com';
-        this.apiAudience = params.apiAudience || 'https://api.staging.sandcastle.cloud';
         this.deploymentId  = params.deploymentId;
         const baseOptions = params.baseOptions || {};
         baseOptions.headers = baseOptions.headers || {};
+
+        this.serverUrl = `${environmentConfiguration.scheme}://${environmentConfiguration.host}`;
+        this.apiTokenIssuer = environmentConfiguration.apiTokenIssuer;
+        this.apiAudience = environmentConfiguration.apiAudience;
 
         if (this.deploymentId) {
           baseOptions.headers['X-SANDCASTLE-DEPLOYMENT-ID'] = this.deploymentId;
         }
         this.baseOptions = baseOptions;
 
-        const url = new URL(this.serverUrl);
-        if (!['api.playground.sandcastle.cloud', 'localhost'].includes(url.hostname)) {
+        if (environmentConfiguration.requireAuth) {
             assertParamExists('Configuration', 'clientId', this.clientId);
             assertParamExists('Configuration', 'clientSecret', this.clientSecret);
         }
-
-        assertParamExists('Configuration', 'serverUrl', this.serverUrl);
     }
 
     /**

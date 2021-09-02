@@ -13,10 +13,11 @@
  */
 
 
-import { Configuration, ConfigurationParameters } from "./configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+
+import { Configuration, UserConfigurationParams } from "./configuration";
 
 /**
  *
@@ -47,8 +48,12 @@ export interface RequestArgs {
 export class BaseAPI {
     protected configuration: Configuration;
 
-    constructor(configuration: ConfigurationParameters, protected axios: AxiosInstance = globalAxios) {
-        this.configuration = new Configuration(configuration, axios);
+    constructor(configuration: UserConfigurationParams | Configuration, protected axios: AxiosInstance = globalAxios) {
+        if (configuration instanceof Configuration) {
+            this.configuration = configuration;
+        } else {
+            this.configuration = new Configuration(configuration, axios);
+        }
     }
 }
 
