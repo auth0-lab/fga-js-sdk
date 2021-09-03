@@ -153,7 +153,7 @@ const { data } = await sandcastleApi.sandcastleCheck({
 ```javascript
 const { data } = await sandcastleApi.sandcastleWrite({
   writes: {
-    tupleKeys: [{ user: "anne", relation: "repo_reader", object: "github-repo/express-jwt" }],
+    tupleKeys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
   },
 });
 
@@ -165,7 +165,7 @@ const { data } = await sandcastleApi.sandcastleWrite({
 ```javascript
 const { data } = await sandcastleApi.sandcastleWrite({
   deletes: {
-    tupleKeys: [{ user: "anne", relation: "repo_reader", object: "github-repo/express-jwt" }],
+    tupleKeys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
   },
 });
 
@@ -194,7 +194,7 @@ const { data } = await sandcastleApi.sandcastleRead({
       {
         user: "anne",
         relation: "repo_reader",
-        object: "github-repo/express-jwt",
+        object: "github-repo:auth0/express-jwt",
       },
     ],
   },
