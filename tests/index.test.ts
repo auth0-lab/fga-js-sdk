@@ -1,19 +1,22 @@
 import * as nock from 'nock';
 
 import { NamespaceNamespaces, SandcastleApi, SandcastleTupleKey } from "../api";
+import { Configuration } from "../configuration";
 
 nock.disableNetConnect();
 
-const { SANDCASTLE_URL, SANDCASTLE_TENANT, SANDCASTLE_CLIENT_ID, SANDCASTLE_CLIENT_SECRET } = process.env as {
-  SANDCASTLE_URL: string; SANDCASTLE_TENANT: string; SANDCASTLE_CLIENT_ID: string; SANDCASTLE_CLIENT_SECRET: string;
+const { SANDCASTLE_ENVIRONMENT, SANDCASTLE_TENANT, SANDCASTLE_CLIENT_ID, SANDCASTLE_CLIENT_SECRET } = process.env as {
+  SANDCASTLE_ENVIRONMENT: string; SANDCASTLE_TENANT: string; SANDCASTLE_CLIENT_ID: string; SANDCASTLE_CLIENT_SECRET: string;
 } & any;
 
 const baseConfig = {
   tenant: SANDCASTLE_TENANT,
-  serverUrl: SANDCASTLE_URL,
+  environment: SANDCASTLE_ENVIRONMENT,
   clientId: SANDCASTLE_CLIENT_ID,
   clientSecret: SANDCASTLE_CLIENT_SECRET,
 };
+
+const defaultConfiguration = new Configuration(baseConfig);
 
 const nocks = {
   tokenExchange: (apiTokenIssuer: string, accessToken = 'access-token', expiresIn = 300) => {
@@ -24,49 +27,49 @@ const nocks = {
         expires_in: expiresIn,
       });
   },
-  readAllNssConfigs: (tenant: string, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  readAllNssConfigs: (tenant: string, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .get(`/${tenant}/v1/namespace-configurations`)
       .reply(200, {
         configurations: [],
       })
   },
-  check: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  check: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .post(`/${tenant}/v1/check`)
       .reply(200, {
         allowed: true,
       });
   },
-  write: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  write: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .post(`/${tenant}/v1/write`)
       .reply(200, {});
   },
-  delete: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  delete: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .post(`/${tenant}/v1/write`)
       .reply(200, {});
   },
-  read: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  read: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .post(`/${tenant}/v1/read`)
       .reply(200, { tuples: [] });
   },
-  expand: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  expand: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .post(`/${tenant}/v1/expand`)
       .reply(200, { tree: {} });
   },
-  readSingleNssConfig: (tenant: string, configId: string, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  readSingleNssConfig: (tenant: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .get(`/${tenant}/v1/namespace-configurations/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", namespaces: [] },
       });
   },
-  upsertNssConfig: (tenant: string, configurations: NamespaceNamespaces, serverUrl = SANDCASTLE_URL) => {
-    return nock(`${serverUrl}`)
+  upsertNssConfig: (tenant: string, configurations: NamespaceNamespaces, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
       .post(`/${tenant}/v1/namespace-configurations`)
       .reply(200, {
         id: "some-new-id",
@@ -80,23 +83,27 @@ describe('sandcastle-sdk', function () {
       expect(() => new SandcastleApi({ ...baseConfig, tenant: undefined! })).toThrowError();
     });
 
-    it('should not require clientId or clientSecret in configuration in non-prod environments', () => {
-      expect(() => new SandcastleApi({ tenant: SANDCASTLE_TENANT, serverUrl: 'https://api.playground.sandcastle.cloud', clientId: undefined!, clientSecret: undefined! })).not.toThrowError();
+    it('should require environment in configuration', () => {
+      expect(() => new SandcastleApi({ ...baseConfig, environment: undefined! })).toThrowError();
     });
 
-    it('should require clientId or clientSecret in configuration in prod environments', () => {
-      expect(() => new SandcastleApi({ tenant: SANDCASTLE_TENANT, clientId: undefined!, clientSecret: undefined! })).toThrowError();
+    it('should require a valid environment in configuration', () => {
+      expect(() => new SandcastleApi({ ...baseConfig, environment: 'non_existent_environment'! })).toThrowError();
     });
 
-    it('should not require serverUrl in configuration', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, serverUrl: undefined! })).not.toThrowError();
+    it('should not require clientId or clientSecret in configuration in environments that don\'t require it', () => {
+      expect(() => new SandcastleApi({ tenant: SANDCASTLE_TENANT, environment: 'playground', clientId: undefined!, clientSecret: undefined! })).not.toThrowError();
+    });
+
+    it('should require clientId or clientSecret in configuration in environments that require it', () => {
+      expect(() => new SandcastleApi({ tenant: SANDCASTLE_TENANT, environment: 'staging', clientId: undefined!, clientSecret: undefined! })).toThrowError();
     });
 
     it('should issue a network call to get the token at the first request if client id is provided', async () => {
-      const scope = nocks.tokenExchange('token-issuer.sandcastle.example');
+      const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
       nocks.readAllNssConfigs(SANDCASTLE_TENANT);
 
-      const sandcastleApi = new SandcastleApi({ ...baseConfig, apiTokenIssuer: 'token-issuer.sandcastle.example' });
+      const sandcastleApi = new SandcastleApi(baseConfig);
       expect(scope.isDone()).toBe(false);
 
       await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
@@ -107,11 +114,10 @@ describe('sandcastle-sdk', function () {
     })
 
     it('should not issue a network call to get the token at the first request if the clientId is not provided', async () => {
-      const scope = nocks.tokenExchange('token-issuer.sandcastle.example');
-      const serverUrl = 'https://api.playground.sandcastle.cloud';
-      nocks.readAllNssConfigs(SANDCASTLE_TENANT, serverUrl);
+      const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
+      nocks.readAllNssConfigs(SANDCASTLE_TENANT);
 
-      const sandcastleApi = new SandcastleApi({ tenant: SANDCASTLE_TENANT, serverUrl, clientId: undefined!, clientSecret: undefined!, apiTokenIssuer: 'token-issuer.sandcastle.example' });
+      const sandcastleApi = new SandcastleApi({ tenant: SANDCASTLE_TENANT, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
       expect(scope.isDone()).toBe(false);
 
       await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
@@ -120,17 +126,23 @@ describe('sandcastle-sdk', function () {
 
       nock.cleanAll();
     })
+
+    it('should allow passing in a configuration instance', async () => {
+      const configuration = new Configuration(baseConfig);
+      configuration.apiAudience = 'api.playground.sandcastle.example';
+      expect(() => new SandcastleApi(configuration)).not.toThrowError();
+    });
   });
 
   describe('using the sdk', () => {
     let sandcastleApi: SandcastleApi;
 
     beforeAll(() => {
-      sandcastleApi = new SandcastleApi({ ...baseConfig, apiTokenIssuer: 'token-issuer.sandcastle.example' });
+      sandcastleApi = new SandcastleApi({ ...baseConfig });
     });
 
     beforeEach(() => {
-      nocks.tokenExchange('token-issuer.sandcastle.example');
+      nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
     });
 
     afterEach(() => {
