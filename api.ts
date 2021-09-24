@@ -384,7 +384,7 @@ export interface SandcastleReadTuplesRequest {
      * @type {string}
      * @memberof SandcastleReadTuplesRequest
      */
-    tenant?: string;
+    storeId?: string;
 }
 /**
  * 
@@ -554,6 +554,95 @@ export interface SandcastleWriteResponse {
 /**
  * 
  * @export
+ * @interface SandcastleWriteSettingsRequest
+ */
+export interface SandcastleWriteSettingsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SandcastleWriteSettingsRequest
+     */
+    storeId?: string;
+    /**
+     * 
+     * @type {SettingsEnvironment}
+     * @memberof SandcastleWriteSettingsRequest
+     */
+    environment?: SettingsEnvironment;
+}
+/**
+ * 
+ * @export
+ * @interface SandcastleWriteTokenIssuersRequest
+ */
+export interface SandcastleWriteTokenIssuersRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SandcastleWriteTokenIssuersRequest
+     */
+    storeId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SandcastleWriteTokenIssuersRequest
+     */
+    issuerUrl?: string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum SettingsEnvironment {
+    EnvironmentUnspecified = 'ENVIRONMENT_UNSPECIFIED',
+    Development = 'DEVELOPMENT',
+    Staging = 'STAGING',
+    Production = 'PRODUCTION'
+}
+
+/**
+ * 
+ * @export
+ * @interface SettingsSettings
+ */
+export interface SettingsSettings {
+    /**
+     * 
+     * @type {SettingsEnvironment}
+     * @memberof SettingsSettings
+     */
+    environment?: SettingsEnvironment;
+    /**
+     * 
+     * @type {Array<SettingsTokenIssuer>}
+     * @memberof SettingsSettings
+     */
+    tokenIssuers?: Array<SettingsTokenIssuer>;
+}
+/**
+ * 
+ * @export
+ * @interface SettingsTokenIssuer
+ */
+export interface SettingsTokenIssuer {
+    /**
+     * 
+     * @type {string}
+     * @memberof SettingsTokenIssuer
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SettingsTokenIssuer
+     */
+    issuerUrl?: string;
+}
+/**
+ * 
+ * @export
  * @interface UsersetTreeComputed
  */
 export interface UsersetTreeComputed {
@@ -668,8 +757,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleCheck: async (body: SandcastleCheckRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleCheck', 'body', body)
-            const localVarPath = `/{tenant}/v1/check`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/check`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -701,6 +790,43 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleDeleteTokenIssuer: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('sandcastleDeleteTokenIssuer', 'id', id)
+            const localVarPath = `/{storeId}/v1/settings/token-issuers/{id}`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
+                        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ClientCredentials required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -708,8 +834,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleExpand: async (body: SandcastleExpandRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleExpand', 'body', body)
-            const localVarPath = `/{tenant}/v1/expand`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/expand`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -748,8 +874,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleRead: async (body: SandcastleReadRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleRead', 'body', body)
-            const localVarPath = `/{tenant}/v1/read`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/read`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -785,8 +911,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @throws {RequiredError}
          */
         sandcastleReadAllNamespaceConfigurations: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/{tenant}/v1/namespace-configurations`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/namespace-configurations`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -822,9 +948,43 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleReadNamespaceConfiguration: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('sandcastleReadNamespaceConfiguration', 'id', id)
-            const localVarPath = `/{tenant}/v1/namespace-configurations/{id}`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/namespace-configurations/{id}`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ClientCredentials required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleReadSettings: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/{storeId}/v1/settings`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
+            ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -860,8 +1020,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleReadTuples: async (body: SandcastleReadTuplesRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleReadTuples', 'body', body)
-            const localVarPath = `/{tenant}/v1/read-tuples`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/read-tuples`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -900,8 +1060,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleWrite: async (body: SandcastleWriteRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWrite', 'body', body)
-            const localVarPath = `/{tenant}/v1/write`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/write`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -940,8 +1100,88 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleWriteNamespaceConfiguration: async (body: NamespaceNamespaces, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWriteNamespaceConfiguration', 'body', body)
-            const localVarPath = `/{tenant}/v1/namespace-configurations`
-            .replace(`{${"tenant"}}`, encodeURIComponent(String(configuration.tenant)))
+            const localVarPath = `/{storeId}/v1/namespace-configurations`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
+            ;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ClientCredentials required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {SandcastleWriteSettingsRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleWriteSettings: async (body: SandcastleWriteSettingsRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('sandcastleWriteSettings', 'body', body)
+            const localVarPath = `/{storeId}/v1/settings`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
+            ;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ClientCredentials required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {SandcastleWriteTokenIssuersRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleWriteTokenIssuer: async (body: SandcastleWriteTokenIssuersRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('sandcastleWriteTokenIssuer', 'body', body)
+            const localVarPath = `/{storeId}/v1/settings/token-issuers`
+            .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -993,6 +1233,16 @@ export const SandcastleApiFp = function(configuration: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sandcastleDeleteTokenIssuer(id: string, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleDeleteTokenIssuer(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
+        },
+        /**
+         * 
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1032,6 +1282,15 @@ export const SandcastleApiFp = function(configuration: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sandcastleReadSettings(options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleReadSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
+        },
+        /**
+         * 
          * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
          * @param {SandcastleReadTuplesRequest} body 
          * @param {*} [options] Override http request option.
@@ -1061,6 +1320,26 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteNamespaceConfiguration(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
+        /**
+         * 
+         * @param {SandcastleWriteSettingsRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sandcastleWriteSettings(body: SandcastleWriteSettingsRequest, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteSettings(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
+        },
+        /**
+         * 
+         * @param {SandcastleWriteTokenIssuersRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequest, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsTokenIssuer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteTokenIssuer(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
+        },
     }
 };
 
@@ -1079,6 +1358,15 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          */
         sandcastleCheck(body: SandcastleCheckRequestParams, options?: any): AxiosPromise<SandcastleCheckResponse> {
             return localVarFp.sandcastleCheck(body, options).then((request) => request(axios));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleDeleteTokenIssuer(id: string, options?: any): AxiosPromise<object> {
+            return localVarFp.sandcastleDeleteTokenIssuer(id, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1117,6 +1405,14 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleReadSettings(options?: any): AxiosPromise<SettingsSettings> {
+            return localVarFp.sandcastleReadSettings(options).then((request) => request(axios));
+        },
+        /**
+         * 
          * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
          * @param {SandcastleReadTuplesRequest} body 
          * @param {*} [options] Override http request option.
@@ -1143,6 +1439,24 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
         sandcastleWriteNamespaceConfiguration(body: NamespaceNamespaces, options?: any): AxiosPromise<SandcastleWriteNamespaceConfigurationResponse> {
             return localVarFp.sandcastleWriteNamespaceConfiguration(body, options).then((request) => request(axios));
         },
+        /**
+         * 
+         * @param {SandcastleWriteSettingsRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleWriteSettings(body: SandcastleWriteSettingsRequest, options?: any): AxiosPromise<SettingsSettings> {
+            return localVarFp.sandcastleWriteSettings(body, options).then((request) => request(axios));
+        },
+        /**
+         * 
+         * @param {SandcastleWriteTokenIssuersRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequest, options?: any): AxiosPromise<SettingsTokenIssuer> {
+            return localVarFp.sandcastleWriteTokenIssuer(body, options).then((request) => request(axios));
+        },
     };
 };
 
@@ -1162,6 +1476,17 @@ export class SandcastleApi extends BaseAPI {
      */
     public sandcastleCheck(body: SandcastleCheckRequestParams, options?: any) {
         return SandcastleApiFp(this.configuration).sandcastleCheck(body, options).then((request) => request(this.axios));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandcastleApi
+     */
+    public sandcastleDeleteTokenIssuer(id: string, options?: any) {
+        return SandcastleApiFp(this.configuration).sandcastleDeleteTokenIssuer(id, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1209,6 +1534,16 @@ export class SandcastleApi extends BaseAPI {
 
     /**
      * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandcastleApi
+     */
+    public sandcastleReadSettings(options?: any) {
+        return SandcastleApiFp(this.configuration).sandcastleReadSettings(options).then((request) => request(this.axios));
+    }
+
+    /**
+     * 
      * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
      * @param {SandcastleReadTuplesRequest} body 
      * @param {*} [options] Override http request option.
@@ -1239,6 +1574,28 @@ export class SandcastleApi extends BaseAPI {
      */
     public sandcastleWriteNamespaceConfiguration(body: NamespaceNamespaces, options?: any) {
         return SandcastleApiFp(this.configuration).sandcastleWriteNamespaceConfiguration(body, options).then((request) => request(this.axios));
+    }
+
+    /**
+     * 
+     * @param {SandcastleWriteSettingsRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandcastleApi
+     */
+    public sandcastleWriteSettings(body: SandcastleWriteSettingsRequest, options?: any) {
+        return SandcastleApiFp(this.configuration).sandcastleWriteSettings(body, options).then((request) => request(this.axios));
+    }
+
+    /**
+     * 
+     * @param {SandcastleWriteTokenIssuersRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandcastleApi
+     */
+    public sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequest, options?: any) {
+        return SandcastleApiFp(this.configuration).sandcastleWriteTokenIssuer(body, options).then((request) => request(this.axios));
     }
 }
 

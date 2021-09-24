@@ -5,12 +5,12 @@ import { Configuration } from "../configuration";
 
 nock.disableNetConnect();
 
-const { SANDCASTLE_ENVIRONMENT, SANDCASTLE_TENANT, SANDCASTLE_CLIENT_ID, SANDCASTLE_CLIENT_SECRET } = process.env as {
-  SANDCASTLE_ENVIRONMENT: string; SANDCASTLE_TENANT: string; SANDCASTLE_CLIENT_ID: string; SANDCASTLE_CLIENT_SECRET: string;
+const { SANDCASTLE_ENVIRONMENT, SANDCASTLE_STORE_ID, SANDCASTLE_CLIENT_ID, SANDCASTLE_CLIENT_SECRET } = process.env as {
+  SANDCASTLE_ENVIRONMENT: string; SANDCASTLE_STORE_ID: string; SANDCASTLE_CLIENT_ID: string; SANDCASTLE_CLIENT_SECRET: string;
 } & any;
 
 const baseConfig = {
-  tenant: SANDCASTLE_TENANT,
+  storeId: SANDCASTLE_STORE_ID,
   environment: SANDCASTLE_ENVIRONMENT,
   clientId: SANDCASTLE_CLIENT_ID,
   clientSecret: SANDCASTLE_CLIENT_SECRET,
@@ -27,50 +27,50 @@ const nocks = {
         expires_in: expiresIn,
       });
   },
-  readAllNssConfigs: (tenant: string, serverUrl = defaultConfiguration.serverUrl) => {
+  readAllNssConfigs: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${tenant}/v1/namespace-configurations`)
+      .get(`/${storeId}/v1/namespace-configurations`)
       .reply(200, {
         configurations: [],
       })
   },
-  check: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  check: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${tenant}/v1/check`)
+      .post(`/${storeId}/v1/check`)
       .reply(200, {
         allowed: true,
       });
   },
-  write: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  write: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${tenant}/v1/write`)
+      .post(`/${storeId}/v1/write`)
       .reply(200, {});
   },
-  delete: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  delete: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${tenant}/v1/write`)
+      .post(`/${storeId}/v1/write`)
       .reply(200, {});
   },
-  read: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  read: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${tenant}/v1/read`)
+      .post(`/${storeId}/v1/read`)
       .reply(200, { tuples: [] });
   },
-  expand: (tenant: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  expand: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${tenant}/v1/expand`)
+      .post(`/${storeId}/v1/expand`)
       .reply(200, { tree: {} });
   },
-  readSingleNssConfig: (tenant: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
+  readSingleNssConfig: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${tenant}/v1/namespace-configurations/${configId}`)
+      .get(`/${storeId}/v1/namespace-configurations/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", namespaces: [] },
       });
   },
-  upsertNssConfig: (tenant: string, configurations: NamespaceNamespaces, serverUrl = defaultConfiguration.serverUrl) => {
+  upsertNssConfig: (storeId: string, configurations: NamespaceNamespaces, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${tenant}/v1/namespace-configurations`)
+      .post(`/${storeId}/v1/namespace-configurations`)
       .reply(200, {
         id: "some-new-id",
       });
@@ -79,8 +79,12 @@ const nocks = {
 
 describe('sandcastle-sdk', function () {
   describe('initializing the sdk', () => {
-    it('should require tenant in configuration', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, tenant: undefined! })).toThrowError();
+    it('should require storeId in configuration', () => {
+      expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined! })).toThrowError();
+    });
+
+    it('should accept tenant instead of storeId for backward compatibility with <0.2.0 releases', () => {
+      expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined!, tenant: 'some_store_id' })).not.toThrowError();
     });
 
     it('should require environment in configuration', () => {
@@ -92,16 +96,16 @@ describe('sandcastle-sdk', function () {
     });
 
     it('should not require clientId or clientSecret in configuration in environments that don\'t require it', () => {
-      expect(() => new SandcastleApi({ tenant: SANDCASTLE_TENANT, environment: 'playground', clientId: undefined!, clientSecret: undefined! })).not.toThrowError();
+      expect(() => new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! })).not.toThrowError();
     });
 
     it('should require clientId or clientSecret in configuration in environments that require it', () => {
-      expect(() => new SandcastleApi({ tenant: SANDCASTLE_TENANT, environment: 'staging', clientId: undefined!, clientSecret: undefined! })).toThrowError();
+      expect(() => new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'staging', clientId: undefined!, clientSecret: undefined! })).toThrowError();
     });
 
     it('should issue a network call to get the token at the first request if client id is provided', async () => {
       const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
-      nocks.readAllNssConfigs(SANDCASTLE_TENANT);
+      nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
 
       const sandcastleApi = new SandcastleApi(baseConfig);
       expect(scope.isDone()).toBe(false);
@@ -115,9 +119,9 @@ describe('sandcastle-sdk', function () {
 
     it('should not issue a network call to get the token at the first request if the clientId is not provided', async () => {
       const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
-      nocks.readAllNssConfigs(SANDCASTLE_TENANT);
+      nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
 
-      const sandcastleApi = new SandcastleApi({ tenant: SANDCASTLE_TENANT, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
+      const sandcastleApi = new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
       expect(scope.isDone()).toBe(false);
 
       await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
@@ -152,7 +156,7 @@ describe('sandcastle-sdk', function () {
     describe('check', () => {
       it('should properly pass the request and return an allowed API response', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.check(SANDCASTLE_TENANT, tuple);
+        const scope = nocks.check(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleCheck({ tupleKey: tuple });
@@ -165,7 +169,7 @@ describe('sandcastle-sdk', function () {
     describe('write: write tuples', () => {
       it('should properly pass the errors that the sandcastle api returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.write(SANDCASTLE_TENANT, tuple);
+        const scope = nocks.write(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleWrite({ writes: { tupleKeys: [tuple] } });
@@ -178,7 +182,7 @@ describe('sandcastle-sdk', function () {
     describe('write: delete tuples', () => {
       it('should properly pass the errors that the sandcastle api returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.delete(SANDCASTLE_TENANT, tuple);
+        const scope = nocks.delete(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleWrite({ deletes: { tupleKeys: [tuple] } });
@@ -191,7 +195,7 @@ describe('sandcastle-sdk', function () {
     describe('expand', () => {
       it('should properly pass the errors that the sandcastle api returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.expand(SANDCASTLE_TENANT, tuple);
+        const scope = nocks.expand(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleExpand({ tupleKey: tuple });
@@ -204,7 +208,7 @@ describe('sandcastle-sdk', function () {
     describe('read', () => {
       it('should properly pass the errors that the sandcastle api returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.read(SANDCASTLE_TENANT, tuple);
+        const scope = nocks.read(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleRead({ reads: { tupleKeys: [tuple] } });
@@ -217,7 +221,7 @@ describe('sandcastle-sdk', function () {
     describe('writeNamespaceConfiguration', () => {
       it('should call the api and return the response', async () => {
         const nssConfig = { namespaces: [{ name: 'workspace', relations: { admin: { _this: {} } } }] };
-        const scope = nocks.upsertNssConfig(SANDCASTLE_TENANT, nssConfig);
+        const scope = nocks.upsertNssConfig(SANDCASTLE_STORE_ID, nssConfig);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleWriteNamespaceConfiguration(nssConfig);
@@ -230,7 +234,7 @@ describe('sandcastle-sdk', function () {
     describe('readNamespaceConfiguration', () => {
       it('should call the api and return the response', async () => {
         const configId = 'string';
-        const scope = nocks.readSingleNssConfig(SANDCASTLE_TENANT, configId);
+        const scope = nocks.readSingleNssConfig(SANDCASTLE_STORE_ID, configId);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleReadNamespaceConfiguration(configId);
@@ -242,7 +246,7 @@ describe('sandcastle-sdk', function () {
 
     describe('readAllNamespaceConfigurations', () => {
       it('should call the api and return the response', async () => {
-        const scope = nocks.readAllNssConfigs(SANDCASTLE_TENANT);
+        const scope = nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
 
         expect(scope.isDone()).toBe(false);
         const { data } = await sandcastleApi.sandcastleReadAllNamespaceConfigurations();

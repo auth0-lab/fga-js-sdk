@@ -14,4 +14,5 @@
 
 
 export * from "./api";
-export { UserConfigurationParams } from "./configuration";
+export { Configuration, UserConfigurationParams } from "./configuration";
+
