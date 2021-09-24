@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.1](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.1...v0.1.0) (2021-09-24)
+
+## Changes:
+- feat: rename `tenant` to `store`
+
 ## [0.1.0](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.0...v0.0.4) (2021-09-13)
 
 ## Changes:

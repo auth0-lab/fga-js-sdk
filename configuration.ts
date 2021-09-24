@@ -53,7 +53,12 @@ export const assertParamExists = function (functionName: string, paramName: stri
 }
 
 export interface UserConfigurationParams {
-    tenant: string;
+    /**
+     * tenant is `deprecated`, please use `storeId` instead
+     * @deprecated
+     */
+    tenant?: string;
+    storeId?: string;
     clientId: string;
     clientSecret: string;
     environment: string;
@@ -97,6 +102,10 @@ const getEnvironmentConfiguration = function (environment: string): EnvironmentC
   throw new InvalidEnvironmentError(environment, allowedEnvs);
 };
 
+interface BaseOptions {
+    headers: Record<string, string>;
+}
+
 export class Configuration {
     private accessToken?: string;
     private accessTokenExpiryDate?: Date;
@@ -108,12 +117,12 @@ export class Configuration {
      */
     serverUrl: string;
     /**
-     * provide tenant
+     * provide storeId
      *
      * @type {string}
      * @memberof Configuration
      */
-    tenant: string;
+    storeId: string;
     /**
      * Sandcastle Client ID
      *
@@ -155,15 +164,21 @@ export class Configuration {
      * @type {any}
      * @memberof Configuration
      */
-    baseOptions?: any;
+    baseOptions?: BaseOptions;
 
     constructor(params: UserConfigurationParams = {} as unknown as UserConfigurationParams, private axios: AxiosInstance = globalAxios) {
-        assertParamExists('Configuration', 'tenant', params.tenant);
+        let { storeId } = params;
+        if (!storeId && params.tenant) {
+            console.warn("passing `tenant` is deprecated, please use `storeId` instead");
+            storeId = params.tenant;
+        }
+
+        assertParamExists('Configuration', 'storeId', storeId);
         assertParamExists('Configuration', 'environment', params.environment);
 
         const environmentConfiguration = getEnvironmentConfiguration(params.environment);
 
-        this.tenant = params.tenant;
+        this.storeId = storeId!;
         this.clientId = params.clientId;
         this.clientSecret = params.clientSecret;
         this.deploymentId  = params.deploymentId;
