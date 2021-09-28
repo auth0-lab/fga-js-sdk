@@ -207,18 +207,18 @@ const { data } = await sandcastleApi.sandcastleRead({
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**sandcastleCheck**](#sandcastlecheck) | **POST** /{storeId}/v1/check |  |
-| [**sandcastleDeleteTokenIssuer**](#sandcastledeletetokenissuer) | **DELETE** /{storeId}/v1/settings/token-issuers/{id} |  |
-| [**sandcastleExpand**](#sandcastleexpand) | **POST** /{storeId}/v1/expand |  |
-| [**sandcastleRead**](#sandcastleread) | **POST** /{storeId}/v1/read |  |
-| [**sandcastleReadAllNamespaceConfigurations**](#sandcastlereadallnamespaceconfigurations) | **GET** /{storeId}/v1/namespace-configurations |  |
-| [**sandcastleReadNamespaceConfiguration**](#sandcastlereadnamespaceconfiguration) | **GET** /{storeId}/v1/namespace-configurations/{id} |  |
-| [**sandcastleReadSettings**](#sandcastlereadsettings) | **GET** /{storeId}/v1/settings |  |
-| [**sandcastleReadTuples**](#sandcastlereadtuples) | **POST** /{storeId}/v1/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
-| [**sandcastleWrite**](#sandcastlewrite) | **POST** /{storeId}/v1/write |  |
-| [**sandcastleWriteNamespaceConfiguration**](#sandcastlewritenamespaceconfiguration) | **POST** /{storeId}/v1/namespace-configurations |  |
-| [**sandcastleWriteSettings**](#sandcastlewritesettings) | **PATCH** /{storeId}/v1/settings |  |
-| [**sandcastleWriteTokenIssuer**](#sandcastlewritetokenissuer) | **POST** /{storeId}/v1/settings/token-issuers |  |
+| [**sandcastleCheck**](#sandcastlecheck) | **POST** /{storeId}/check |  |
+| [**sandcastleDeleteTokenIssuer**](#sandcastledeletetokenissuer) | **DELETE** /{storeId}/settings/token-issuers/{id} |  |
+| [**sandcastleExpand**](#sandcastleexpand) | **POST** /{storeId}/expand |  |
+| [**sandcastleRead**](#sandcastleread) | **POST** /{storeId}/read |  |
+| [**sandcastleReadAllNamespaceConfigurations**](#sandcastlereadallnamespaceconfigurations) | **GET** /{storeId}/namespace-configurations |  |
+| [**sandcastleReadNamespaceConfiguration**](#sandcastlereadnamespaceconfiguration) | **GET** /{storeId}/namespace-configurations/{id} |  |
+| [**sandcastleReadSettings**](#sandcastlereadsettings) | **GET** /{storeId}/settings |  |
+| [**sandcastleReadTuples**](#sandcastlereadtuples) | **POST** /{storeId}/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
+| [**sandcastleWrite**](#sandcastlewrite) | **POST** /{storeId}/write |  |
+| [**sandcastleWriteNamespaceConfiguration**](#sandcastlewritenamespaceconfiguration) | **POST** /{storeId}/namespace-configurations |  |
+| [**sandcastleWriteSettings**](#sandcastlewritesettings) | **PATCH** /{storeId}/settings |  |
+| [**sandcastleWriteTokenIssuer**](#sandcastlewritetokenissuer) | **POST** /{storeId}/settings/token-issuers |  |
 
 #### sandcastleCheck
 

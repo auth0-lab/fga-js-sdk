@@ -29,48 +29,48 @@ const nocks = {
   },
   readAllNssConfigs: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${storeId}/v1/namespace-configurations`)
+      .get(`/${storeId}/namespace-configurations`)
       .reply(200, {
         configurations: [],
       })
   },
   check: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/v1/check`)
+      .post(`/${storeId}/check`)
       .reply(200, {
         allowed: true,
       });
   },
   write: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/v1/write`)
+      .post(`/${storeId}/write`)
       .reply(200, {});
   },
   delete: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/v1/write`)
+      .post(`/${storeId}/write`)
       .reply(200, {});
   },
   read: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/v1/read`)
+      .post(`/${storeId}/read`)
       .reply(200, { tuples: [] });
   },
   expand: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/v1/expand`)
+      .post(`/${storeId}/expand`)
       .reply(200, { tree: {} });
   },
   readSingleNssConfig: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${storeId}/v1/namespace-configurations/${configId}`)
+      .get(`/${storeId}/namespace-configurations/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", namespaces: [] },
       });
   },
   upsertNssConfig: (storeId: string, configurations: NamespaceNamespaces, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/v1/namespace-configurations`)
+      .post(`/${storeId}/namespace-configurations`)
       .reply(200, {
         id: "some-new-id",
       });

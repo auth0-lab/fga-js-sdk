@@ -757,7 +757,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleCheck: async (body: SandcastleCheckRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleCheck', 'body', body)
-            const localVarPath = `/{storeId}/v1/check`
+            const localVarPath = `/{storeId}/check`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -797,7 +797,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleDeleteTokenIssuer: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('sandcastleDeleteTokenIssuer', 'id', id)
-            const localVarPath = `/{storeId}/v1/settings/token-issuers/{id}`
+            const localVarPath = `/{storeId}/settings/token-issuers/{id}`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -834,7 +834,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleExpand: async (body: SandcastleExpandRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleExpand', 'body', body)
-            const localVarPath = `/{storeId}/v1/expand`
+            const localVarPath = `/{storeId}/expand`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -874,7 +874,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleRead: async (body: SandcastleReadRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleRead', 'body', body)
-            const localVarPath = `/{storeId}/v1/read`
+            const localVarPath = `/{storeId}/read`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -911,7 +911,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @throws {RequiredError}
          */
         sandcastleReadAllNamespaceConfigurations: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/{storeId}/v1/namespace-configurations`
+            const localVarPath = `/{storeId}/namespace-configurations`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -948,7 +948,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleReadNamespaceConfiguration: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('sandcastleReadNamespaceConfiguration', 'id', id)
-            const localVarPath = `/{storeId}/v1/namespace-configurations/{id}`
+            const localVarPath = `/{storeId}/namespace-configurations/{id}`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -982,7 +982,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @throws {RequiredError}
          */
         sandcastleReadSettings: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/{storeId}/v1/settings`
+            const localVarPath = `/{storeId}/settings`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1020,7 +1020,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleReadTuples: async (body: SandcastleReadTuplesRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleReadTuples', 'body', body)
-            const localVarPath = `/{storeId}/v1/read-tuples`
+            const localVarPath = `/{storeId}/read-tuples`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1060,7 +1060,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleWrite: async (body: SandcastleWriteRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWrite', 'body', body)
-            const localVarPath = `/{storeId}/v1/write`
+            const localVarPath = `/{storeId}/write`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1100,7 +1100,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleWriteNamespaceConfiguration: async (body: NamespaceNamespaces, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWriteNamespaceConfiguration', 'body', body)
-            const localVarPath = `/{storeId}/v1/namespace-configurations`
+            const localVarPath = `/{storeId}/namespace-configurations`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1140,7 +1140,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleWriteSettings: async (body: SandcastleWriteSettingsRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWriteSettings', 'body', body)
-            const localVarPath = `/{storeId}/v1/settings`
+            const localVarPath = `/{storeId}/settings`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1180,7 +1180,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         sandcastleWriteTokenIssuer: async (body: SandcastleWriteTokenIssuersRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWriteTokenIssuer', 'body', body)
-            const localVarPath = `/{storeId}/v1/settings/token-issuers`
+            const localVarPath = `/{storeId}/settings/token-issuers`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
