@@ -26,48 +26,48 @@ const nocks = {
   },
   readAllNssConfigs: (tenant: string, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .get(`/${tenant}/v1/namespace-configurations`)
+      .get(`/${tenant}/namespace-configurations`)
       .reply(200, {
         configurations: [],
       })
   },
   check: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .post(`/${tenant}/v1/check`)
+      .post(`/${tenant}/check`)
       .reply(200, {
         allowed: true,
       });
   },
   write: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .post(`/${tenant}/v1/write`)
+      .post(`/${tenant}/write`)
       .reply(200, {});
   },
   delete: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .post(`/${tenant}/v1/write`)
+      .post(`/${tenant}/write`)
       .reply(200, {});
   },
   read: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .post(`/${tenant}/v1/read`)
+      .post(`/${tenant}/read`)
       .reply(200, { tuples: [] });
   },
   expand: (tenant: string, tuple: SandcastleTupleKey, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .post(`/${tenant}/v1/expand`)
+      .post(`/${tenant}/expand`)
       .reply(200, { tree: {} });
   },
   readSingleNssConfig: (tenant: string, configId: string, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .get(`/${tenant}/v1/namespace-configurations/${configId}`)
+      .get(`/${tenant}/namespace-configurations/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", namespaces: [] },
       });
   },
   upsertNssConfig: (tenant: string, configurations: NamespaceNamespaces, serverUrl = SANDCASTLE_URL) => {
     return nock(`${serverUrl}`)
-      .post(`/${tenant}/v1/namespace-configurations`)
+      .post(`/${tenant}/namespace-configurations`)
       .reply(200, {
         id: "some-new-id",
       });

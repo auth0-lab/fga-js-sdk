@@ -195,14 +195,14 @@ All URIs are relative to *https://api.staging.sandcastle.cloud*
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**sandcastleCheck**](#sandcastlecheck) | **POST** /{tenant}/v1/check |  |
-| [**sandcastleExpand**](#sandcastleexpand) | **POST** /{tenant}/v1/expand |  |
-| [**sandcastleRead**](#sandcastleread) | **POST** /{tenant}/v1/read |  |
-| [**sandcastleReadAllNamespaceConfigurations**](#sandcastlereadallnamespaceconfigurations) | **GET** /{tenant}/v1/namespace-configurations |  |
-| [**sandcastleReadNamespaceConfiguration**](#sandcastlereadnamespaceconfiguration) | **GET** /{tenant}/v1/namespace-configurations/{id} |  |
-| [**sandcastleReadTuples**](#sandcastlereadtuples) | **POST** /{tenant}/v1/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
-| [**sandcastleWrite**](#sandcastlewrite) | **POST** /{tenant}/v1/write |  |
-| [**sandcastleWriteNamespaceConfiguration**](#sandcastlewritenamespaceconfiguration) | **POST** /{tenant}/v1/namespace-configurations |  |
+| [**sandcastleCheck**](#sandcastlecheck) | **POST** /{tenant}/check |  |
+| [**sandcastleExpand**](#sandcastleexpand) | **POST** /{tenant}/expand |  |
+| [**sandcastleRead**](#sandcastleread) | **POST** /{tenant}/read |  |
+| [**sandcastleReadAllNamespaceConfigurations**](#sandcastlereadallnamespaceconfigurations) | **GET** /{tenant}/namespace-configurations |  |
+| [**sandcastleReadNamespaceConfiguration**](#sandcastlereadnamespaceconfiguration) | **GET** /{tenant}/namespace-configurations/{id} |  |
+| [**sandcastleReadTuples**](#sandcastlereadtuples) | **POST** /{tenant}/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
+| [**sandcastleWrite**](#sandcastlewrite) | **POST** /{tenant}/write |  |
+| [**sandcastleWriteNamespaceConfiguration**](#sandcastlewritenamespaceconfiguration) | **POST** /{tenant}/namespace-configurations |  |
 
 #### sandcastleCheck
 
