@@ -554,38 +554,26 @@ export interface SandcastleWriteResponse {
 /**
  * 
  * @export
- * @interface SandcastleWriteSettingsRequest
+ * @interface SandcastleWriteSettingsRequestParams
  */
-export interface SandcastleWriteSettingsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteSettingsRequest
-     */
-    storeId?: string;
+export interface SandcastleWriteSettingsRequestParams {
     /**
      * 
      * @type {SettingsEnvironment}
-     * @memberof SandcastleWriteSettingsRequest
+     * @memberof SandcastleWriteSettingsRequestParams
      */
     environment?: SettingsEnvironment;
 }
 /**
  * 
  * @export
- * @interface SandcastleWriteTokenIssuersRequest
+ * @interface SandcastleWriteTokenIssuersRequestParams
  */
-export interface SandcastleWriteTokenIssuersRequest {
+export interface SandcastleWriteTokenIssuersRequestParams {
     /**
      * 
      * @type {string}
-     * @memberof SandcastleWriteTokenIssuersRequest
-     */
-    storeId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteTokenIssuersRequest
+     * @memberof SandcastleWriteTokenIssuersRequestParams
      */
     issuerUrl?: string;
 }
@@ -1133,11 +1121,11 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         },
         /**
          * 
-         * @param {SandcastleWriteSettingsRequest} body 
+         * @param {SandcastleWriteSettingsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteSettings: async (body: SandcastleWriteSettingsRequest, options: any = {}): Promise<RequestArgs> => {
+        sandcastleWriteSettings: async (body: SandcastleWriteSettingsRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWriteSettings', 'body', body)
             const localVarPath = `/{storeId}/settings`
@@ -1173,11 +1161,11 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
         },
         /**
          * 
-         * @param {SandcastleWriteTokenIssuersRequest} body 
+         * @param {SandcastleWriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteTokenIssuer: async (body: SandcastleWriteTokenIssuersRequest, options: any = {}): Promise<RequestArgs> => {
+        sandcastleWriteTokenIssuer: async (body: SandcastleWriteTokenIssuersRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('sandcastleWriteTokenIssuer', 'body', body)
             const localVarPath = `/{storeId}/settings/token-issuers`
@@ -1322,21 +1310,21 @@ export const SandcastleApiFp = function(configuration: Configuration) {
         },
         /**
          * 
-         * @param {SandcastleWriteSettingsRequest} body 
+         * @param {SandcastleWriteSettingsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleWriteSettings(body: SandcastleWriteSettingsRequest, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsSettings>> {
+        async sandcastleWriteSettings(body: SandcastleWriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteSettings(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
          * 
-         * @param {SandcastleWriteTokenIssuersRequest} body 
+         * @param {SandcastleWriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequest, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsTokenIssuer>> {
+        async sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsTokenIssuer>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteTokenIssuer(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
@@ -1441,20 +1429,20 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
         },
         /**
          * 
-         * @param {SandcastleWriteSettingsRequest} body 
+         * @param {SandcastleWriteSettingsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteSettings(body: SandcastleWriteSettingsRequest, options?: any): AxiosPromise<SettingsSettings> {
+        sandcastleWriteSettings(body: SandcastleWriteSettingsRequestParams, options?: any): AxiosPromise<SettingsSettings> {
             return localVarFp.sandcastleWriteSettings(body, options).then((request) => request(axios));
         },
         /**
          * 
-         * @param {SandcastleWriteTokenIssuersRequest} body 
+         * @param {SandcastleWriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequest, options?: any): AxiosPromise<SettingsTokenIssuer> {
+        sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): AxiosPromise<SettingsTokenIssuer> {
             return localVarFp.sandcastleWriteTokenIssuer(body, options).then((request) => request(axios));
         },
     };
@@ -1578,23 +1566,23 @@ export class SandcastleApi extends BaseAPI {
 
     /**
      * 
-     * @param {SandcastleWriteSettingsRequest} body 
+     * @param {SandcastleWriteSettingsRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleWriteSettings(body: SandcastleWriteSettingsRequest, options?: any) {
+    public sandcastleWriteSettings(body: SandcastleWriteSettingsRequestParams, options?: any) {
         return SandcastleApiFp(this.configuration).sandcastleWriteSettings(body, options).then((request) => request(this.axios));
     }
 
     /**
      * 
-     * @param {SandcastleWriteTokenIssuersRequest} body 
+     * @param {SandcastleWriteTokenIssuersRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequest, options?: any) {
+    public sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any) {
         return SandcastleApiFp(this.configuration).sandcastleWriteTokenIssuer(body, options).then((request) => request(this.axios));
     }
 }

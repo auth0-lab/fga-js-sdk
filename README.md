@@ -345,7 +345,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**SandcastleWriteSettingsRequest**](#SandcastleWriteSettingsRequest) |  | |
+| **body** | [**SandcastleWriteSettingsRequestParams**](#SandcastleWriteSettingsRequestParams) |  | |
 
 ##### Return type
 
@@ -357,7 +357,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**SandcastleWriteTokenIssuersRequest**](#SandcastleWriteTokenIssuersRequest) |  | |
+| **body** | [**SandcastleWriteTokenIssuersRequestParams**](#SandcastleWriteTokenIssuersRequestParams) |  | |
 
 ##### Return type
 
@@ -394,8 +394,8 @@ const { data } = await sandcastleApi.sandcastleRead({
  - [SandcastleWriteNamespaceConfigurationResponse](#SandcastleWriteNamespaceConfigurationResponse)
  - [SandcastleWriteRequestParams](#SandcastleWriteRequestParams)
  - [SandcastleWriteResponse](#SandcastleWriteResponse)
- - [SandcastleWriteSettingsRequest](#SandcastleWriteSettingsRequest)
- - [SandcastleWriteTokenIssuersRequest](#SandcastleWriteTokenIssuersRequest)
+ - [SandcastleWriteSettingsRequestParams](#SandcastleWriteSettingsRequestParams)
+ - [SandcastleWriteTokenIssuersRequestParams](#SandcastleWriteTokenIssuersRequestParams)
  - [SettingsEnvironment](#SettingsEnvironment)
  - [SettingsSettings](#SettingsSettings)
  - [SettingsTokenIssuer](#SettingsTokenIssuer)
@@ -658,22 +658,20 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **zookie** | **string** |  | [optional] [default to undefined]
 
-#### SandcastleWriteSettingsRequest
+#### SandcastleWriteSettingsRequestParams
 
 ##### Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**storeId** | **string** |  | [optional] [default to undefined]
 **environment** | [**SettingsEnvironment**](#SettingsEnvironment) |  | [optional] [default to undefined]
 
-#### SandcastleWriteTokenIssuersRequest
+#### SandcastleWriteTokenIssuersRequestParams
 
 ##### Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**storeId** | **string** |  | [optional] [default to undefined]
 **issuerUrl** | **string** |  | [optional] [default to undefined]
 
 #### SettingsEnvironment
