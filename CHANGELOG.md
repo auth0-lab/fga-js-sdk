@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.2](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.1...v0.1.2) (2021-09-28)
+
+## Changes:
+- fix: update endpoint paths, remove `/v1` 768960d
+- fix: regenerate sdk from latest API definition 730bd1f
+
 ## [0.1.1](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.1...v0.1.0) (2021-09-24)
 
 ## Changes:
