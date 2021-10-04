@@ -83,10 +83,6 @@ describe('sandcastle-sdk', function () {
       expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined! })).toThrowError();
     });
 
-    it('should accept tenant instead of storeId for backward compatibility with <0.2.0 releases', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined!, tenant: 'some_store_id' })).not.toThrowError();
-    });
-
     it('should require environment in configuration', () => {
       expect(() => new SandcastleApi({ ...baseConfig, environment: undefined! })).toThrowError();
     });
@@ -110,7 +106,7 @@ describe('sandcastle-sdk', function () {
       const sandcastleApi = new SandcastleApi(baseConfig);
       expect(scope.isDone()).toBe(false);
 
-      await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
+      await sandcastleApi.readAllNamespaceConfigurations();
 
       expect(scope.isDone()).toBe(true);
 
@@ -124,7 +120,7 @@ describe('sandcastle-sdk', function () {
       const sandcastleApi = new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
       expect(scope.isDone()).toBe(false);
 
-      await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
+      await sandcastleApi.readAllNamespaceConfigurations();
 
       expect(scope.isDone()).toBe(false);
 
@@ -159,7 +155,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.check(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleCheck({ tupleKey: tuple });
+        const data = await sandcastleApi.check({ tuple_key: tuple });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ allowed: expect.any(Boolean) });
@@ -172,7 +168,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.write(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleWrite({ writes: { tupleKeys: [tuple] } });
+        const data = await sandcastleApi.write({ writes: { tuple_keys: [tuple] } });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -185,7 +181,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.delete(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleWrite({ deletes: { tupleKeys: [tuple] } });
+        const data = await sandcastleApi.write({ deletes: { tuple_keys: [tuple] } });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -198,7 +194,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.expand(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleExpand({ tupleKey: tuple });
+        const data = await sandcastleApi.expand({ tuple_key: tuple });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -211,7 +207,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.read(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleRead({ reads: { tupleKeys: [tuple] } });
+        const data = await sandcastleApi.read({ reads: { tuple_keys: [tuple] } });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -224,7 +220,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.upsertNssConfig(SANDCASTLE_STORE_ID, nssConfig);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleWriteNamespaceConfiguration(nssConfig);
+        const data = await sandcastleApi.writeNamespaceConfiguration(nssConfig);
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ id: expect.any(String) });
@@ -237,7 +233,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.readSingleNssConfig(SANDCASTLE_STORE_ID, configId);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleReadNamespaceConfiguration(configId);
+        const data = await sandcastleApi.readNamespaceConfiguration(configId);
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ configuration: { id: expect.any(String), namespaces: expect.arrayContaining([]) } });
@@ -249,7 +245,7 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
 
         expect(scope.isDone()).toBe(false);
-        const { data } = await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
+        const data = await sandcastleApi.readAllNamespaceConfigurations();
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ configurations: expect.arrayContaining([]) });
