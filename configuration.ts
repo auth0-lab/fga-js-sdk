@@ -53,12 +53,7 @@ export const assertParamExists = function (functionName: string, paramName: stri
 }
 
 export interface UserConfigurationParams {
-    /**
-     * tenant is `deprecated`, please use `storeId` instead
-     * @deprecated
-     */
-    tenant?: string;
-    storeId?: string;
+    storeId: string;
     clientId: string;
     clientSecret: string;
     environment: string;
@@ -167,18 +162,12 @@ export class Configuration {
     baseOptions?: BaseOptions;
 
     constructor(params: UserConfigurationParams = {} as unknown as UserConfigurationParams, private axios: AxiosInstance = globalAxios) {
-        let { storeId } = params;
-        if (!storeId && params.tenant) {
-            console.warn("passing `tenant` is deprecated, please use `storeId` instead");
-            storeId = params.tenant;
-        }
-
-        assertParamExists('Configuration', 'storeId', storeId);
+        assertParamExists('Configuration', 'storeId', params.storeId);
         assertParamExists('Configuration', 'environment', params.environment);
 
         const environmentConfiguration = getEnvironmentConfiguration(params.environment);
 
-        this.storeId = storeId!;
+        this.storeId = params.storeId!;
         this.clientId = params.clientId;
         this.clientSecret = params.clientSecret;
         this.deploymentId  = params.deploymentId;

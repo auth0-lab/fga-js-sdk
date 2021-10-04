@@ -83,10 +83,6 @@ describe('sandcastle-sdk', function () {
       expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined! })).toThrowError();
     });
 
-    it('should accept tenant instead of storeId for backward compatibility with <0.2.0 releases', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined!, tenant: 'some_store_id' })).not.toThrowError();
-    });
-
     it('should require environment in configuration', () => {
       expect(() => new SandcastleApi({ ...baseConfig, environment: undefined! })).toThrowError();
     });
