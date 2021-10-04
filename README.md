@@ -93,7 +93,7 @@ In the playground environment, you do not need to provide a client id and client
 > Note: The Sandcastle Playground uses an experimental friendly yaml syntax which gets translated to the API syntax seen below, let us know your feedback at https://discord.gg/8naAwJfWN6
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleWriteNamespaceConfiguration({
+const data = await sandcastleApi.writeNamespaceConfiguration({
   namespaces: [{
     name: "github-repo",
     relations: {
@@ -119,78 +119,80 @@ const { data } = await sandcastleApi.sandcastleWriteNamespaceConfiguration({
 
 ```javascript
 // Assuming `1uHxCSuTP0VKPYSnkq1pbb1jeZw` is an id of a configuration
-const { data } = await sandcastleApi.sandcastleReadNamespaceConfiguration('1uHxCSuTP0VKPYSnkq1pbb1jeZw');
+const { configuration } = await sandcastleApi.readNamespaceConfiguration('1uHxCSuTP0VKPYSnkq1pbb1jeZw');
 
-// data = { configuration: { id: "1uHxCSuTP0VKPYSnkq1pbb1jeZw", namespaces: { namespaces: [{ name: "github-repo", relations: { repo_writer: { this: {} } }, repo_reader: { ... } } }] } } }
+// configuration = { id: "1uHxCSuTP0VKPYSnkq1pbb1jeZw", namespaces: ...
 ```
 
 #### Read All Namespaces Configuration
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleReadAllNamespaceConfigurations();
-
-// data = { configurations: [{ id: "1uHxCSuTP0VKPYSnkq1pbb1jeZw", namespaces: { namespaces: [{ name: "github-repo", relations: {...} }, "github-team": { ... } ] } }] }
+const { configurations } = await sandcastleApi.readAllNamespaceConfigurations();
+/**
+ configurations = [
+  { id: "1uHxCSuTP0VKPYSnkq1pbb1jeZw", namespaces: ... ,
+  { id: "GtQpMohWezFmIbyXxVEocOCxxgq", namespaces: ... ,
+**/
 ```
 
 #### Check
 > Provide a tuple and ask Sandcastle to check for a relationship
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleCheck({
-  tupleKey: {
+const result = await sandcastleApi.check({
+  tuple_key: {
     user: "81684243-9356-4421-8fbf-a4f8d36aa31b",
     relation: "admin",
     object: "workspace:675bcac4-ad38-4fb1-a19a-94a5648c91d6",
   },
 });
 
-// data = { allowed: true, resolution: "", zookie: "" }
-
+// result = { allowed: true, resolution: "", zookie: "" }
 ```
 
 #### Write Tuples
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleWrite({
+const result = await sandcastleApi.write({
   writes: {
-    tupleKeys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
+    tuple_keys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
   },
 });
 
-// data = { zookie: "" }
+// result = { zookie: "" }
 ```
 
 #### Delete Tuples
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleWrite({
+const result = await sandcastleApi.write({
   deletes: {
-    tupleKeys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
+    tuple_keys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
   },
 });
 
-// data = { zookie: "" }
+// result = { zookie: "" }
 ```
 
 #### Expand
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleExpand({
-  tupleKey: {
+const { tree } = await sandcastleApi.expand({
+  tuple_key: {
     relation: "admin",
     object: "workspace:675bcac4-ad38-4fb1-a19a-94a5648c91d6",
   },
 });
 
-// data = { tree: {...} }
+// tree = {...}
 ```
 
 #### Read
 
 ```javascript
-const { data } = await sandcastleApi.sandcastleRead({
+const { tuples } = await sandcastleApi.read({
   reads: {
-    tupleKeys: [
+    tuple_keys: [
       {
         user: "anne",
         relation: "repo_reader",
@@ -200,27 +202,27 @@ const { data } = await sandcastleApi.sandcastleRead({
   },
 });
 
-// data = { tuples: [{ key: { user, relation, object }, timestamp: ... }], zookie: "" }
+// tuples = [{ key: { user, relation, object }, timestamp: ... }]
 ```
 
 ### API Endpoints
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**sandcastleCheck**](#sandcastlecheck) | **POST** /{storeId}/check |  |
-| [**sandcastleDeleteTokenIssuer**](#sandcastledeletetokenissuer) | **DELETE** /{storeId}/settings/token-issuers/{id} |  |
-| [**sandcastleExpand**](#sandcastleexpand) | **POST** /{storeId}/expand |  |
-| [**sandcastleRead**](#sandcastleread) | **POST** /{storeId}/read |  |
-| [**sandcastleReadAllNamespaceConfigurations**](#sandcastlereadallnamespaceconfigurations) | **GET** /{storeId}/namespace-configurations |  |
-| [**sandcastleReadNamespaceConfiguration**](#sandcastlereadnamespaceconfiguration) | **GET** /{storeId}/namespace-configurations/{id} |  |
-| [**sandcastleReadSettings**](#sandcastlereadsettings) | **GET** /{storeId}/settings |  |
-| [**sandcastleReadTuples**](#sandcastlereadtuples) | **POST** /{storeId}/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
-| [**sandcastleWrite**](#sandcastlewrite) | **POST** /{storeId}/write |  |
-| [**sandcastleWriteNamespaceConfiguration**](#sandcastlewritenamespaceconfiguration) | **POST** /{storeId}/namespace-configurations |  |
-| [**sandcastleWriteSettings**](#sandcastlewritesettings) | **PATCH** /{storeId}/settings |  |
-| [**sandcastleWriteTokenIssuer**](#sandcastlewritetokenissuer) | **POST** /{storeId}/settings/token-issuers |  |
+| [**check**](#check) | **POST** /{storeId}/check |  |
+| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /{storeId}/settings/token-issuers/{id} |  |
+| [**expand**](#expand) | **POST** /{storeId}/expand |  |
+| [**read**](#read) | **POST** /{storeId}/read |  |
+| [**readAllNamespaceConfigurations**](#readallnamespaceconfigurations) | **GET** /{storeId}/namespace-configurations |  |
+| [**readNamespaceConfiguration**](#readnamespaceconfiguration) | **GET** /{storeId}/namespace-configurations/{id} |  |
+| [**readSettings**](#readsettings) | **GET** /{storeId}/settings |  |
+| [**readTuples**](#readtuples) | **POST** /{storeId}/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
+| [**write**](#write) | **POST** /{storeId}/write |  |
+| [**writeNamespaceConfiguration**](#writenamespaceconfiguration) | **POST** /{storeId}/namespace-configurations |  |
+| [**writeSettings**](#writesettings) | **PATCH** /{storeId}/settings |  |
+| [**writeTokenIssuer**](#writetokenissuer) | **POST** /{storeId}/settings/token-issuers |  |
 
-#### sandcastleCheck
+#### check
 
 
 | Name | Type | Description  | Notes |
@@ -232,7 +234,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleCheckResponse**](#SandcastleCheckResponse)
 
 
-#### sandcastleDeleteTokenIssuer
+#### deleteTokenIssuer
 
 
 | Name | Type | Description  | Notes |
@@ -244,7 +246,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 **object**
 
 
-#### sandcastleExpand
+#### expand
 
 
 | Name | Type | Description  | Notes |
@@ -256,7 +258,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleExpandResponse**](#SandcastleExpandResponse)
 
 
-#### sandcastleRead
+#### read
 
 
 | Name | Type | Description  | Notes |
@@ -268,7 +270,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleReadResponse**](#SandcastleReadResponse)
 
 
-#### sandcastleReadAllNamespaceConfigurations
+#### readAllNamespaceConfigurations
 
 
 | Name | Type | Description  | Notes |
@@ -280,7 +282,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleReadAllNamespaceConfigurationsResponse**](#SandcastleReadAllNamespaceConfigurationsResponse)
 
 
-#### sandcastleReadNamespaceConfiguration
+#### readNamespaceConfiguration
 
 
 | Name | Type | Description  | Notes |
@@ -292,7 +294,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleReadNamespaceConfigurationResponse**](#SandcastleReadNamespaceConfigurationResponse)
 
 
-#### sandcastleReadSettings
+#### readSettings
 
 
 | Name | Type | Description  | Notes |
@@ -304,7 +306,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SettingsSettings**](#SettingsSettings)
 
 
-#### sandcastleReadTuples
+#### readTuples
 
 
 | Name | Type | Description  | Notes |
@@ -316,7 +318,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleReadResponse**](#SandcastleReadResponse)
 
 
-#### sandcastleWrite
+#### write
 
 
 | Name | Type | Description  | Notes |
@@ -325,10 +327,10 @@ const { data } = await sandcastleApi.sandcastleRead({
 
 ##### Return type
 
-[**SandcastleWriteResponse**](#SandcastleWriteResponse)
+**object**
 
 
-#### sandcastleWriteNamespaceConfiguration
+#### writeNamespaceConfiguration
 
 
 | Name | Type | Description  | Notes |
@@ -340,7 +342,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SandcastleWriteNamespaceConfigurationResponse**](#SandcastleWriteNamespaceConfigurationResponse)
 
 
-#### sandcastleWriteSettings
+#### writeSettings
 
 
 | Name | Type | Description  | Notes |
@@ -352,7 +354,7 @@ const { data } = await sandcastleApi.sandcastleRead({
 [**SettingsSettings**](#SettingsSettings)
 
 
-#### sandcastleWriteTokenIssuer
+#### writeTokenIssuer
 
 
 | Name | Type | Description  | Notes |
@@ -393,7 +395,6 @@ const { data } = await sandcastleApi.sandcastleRead({
  - [SandcastleUsersetTreeTupleToUserset](#SandcastleUsersetTreeTupleToUserset)
  - [SandcastleWriteNamespaceConfigurationResponse](#SandcastleWriteNamespaceConfigurationResponse)
  - [SandcastleWriteRequestParams](#SandcastleWriteRequestParams)
- - [SandcastleWriteResponse](#SandcastleWriteResponse)
  - [SandcastleWriteSettingsRequestParams](#SandcastleWriteSettingsRequestParams)
  - [SandcastleWriteTokenIssuersRequestParams](#SandcastleWriteTokenIssuersRequestParams)
  - [SettingsEnvironment](#SettingsEnvironment)
@@ -505,9 +506,8 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tupleKey** | [**SandcastleTupleKey**](#SandcastleTupleKey) |  | [optional] [default to undefined]
+**tuple_key** | [**SandcastleTupleKey**](#SandcastleTupleKey) |  | [optional] [default to undefined]
 **trace** | **boolean** | defaults to false. making it true has performance implications. only use for debugging purposes, etc. | [optional] [readonly] [default to undefined]
-**zookie** | **string** |  | [optional] [readonly] [default to undefined]
 
 #### SandcastleCheckResponse
 
@@ -517,7 +517,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed** | **boolean** |  | [optional] [default to undefined]
 **resolution** | **string** |  | [optional] [default to undefined]
-**zookie** | **string** |  | [optional] [default to undefined]
 
 #### SandcastleExpandRequestParams
 
@@ -525,8 +524,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tupleKey** | [**SandcastleTupleKey**](#SandcastleTupleKey) |  | [optional] [default to undefined]
-**zookie** | **string** |  | [optional] [readonly] [default to undefined]
+**tuple_key** | [**SandcastleTupleKey**](#SandcastleTupleKey) |  | [optional] [default to undefined]
 
 #### SandcastleExpandResponse
 
@@ -559,7 +557,6 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **reads** | [**SandcastleTupleKeys**](#SandcastleTupleKeys) |  | [optional] [default to undefined]
-**zookie** | **string** |  | [optional] [readonly] [default to undefined]
 
 #### SandcastleReadResponse
 
@@ -568,7 +565,6 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuples** | [**SandcastleTuple**[]](#SandcastleTuple) |  | [optional] [default to undefined]
-**zookie** | **string** |  | [optional] [default to undefined]
 
 #### SandcastleReadTuplesRequest
 
@@ -603,7 +599,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tupleKeys** | [**SandcastleTupleKey**[]](#SandcastleTupleKey) |  | [optional] [default to undefined]
+**tuple_keys** | [**SandcastleTupleKey**[]](#SandcastleTupleKey) |  | [optional] [default to undefined]
 
 #### SandcastleUsersetTree
 
@@ -638,7 +634,6 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] [default to undefined]
-**zookie** | **string** |  | [optional] [default to undefined]
 
 #### SandcastleWriteRequestParams
 
@@ -648,15 +643,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **writes** | [**SandcastleTupleKeys**](#SandcastleTupleKeys) |  | [optional] [default to undefined]
 **deletes** | [**SandcastleTupleKeys**](#SandcastleTupleKeys) |  | [optional] [default to undefined]
-**lockTuple** | [**SandcastleTuple**](#SandcastleTuple) |  | [optional] [default to undefined]
-
-#### SandcastleWriteResponse
-
-##### Properties
-
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**zookie** | **string** |  | [optional] [default to undefined]
+**lock_tuple** | [**SandcastleTuple**](#SandcastleTuple) |  | [optional] [default to undefined]
 
 #### SandcastleWriteSettingsRequestParams
 
@@ -672,7 +659,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**issuerUrl** | **string** |  | [optional] [default to undefined]
+**issuer_url** | **string** |  | [optional] [default to undefined]
 
 #### SettingsEnvironment
 
@@ -695,7 +682,7 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **environment** | [**SettingsEnvironment**](#SettingsEnvironment) |  | [optional] [default to undefined]
-**tokenIssuers** | [**SettingsTokenIssuer**[]](#SettingsTokenIssuer) |  | [optional] [default to undefined]
+**token_issuers** | [**SettingsTokenIssuer**[]](#SettingsTokenIssuer) |  | [optional] [default to undefined]
 
 #### SettingsTokenIssuer
 
@@ -704,7 +691,7 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] [default to undefined]
-**issuerUrl** | **string** |  | [optional] [default to undefined]
+**issuer_url** | **string** |  | [optional] [default to undefined]
 
 #### UsersetTreeComputed
 

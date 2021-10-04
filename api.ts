@@ -16,7 +16,16 @@
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 
 import { COLLECTION_FORMATS, BaseAPI } from './base';
-import { DUMMY_BASE_URL, setBearerAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction, RequestArgs } from './common';
+import {
+    DUMMY_BASE_URL,
+    setBearerAuthToObject,
+    setSearchParams,
+    serializeDataIfNeeded,
+    toPathString,
+    createRequestFunction,
+    RequestArgs,
+    PromiseResult
+} from './common';
 import { assertParamExists, Configuration, RequiredError } from './configuration';
 
 /**
@@ -238,19 +247,13 @@ export interface SandcastleCheckRequestParams {
      * @type {SandcastleTupleKey}
      * @memberof SandcastleCheckRequestParams
      */
-    tupleKey?: SandcastleTupleKey;
+    tuple_key?: SandcastleTupleKey;
     /**
      * defaults to false. making it true has performance implications. only use for debugging purposes, etc.
      * @type {boolean}
      * @memberof SandcastleCheckRequestParams
      */
     trace?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleCheckRequestParams
-     */
-    zookie?: string;
 }
 /**
  * 
@@ -270,12 +273,6 @@ export interface SandcastleCheckResponse {
      * @memberof SandcastleCheckResponse
      */
     resolution?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleCheckResponse
-     */
-    zookie?: string;
 }
 /**
  * 
@@ -288,13 +285,7 @@ export interface SandcastleExpandRequestParams {
      * @type {SandcastleTupleKey}
      * @memberof SandcastleExpandRequestParams
      */
-    tupleKey?: SandcastleTupleKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleExpandRequestParams
-     */
-    zookie?: string;
+    tuple_key?: SandcastleTupleKey;
 }
 /**
  * 
@@ -347,12 +338,6 @@ export interface SandcastleReadRequestParams {
      * @memberof SandcastleReadRequestParams
      */
     reads?: SandcastleTupleKeys;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleReadRequestParams
-     */
-    zookie?: string;
 }
 /**
  * 
@@ -366,12 +351,6 @@ export interface SandcastleReadResponse {
      * @memberof SandcastleReadResponse
      */
     tuples?: Array<SandcastleTuple>;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleReadResponse
-     */
-    zookie?: string;
 }
 /**
  * 
@@ -441,7 +420,7 @@ export interface SandcastleTupleKeys {
      * @type {Array<SandcastleTupleKey>}
      * @memberof SandcastleTupleKeys
      */
-    tupleKeys?: Array<SandcastleTupleKey>;
+    tuple_keys?: Array<SandcastleTupleKey>;
 }
 /**
  * A UsersetTree contains the result of an Expansion.
@@ -506,12 +485,6 @@ export interface SandcastleWriteNamespaceConfigurationResponse {
      * @memberof SandcastleWriteNamespaceConfigurationResponse
      */
     id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteNamespaceConfigurationResponse
-     */
-    zookie?: string;
 }
 /**
  * 
@@ -536,20 +509,7 @@ export interface SandcastleWriteRequestParams {
      * @type {SandcastleTuple}
      * @memberof SandcastleWriteRequestParams
      */
-    lockTuple?: SandcastleTuple;
-}
-/**
- * 
- * @export
- * @interface SandcastleWriteResponse
- */
-export interface SandcastleWriteResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteResponse
-     */
-    zookie?: string;
+    lock_tuple?: SandcastleTuple;
 }
 /**
  * 
@@ -575,7 +535,7 @@ export interface SandcastleWriteTokenIssuersRequestParams {
      * @type {string}
      * @memberof SandcastleWriteTokenIssuersRequestParams
      */
-    issuerUrl?: string;
+    issuer_url?: string;
 }
 /**
  * 
@@ -607,7 +567,7 @@ export interface SettingsSettings {
      * @type {Array<SettingsTokenIssuer>}
      * @memberof SettingsSettings
      */
-    tokenIssuers?: Array<SettingsTokenIssuer>;
+    token_issuers?: Array<SettingsTokenIssuer>;
 }
 /**
  * 
@@ -626,7 +586,7 @@ export interface SettingsTokenIssuer {
      * @type {string}
      * @memberof SettingsTokenIssuer
      */
-    issuerUrl?: string;
+    issuer_url?: string;
 }
 /**
  * 
@@ -737,14 +697,14 @@ export interface UsersetTreeUsers {
 export const SandcastleApiAxiosParamCreator = function (configuration: Configuration) {
     return {
         /**
-         * 
+         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `storeId` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Example In order to check if user anne@auth0.com has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @param {SandcastleCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleCheck: async (body: SandcastleCheckRequestParams, options: any = {}): Promise<RequestArgs> => {
+        check: async (body: SandcastleCheckRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleCheck', 'body', body)
+            assertParamExists('check', 'body', body)
             const localVarPath = `/{storeId}/check`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -782,9 +742,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleDeleteTokenIssuer: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        deleteTokenIssuer: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('sandcastleDeleteTokenIssuer', 'id', id)
+            assertParamExists('deleteTokenIssuer', 'id', id)
             const localVarPath = `/{storeId}/settings/token-issuers/{id}`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -814,14 +774,14 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * 
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `storeId` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leafs are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Example Assume the namesapce configuration for document has the following configuration ```   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ``` {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleExpand: async (body: SandcastleExpandRequestParams, options: any = {}): Promise<RequestArgs> => {
+        expand: async (body: SandcastleExpandRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleExpand', 'body', body)
+            assertParamExists('expand', 'body', body)
             const localVarPath = `/{storeId}/expand`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -859,9 +819,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleRead: async (body: SandcastleReadRequestParams, options: any = {}): Promise<RequestArgs> => {
+        read: async (body: SandcastleReadRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleRead', 'body', body)
+            assertParamExists('read', 'body', body)
             const localVarPath = `/{storeId}/read`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -898,7 +858,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadAllNamespaceConfigurations: async (options: any = {}): Promise<RequestArgs> => {
+        readAllNamespaceConfigurations: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/{storeId}/namespace-configurations`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -933,9 +893,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadNamespaceConfiguration: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        readNamespaceConfiguration: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('sandcastleReadNamespaceConfiguration', 'id', id)
+            assertParamExists('readNamespaceConfiguration', 'id', id)
             const localVarPath = `/{storeId}/namespace-configurations/{id}`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -969,7 +929,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadSettings: async (options: any = {}): Promise<RequestArgs> => {
+        readSettings: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/{storeId}/settings`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1005,9 +965,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadTuples: async (body: SandcastleReadTuplesRequest, options: any = {}): Promise<RequestArgs> => {
+        readTuples: async (body: SandcastleReadTuplesRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleReadTuples', 'body', body)
+            assertParamExists('readTuples', 'body', body)
             const localVarPath = `/{storeId}/read-tuples`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1045,9 +1005,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWrite: async (body: SandcastleWriteRequestParams, options: any = {}): Promise<RequestArgs> => {
+        write: async (body: SandcastleWriteRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleWrite', 'body', body)
+            assertParamExists('write', 'body', body)
             const localVarPath = `/{storeId}/write`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1085,9 +1045,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteNamespaceConfiguration: async (body: NamespaceNamespaces, options: any = {}): Promise<RequestArgs> => {
+        writeNamespaceConfiguration: async (body: NamespaceNamespaces, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleWriteNamespaceConfiguration', 'body', body)
+            assertParamExists('writeNamespaceConfiguration', 'body', body)
             const localVarPath = `/{storeId}/namespace-configurations`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1125,9 +1085,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteSettings: async (body: SandcastleWriteSettingsRequestParams, options: any = {}): Promise<RequestArgs> => {
+        writeSettings: async (body: SandcastleWriteSettingsRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleWriteSettings', 'body', body)
+            assertParamExists('writeSettings', 'body', body)
             const localVarPath = `/{storeId}/settings`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1165,9 +1125,9 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteTokenIssuer: async (body: SandcastleWriteTokenIssuersRequestParams, options: any = {}): Promise<RequestArgs> => {
+        writeTokenIssuer: async (body: SandcastleWriteTokenIssuersRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sandcastleWriteTokenIssuer', 'body', body)
+            assertParamExists('writeTokenIssuer', 'body', body)
             const localVarPath = `/{storeId}/settings/token-issuers`
             .replace(`{${"storeId"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1210,13 +1170,13 @@ export const SandcastleApiFp = function(configuration: Configuration) {
     const localVarAxiosParamCreator = SandcastleApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `storeId` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Example In order to check if user anne@auth0.com has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @param {SandcastleCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleCheck(body: SandcastleCheckRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleCheckResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleCheck(body, options);
+        async check(body: SandcastleCheckRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.check(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1225,18 +1185,18 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleDeleteTokenIssuer(id: string, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleDeleteTokenIssuer(id, options);
+        async deleteTokenIssuer(id: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTokenIssuer(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * 
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `storeId` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leafs are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Example Assume the namesapce configuration for document has the following configuration ```   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ``` {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleExpand(body: SandcastleExpandRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleExpandResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleExpand(body, options);
+        async expand(body: SandcastleExpandRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleExpandResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.expand(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1245,8 +1205,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleRead(body: SandcastleReadRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleReadResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleRead(body, options);
+        async read(body: SandcastleReadRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.read(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1254,8 +1214,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleReadAllNamespaceConfigurations(options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleReadAllNamespaceConfigurationsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleReadAllNamespaceConfigurations(options);
+        async readAllNamespaceConfigurations(options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadAllNamespaceConfigurationsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readAllNamespaceConfigurations(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1264,8 +1224,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleReadNamespaceConfiguration(id: string, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleReadNamespaceConfigurationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleReadNamespaceConfiguration(id, options);
+        async readNamespaceConfiguration(id: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadNamespaceConfigurationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readNamespaceConfiguration(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1273,8 +1233,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleReadSettings(options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleReadSettings(options);
+        async readSettings(options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readSettings(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1284,8 +1244,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleReadTuples(body: SandcastleReadTuplesRequest, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleReadResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleReadTuples(body, options);
+        async readTuples(body: SandcastleReadTuplesRequest, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readTuples(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1294,8 +1254,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleWrite(body: SandcastleWriteRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleWriteResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWrite(body, options);
+        async write(body: SandcastleWriteRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.write(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1304,8 +1264,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleWriteNamespaceConfiguration(body: NamespaceNamespaces, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SandcastleWriteNamespaceConfigurationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteNamespaceConfiguration(body, options);
+        async writeNamespaceConfiguration(body: NamespaceNamespaces, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleWriteNamespaceConfigurationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeNamespaceConfiguration(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1314,8 +1274,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleWriteSettings(body: SandcastleWriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteSettings(body, options);
+        async writeSettings(body: SandcastleWriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeSettings(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1324,8 +1284,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosInstance) => AxiosPromise<SettingsTokenIssuer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sandcastleWriteTokenIssuer(body, options);
+        async writeTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsTokenIssuer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeTokenIssuer(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
     }
@@ -1339,13 +1299,13 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
     const localVarFp = SandcastleApiFp(configuration)
     return {
         /**
-         * 
+         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `storeId` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Example In order to check if user anne@auth0.com has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @param {SandcastleCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleCheck(body: SandcastleCheckRequestParams, options?: any): AxiosPromise<SandcastleCheckResponse> {
-            return localVarFp.sandcastleCheck(body, options).then((request) => request(axios));
+        check(body: SandcastleCheckRequestParams, options?: any): PromiseResult<SandcastleCheckResponse> {
+            return localVarFp.check(body, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1353,17 +1313,17 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleDeleteTokenIssuer(id: string, options?: any): AxiosPromise<object> {
-            return localVarFp.sandcastleDeleteTokenIssuer(id, options).then((request) => request(axios));
+        deleteTokenIssuer(id: string, options?: any): PromiseResult<object> {
+            return localVarFp.deleteTokenIssuer(id, options).then((request) => request(axios));
         },
         /**
-         * 
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `storeId` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leafs are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Example Assume the namesapce configuration for document has the following configuration ```   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ``` {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleExpand(body: SandcastleExpandRequestParams, options?: any): AxiosPromise<SandcastleExpandResponse> {
-            return localVarFp.sandcastleExpand(body, options).then((request) => request(axios));
+        expand(body: SandcastleExpandRequestParams, options?: any): PromiseResult<SandcastleExpandResponse> {
+            return localVarFp.expand(body, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1371,16 +1331,16 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleRead(body: SandcastleReadRequestParams, options?: any): AxiosPromise<SandcastleReadResponse> {
-            return localVarFp.sandcastleRead(body, options).then((request) => request(axios));
+        read(body: SandcastleReadRequestParams, options?: any): PromiseResult<SandcastleReadResponse> {
+            return localVarFp.read(body, options).then((request) => request(axios));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadAllNamespaceConfigurations(options?: any): AxiosPromise<SandcastleReadAllNamespaceConfigurationsResponse> {
-            return localVarFp.sandcastleReadAllNamespaceConfigurations(options).then((request) => request(axios));
+        readAllNamespaceConfigurations(options?: any): PromiseResult<SandcastleReadAllNamespaceConfigurationsResponse> {
+            return localVarFp.readAllNamespaceConfigurations(options).then((request) => request(axios));
         },
         /**
          * 
@@ -1388,16 +1348,16 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadNamespaceConfiguration(id: string, options?: any): AxiosPromise<SandcastleReadNamespaceConfigurationResponse> {
-            return localVarFp.sandcastleReadNamespaceConfiguration(id, options).then((request) => request(axios));
+        readNamespaceConfiguration(id: string, options?: any): PromiseResult<SandcastleReadNamespaceConfigurationResponse> {
+            return localVarFp.readNamespaceConfiguration(id, options).then((request) => request(axios));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadSettings(options?: any): AxiosPromise<SettingsSettings> {
-            return localVarFp.sandcastleReadSettings(options).then((request) => request(axios));
+        readSettings(options?: any): PromiseResult<SettingsSettings> {
+            return localVarFp.readSettings(options).then((request) => request(axios));
         },
         /**
          * 
@@ -1406,8 +1366,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleReadTuples(body: SandcastleReadTuplesRequest, options?: any): AxiosPromise<SandcastleReadResponse> {
-            return localVarFp.sandcastleReadTuples(body, options).then((request) => request(axios));
+        readTuples(body: SandcastleReadTuplesRequest, options?: any): PromiseResult<SandcastleReadResponse> {
+            return localVarFp.readTuples(body, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1415,8 +1375,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWrite(body: SandcastleWriteRequestParams, options?: any): AxiosPromise<SandcastleWriteResponse> {
-            return localVarFp.sandcastleWrite(body, options).then((request) => request(axios));
+        write(body: SandcastleWriteRequestParams, options?: any): PromiseResult<object> {
+            return localVarFp.write(body, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1424,8 +1384,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteNamespaceConfiguration(body: NamespaceNamespaces, options?: any): AxiosPromise<SandcastleWriteNamespaceConfigurationResponse> {
-            return localVarFp.sandcastleWriteNamespaceConfiguration(body, options).then((request) => request(axios));
+        writeNamespaceConfiguration(body: NamespaceNamespaces, options?: any): PromiseResult<SandcastleWriteNamespaceConfigurationResponse> {
+            return localVarFp.writeNamespaceConfiguration(body, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1433,8 +1393,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteSettings(body: SandcastleWriteSettingsRequestParams, options?: any): AxiosPromise<SettingsSettings> {
-            return localVarFp.sandcastleWriteSettings(body, options).then((request) => request(axios));
+        writeSettings(body: SandcastleWriteSettingsRequestParams, options?: any): PromiseResult<SettingsSettings> {
+            return localVarFp.writeSettings(body, options).then((request) => request(axios));
         },
         /**
          * 
@@ -1442,8 +1402,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): AxiosPromise<SettingsTokenIssuer> {
-            return localVarFp.sandcastleWriteTokenIssuer(body, options).then((request) => request(axios));
+        writeTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): PromiseResult<SettingsTokenIssuer> {
+            return localVarFp.writeTokenIssuer(body, options).then((request) => request(axios));
         },
     };
 };
@@ -1456,14 +1416,14 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
  */
 export class SandcastleApi extends BaseAPI {
     /**
-     * 
+     * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `storeId` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Example In order to check if user anne@auth0.com has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
      * @param {SandcastleCheckRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleCheck(body: SandcastleCheckRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleCheck(body, options).then((request) => request(this.axios));
+    public check(body: SandcastleCheckRequestParams, options?: any) {
+        return SandcastleApiFp(this.configuration).check(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1473,19 +1433,19 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleDeleteTokenIssuer(id: string, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleDeleteTokenIssuer(id, options).then((request) => request(this.axios));
+    public deleteTokenIssuer(id: string, options?: any) {
+        return SandcastleApiFp(this.configuration).deleteTokenIssuer(id, options).then((request) => request(this.axios));
     }
 
     /**
-     * 
+     * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `storeId` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leafs are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Example Assume the namesapce configuration for document has the following configuration ```   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ``` {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ``` {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
      * @param {SandcastleExpandRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleExpand(body: SandcastleExpandRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleExpand(body, options).then((request) => request(this.axios));
+    public expand(body: SandcastleExpandRequestParams, options?: any) {
+        return SandcastleApiFp(this.configuration).expand(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1495,8 +1455,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleRead(body: SandcastleReadRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleRead(body, options).then((request) => request(this.axios));
+    public read(body: SandcastleReadRequestParams, options?: any) {
+        return SandcastleApiFp(this.configuration).read(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1505,8 +1465,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleReadAllNamespaceConfigurations(options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleReadAllNamespaceConfigurations(options).then((request) => request(this.axios));
+    public readAllNamespaceConfigurations(options?: any) {
+        return SandcastleApiFp(this.configuration).readAllNamespaceConfigurations(options).then((request) => request(this.axios));
     }
 
     /**
@@ -1516,8 +1476,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleReadNamespaceConfiguration(id: string, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleReadNamespaceConfiguration(id, options).then((request) => request(this.axios));
+    public readNamespaceConfiguration(id: string, options?: any) {
+        return SandcastleApiFp(this.configuration).readNamespaceConfiguration(id, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1526,8 +1486,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleReadSettings(options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleReadSettings(options).then((request) => request(this.axios));
+    public readSettings(options?: any) {
+        return SandcastleApiFp(this.configuration).readSettings(options).then((request) => request(this.axios));
     }
 
     /**
@@ -1538,8 +1498,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleReadTuples(body: SandcastleReadTuplesRequest, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleReadTuples(body, options).then((request) => request(this.axios));
+    public readTuples(body: SandcastleReadTuplesRequest, options?: any) {
+        return SandcastleApiFp(this.configuration).readTuples(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1549,8 +1509,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleWrite(body: SandcastleWriteRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleWrite(body, options).then((request) => request(this.axios));
+    public write(body: SandcastleWriteRequestParams, options?: any) {
+        return SandcastleApiFp(this.configuration).write(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1560,8 +1520,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleWriteNamespaceConfiguration(body: NamespaceNamespaces, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleWriteNamespaceConfiguration(body, options).then((request) => request(this.axios));
+    public writeNamespaceConfiguration(body: NamespaceNamespaces, options?: any) {
+        return SandcastleApiFp(this.configuration).writeNamespaceConfiguration(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1571,8 +1531,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleWriteSettings(body: SandcastleWriteSettingsRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleWriteSettings(body, options).then((request) => request(this.axios));
+    public writeSettings(body: SandcastleWriteSettingsRequestParams, options?: any) {
+        return SandcastleApiFp(this.configuration).writeSettings(body, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1582,8 +1542,8 @@ export class SandcastleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public sandcastleWriteTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).sandcastleWriteTokenIssuer(body, options).then((request) => request(this.axios));
+    public writeTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any) {
+        return SandcastleApiFp(this.configuration).writeTokenIssuer(body, options).then((request) => request(this.axios));
     }
 }
 

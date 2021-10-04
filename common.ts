@@ -14,7 +14,7 @@
 
 
 import { Configuration } from "./configuration";
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 
 /**
  *
@@ -87,13 +87,26 @@ export const toPathString = function (url: URL) {
     return url.pathname + url.search + url.hash
 }
 
+export type CallResult<T extends {}> = T & {
+    $response: AxiosResponse<T>
+};
+
+export type PromiseResult<T extends {}> = Promise<CallResult<T>>;
+
 /**
- *
- * @export
+ * creates an axios request function
  */
 export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxios: AxiosInstance, configuration: Configuration) {
-    return (axios: AxiosInstance = globalAxios) => {
+    return async (axios: AxiosInstance = globalAxios) : PromiseResult<any> => {
         const axiosRequestArgs = {...axiosArgs.options, url: configuration.serverUrl + axiosArgs.url};
-        return axios.request(axiosRequestArgs);
+        const response = await axios.request(axiosRequestArgs);
+        const data = typeof response.data === 'undefined' ? {} : response.data;
+        const result: CallResult<any> = { ...data };
+        Object.defineProperty(result, '$response', {
+            enumerable: false,
+            writable: false,
+            value: response
+        });
+        return result;
     };
 }
