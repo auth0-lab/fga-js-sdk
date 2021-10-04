@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.0](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.2...v0.2.0) (2021-10-04)
+
+## Changes:
+- feat!: drop zookies, lowercase params & update exported methods 26453ae
+    * drop references to Zookies
+    * lowercase all parameters
+      * in `check` and `expand` requests, `tupleKey` becomes `tuple_key`
+      * in `write` and `read` requests `tupleKeys` becomes `tuple_keys`
+    * remove `sandcastle` prefixes on methods (`sandcastleCheck` becomes `check`)
+    * the methods now return the response body directly
+
+- feat!: require passing `storeId` instead of `tenant` 874dbbb
+
 ## [0.1.2](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.1...v0.1.2) (2021-09-28)
 
 ## Changes:
