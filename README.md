@@ -93,7 +93,7 @@ In the playground environment, you do not need to provide a client id and client
 > Note: The Sandcastle Playground uses an experimental friendly yaml syntax which gets translated to the API syntax seen below, let us know your feedback at https://discord.gg/8naAwJfWN6
 
 ```javascript
-const data = await sandcastleApi.writeNamespaceConfiguration({
+const { id } = await sandcastleApi.writeNamespaceConfiguration({
   namespaces: [{
     name: "github-repo",
     relations: {
@@ -112,7 +112,7 @@ const data = await sandcastleApi.writeNamespaceConfiguration({
     } }],
 });
 
-// data = { id: "...", zookie: "" }
+// id = "1uHxCSuTP0VKPYSnkq1pbb1jeZw"
 ```
 
 #### Read a Single Namespaces Configuration
@@ -147,31 +147,29 @@ const result = await sandcastleApi.check({
   },
 });
 
-// result = { allowed: true, resolution: "", zookie: "" }
+// result = { allowed: true, resolution: "" }
 ```
 
 #### Write Tuples
 
 ```javascript
-const result = await sandcastleApi.write({
+await sandcastleApi.write({
   writes: {
     tuple_keys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
   },
 });
 
-// result = { zookie: "" }
 ```
 
 #### Delete Tuples
 
 ```javascript
-const result = await sandcastleApi.write({
+await sandcastleApi.write({
   deletes: {
     tuple_keys: [{ user: "anne", relation: "repo_reader", object: "github-repo:auth0/express-jwt" }],
   },
 });
 
-// result = { zookie: "" }
 ```
 
 #### Expand
