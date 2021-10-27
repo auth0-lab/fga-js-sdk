@@ -207,18 +207,18 @@ const { tuples } = await sandcastleApi.read({
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**check**](#check) | **POST** /{storeId}/check |  |
-| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /{storeId}/settings/token-issuers/{id} |  |
-| [**expand**](#expand) | **POST** /{storeId}/expand |  |
-| [**read**](#read) | **POST** /{storeId}/read |  |
-| [**readAllNamespaceConfigurations**](#readallnamespaceconfigurations) | **GET** /{storeId}/namespace-configurations |  |
-| [**readNamespaceConfiguration**](#readnamespaceconfiguration) | **GET** /{storeId}/namespace-configurations/{id} |  |
-| [**readSettings**](#readsettings) | **GET** /{storeId}/settings |  |
-| [**readTuples**](#readtuples) | **POST** /{storeId}/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
-| [**write**](#write) | **POST** /{storeId}/write |  |
-| [**writeNamespaceConfiguration**](#writenamespaceconfiguration) | **POST** /{storeId}/namespace-configurations |  |
-| [**writeSettings**](#writesettings) | **PATCH** /{storeId}/settings |  |
-| [**writeTokenIssuer**](#writetokenissuer) | **POST** /{storeId}/settings/token-issuers |  |
+| [**check**](#check) | **POST** /{store_id}/check | Check: Used to check whether a user is authorized to access a system |
+| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /{store_id}/settings/token-issuers/{id} | Remove 3rd party token issuer for Sandcastle read and write operation |
+| [**expand**](#expand) | **POST** /{store_id}/expand | Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship |
+| [**read**](#read) | **POST** /{store_id}/read | Read Tuples: Return tuples from the system that matches query filters, without following userset rewrite rules |
+| [**readNamespaceConfiguration**](#readnamespaceconfiguration) | **GET** /{store_id}/namespace-configurations/{id} | Return a partiruclar version of namespaces configuration |
+| [**readNamespaceConfigurations**](#readnamespaceconfigurations) | **GET** /{store_id}/namespace-configurations | Return all namespaces configuration versions |
+| [**readSettings**](#readsettings) | **GET** /{store_id}/settings | Return store settings, including the environment tag |
+| [**readTuples**](#readtuples) | **POST** /{store_id}/read-tuples | ReadTuples should only be used for the playground. do not enable it for prod deployments |
+| [**write**](#write) | **POST** /{store_id}/write | Write Tuples: Create and delete tuples from the system |
+| [**writeNamespaceConfiguration**](#writenamespaceconfiguration) | **POST** /{store_id}/namespace-configurations | Create a new namespaces configuration version |
+| [**writeSettings**](#writesettings) | **PATCH** /{store_id}/settings | Update the environment tag for a store |
+| [**writeTokenIssuer**](#writetokenissuer) | **POST** /{store_id}/settings/token-issuers | Add 3rd party token issuer for Sandcastle read and write operations |
 
 #### check
 
@@ -237,7 +237,7 @@ const { tuples } = await sandcastleApi.read({
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **id** | **string** |  | [default to undefined]|
+| **id** | **string** | Id of token issuer to be removed | [default to undefined]|
 
 ##### Return type
 
@@ -268,28 +268,28 @@ const { tuples } = await sandcastleApi.read({
 [**SandcastleReadResponse**](#SandcastleReadResponse)
 
 
-#### readAllNamespaceConfigurations
-
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-
-
-##### Return type
-
-[**SandcastleReadAllNamespaceConfigurationsResponse**](#SandcastleReadAllNamespaceConfigurationsResponse)
-
-
 #### readNamespaceConfiguration
 
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **id** | **string** |  | [default to undefined]|
+| **id** | **string** | Version id of namespace configuration | [default to undefined]|
 
 ##### Return type
 
 [**SandcastleReadNamespaceConfigurationResponse**](#SandcastleReadNamespaceConfigurationResponse)
+
+
+#### readNamespaceConfigurations
+
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **pageSize** | **number** |  | [default to undefined]|| **continuationToken** | **string** |  | [default to undefined]|
+
+##### Return type
+
+[**SandcastleReadNamespaceConfigurationsResponse**](#SandcastleReadNamespaceConfigurationsResponse)
 
 
 #### readSettings
@@ -309,11 +309,11 @@ const { tuples } = await sandcastleApi.read({
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**SandcastleReadTuplesRequest**](#SandcastleReadTuplesRequest) |  | |
+| **body** | [**SandcastleReadTuplesRequestParams**](#SandcastleReadTuplesRequestParams) |  | |
 
 ##### Return type
 
-[**SandcastleReadResponse**](#SandcastleReadResponse)
+[**SandcastleReadTuplesResponse**](#SandcastleReadTuplesResponse)
 
 
 #### write
@@ -380,11 +380,12 @@ const { tuples } = await sandcastleApi.read({
  - [SandcastleCheckResponse](#SandcastleCheckResponse)
  - [SandcastleExpandRequestParams](#SandcastleExpandRequestParams)
  - [SandcastleExpandResponse](#SandcastleExpandResponse)
- - [SandcastleReadAllNamespaceConfigurationsResponse](#SandcastleReadAllNamespaceConfigurationsResponse)
  - [SandcastleReadNamespaceConfigurationResponse](#SandcastleReadNamespaceConfigurationResponse)
+ - [SandcastleReadNamespaceConfigurationsResponse](#SandcastleReadNamespaceConfigurationsResponse)
  - [SandcastleReadRequestParams](#SandcastleReadRequestParams)
  - [SandcastleReadResponse](#SandcastleReadResponse)
- - [SandcastleReadTuplesRequest](#SandcastleReadTuplesRequest)
+ - [SandcastleReadTuplesRequestParams](#SandcastleReadTuplesRequestParams)
+ - [SandcastleReadTuplesResponse](#SandcastleReadTuplesResponse)
  - [SandcastleTuple](#SandcastleTuple)
  - [SandcastleTupleKey](#SandcastleTupleKey)
  - [SandcastleTupleKeys](#SandcastleTupleKeys)
@@ -411,8 +412,8 @@ const { tuples } = await sandcastleApi.read({
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**base** | [**NamespaceUserset**](#NamespaceUserset) |  | [optional] [default to undefined]
-**subtract** | [**NamespaceUserset**](#NamespaceUserset) |  | [optional] [default to undefined]
+**base** | [**NamespaceUserset**](#NamespaceUserset) |  | [default to undefined]
+**subtract** | [**NamespaceUserset**](#NamespaceUserset) |  | [default to undefined]
 
 #### NamespaceNamespace
 
@@ -420,8 +421,8 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **string** |  | [optional] [default to undefined]
-**relations** | [**Record<string, NamespaceUserset**>](#NamespaceUserset) |  | [optional] [default to undefined]
+**name** | **string** |  | [default to undefined]
+**relations** | [**Record<string, NamespaceUserset**>](#NamespaceUserset) |  | [default to undefined]
 
 #### NamespaceNamespaceConfiguration
 
@@ -532,14 +533,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tree** | [**SandcastleUsersetTree**](#SandcastleUsersetTree) |  | [optional] [default to undefined]
 
-#### SandcastleReadAllNamespaceConfigurationsResponse
-
-##### Properties
-
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**configurations** | [**NamespaceNamespaceConfiguration**[]](#NamespaceNamespaceConfiguration) |  | [optional] [default to undefined]
-
 #### SandcastleReadNamespaceConfigurationResponse
 
 ##### Properties
@@ -547,6 +540,15 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **configuration** | [**NamespaceNamespaceConfiguration**](#NamespaceNamespaceConfiguration) |  | [optional] [default to undefined]
+
+#### SandcastleReadNamespaceConfigurationsResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**configuration_ids** | **string** |  | [optional] [default to undefined]
+**continuation_token** | **string** |  | [optional] [default to undefined]
 
 #### SandcastleReadRequestParams
 
@@ -564,13 +566,23 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuples** | [**SandcastleTuple**[]](#SandcastleTuple) |  | [optional] [default to undefined]
 
-#### SandcastleReadTuplesRequest
+#### SandcastleReadTuplesRequestParams
 
 ##### Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**storeId** | **string** |  | [optional] [default to undefined]
+**page_size** | **number** |  | [optional] [default to undefined]
+**continuation_token** | **string** |  | [optional] [default to undefined]
+
+#### SandcastleReadTuplesResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**tuples** | [**SandcastleTuple**[]](#SandcastleTuple) |  | [optional] [default to undefined]
+**continuation_token** | **string** |  | [optional] [default to undefined]
 
 #### SandcastleTuple
 
@@ -597,7 +609,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tuple_keys** | [**SandcastleTupleKey**[]](#SandcastleTupleKey) |  | [optional] [default to undefined]
+**tuple_keys** | [**SandcastleTupleKey**[]](#SandcastleTupleKey) |  | [default to undefined]
 
 #### SandcastleUsersetTree
 
