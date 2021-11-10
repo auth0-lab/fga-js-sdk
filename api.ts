@@ -31,166 +31,166 @@ import { assertParamExists, Configuration, RequiredError } from './configuration
 /**
  * 
  * @export
- * @interface NamespaceDifference
+ * @interface AuthzmodelAuthzModel
  */
-export interface NamespaceDifference {
-    /**
-     * 
-     * @type {NamespaceUserset}
-     * @memberof NamespaceDifference
-     */
-    base: NamespaceUserset;
-    /**
-     * 
-     * @type {NamespaceUserset}
-     * @memberof NamespaceDifference
-     */
-    subtract: NamespaceUserset;
-}
-/**
- * 
- * @export
- * @interface NamespaceNamespace
- */
-export interface NamespaceNamespace {
+export interface AuthzmodelAuthzModel {
     /**
      * 
      * @type {string}
-     * @memberof NamespaceNamespace
-     */
-    name: string;
-    /**
-     * 
-     * @type {{ [key: string]: NamespaceUserset; }}
-     * @memberof NamespaceNamespace
-     */
-    relations: { [key: string]: NamespaceUserset; };
-}
-/**
- * 
- * @export
- * @interface NamespaceNamespaceConfiguration
- */
-export interface NamespaceNamespaceConfiguration {
-    /**
-     * 
-     * @type {string}
-     * @memberof NamespaceNamespaceConfiguration
+     * @memberof AuthzmodelAuthzModel
      */
     id?: string;
     /**
      * 
-     * @type {NamespaceNamespaces}
-     * @memberof NamespaceNamespaceConfiguration
+     * @type {AuthzmodelTypeDefinitions}
+     * @memberof AuthzmodelAuthzModel
      */
-    namespaces?: NamespaceNamespaces;
+    type_definitions?: AuthzmodelTypeDefinitions;
 }
 /**
  * 
  * @export
- * @interface NamespaceNamespaces
+ * @interface AuthzmodelDifference
  */
-export interface NamespaceNamespaces {
+export interface AuthzmodelDifference {
     /**
      * 
-     * @type {Array<NamespaceNamespace>}
-     * @memberof NamespaceNamespaces
+     * @type {AuthzmodelUserset}
+     * @memberof AuthzmodelDifference
      */
-    namespaces?: Array<NamespaceNamespace>;
+    base: AuthzmodelUserset;
+    /**
+     * 
+     * @type {AuthzmodelUserset}
+     * @memberof AuthzmodelDifference
+     */
+    subtract: AuthzmodelUserset;
 }
 /**
  * 
  * @export
- * @interface NamespaceObjectRelation
+ * @interface AuthzmodelObjectRelation
  */
-export interface NamespaceObjectRelation {
+export interface AuthzmodelObjectRelation {
     /**
      * 
      * @type {string}
-     * @memberof NamespaceObjectRelation
+     * @memberof AuthzmodelObjectRelation
      */
     object?: string;
     /**
      * 
      * @type {string}
-     * @memberof NamespaceObjectRelation
+     * @memberof AuthzmodelObjectRelation
      */
     relation?: string;
 }
 /**
  * 
  * @export
- * @interface NamespaceTupleToUserset
+ * @interface AuthzmodelTupleToUserset
  */
-export interface NamespaceTupleToUserset {
+export interface AuthzmodelTupleToUserset {
     /**
      * 
-     * @type {NamespaceObjectRelation}
-     * @memberof NamespaceTupleToUserset
+     * @type {AuthzmodelObjectRelation}
+     * @memberof AuthzmodelTupleToUserset
      */
-    tupleset?: NamespaceObjectRelation;
+    tupleset?: AuthzmodelObjectRelation;
     /**
      * 
-     * @type {NamespaceObjectRelation}
-     * @memberof NamespaceTupleToUserset
+     * @type {AuthzmodelObjectRelation}
+     * @memberof AuthzmodelTupleToUserset
      */
-    computedUserset?: NamespaceObjectRelation;
+    computedUserset?: AuthzmodelObjectRelation;
 }
 /**
  * 
  * @export
- * @interface NamespaceUserset
+ * @interface AuthzmodelTypeDefinition
  */
-export interface NamespaceUserset {
+export interface AuthzmodelTypeDefinition {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthzmodelTypeDefinition
+     */
+    type: string;
+    /**
+     * 
+     * @type {{ [key: string]: AuthzmodelUserset; }}
+     * @memberof AuthzmodelTypeDefinition
+     */
+    relations: { [key: string]: AuthzmodelUserset; };
+}
+/**
+ * 
+ * @export
+ * @interface AuthzmodelTypeDefinitions
+ */
+export interface AuthzmodelTypeDefinitions {
+    /**
+     * 
+     * @type {Array<AuthzmodelTypeDefinition>}
+     * @memberof AuthzmodelTypeDefinitions
+     */
+    type_definitions?: Array<AuthzmodelTypeDefinition>;
+}
+/**
+ * 
+ * @export
+ * @interface AuthzmodelUserset
+ */
+export interface AuthzmodelUserset {
     /**
      * A DirectUserset is a sentinel message for referencing the direct members specified by an object/relation mapping.
      * @type {object}
-     * @memberof NamespaceUserset
+     * @memberof AuthzmodelUserset
      */
     _this?: object;
     /**
      * 
-     * @type {NamespaceObjectRelation}
-     * @memberof NamespaceUserset
+     * @type {AuthzmodelObjectRelation}
+     * @memberof AuthzmodelUserset
      */
-    computedUserset?: NamespaceObjectRelation;
+    computedUserset?: AuthzmodelObjectRelation;
     /**
      * 
-     * @type {NamespaceTupleToUserset}
-     * @memberof NamespaceUserset
+     * @type {AuthzmodelTupleToUserset}
+     * @memberof AuthzmodelUserset
      */
-    tupleToUserset?: NamespaceTupleToUserset;
+    tupleToUserset?: AuthzmodelTupleToUserset;
     /**
      * 
-     * @type {NamespaceUsersets}
-     * @memberof NamespaceUserset
+     * @type {AuthzmodelUsersets}
+     * @memberof AuthzmodelUserset
      */
-    union?: NamespaceUsersets;
+    union?: AuthzmodelUsersets;
     /**
      * 
-     * @type {NamespaceUsersets}
-     * @memberof NamespaceUserset
+     * @type {AuthzmodelUsersets}
+     * @memberof AuthzmodelUserset
      */
-    intersection?: NamespaceUsersets;
+    intersection?: AuthzmodelUsersets;
     /**
      * 
-     * @type {NamespaceDifference}
-     * @memberof NamespaceUserset
+     * @type {AuthzmodelDifference}
+     * @memberof AuthzmodelUserset
      */
-    difference?: NamespaceDifference;
+    difference?: AuthzmodelDifference;
 }
 /**
  * 
  * @export
- * @interface NamespaceUsersets
+ * @interface AuthzmodelUsersets
  */
-export interface NamespaceUsersets {
+export interface AuthzmodelUsersets {
     /**
      * 
-     * @type {Array<NamespaceUserset>}
-     * @memberof NamespaceUsersets
+     * @type {Array<AuthzmodelUserset>}
+     * @memberof AuthzmodelUsersets
      */
-    child?: Array<NamespaceUserset>;
+    child?: Array<AuthzmodelUserset>;
 }
 /**
  * 
@@ -249,6 +249,12 @@ export interface SandcastleCheckRequestParams {
      */
     tuple_key?: SandcastleTupleKey;
     /**
+     * 
+     * @type {string}
+     * @memberof SandcastleCheckRequestParams
+     */
+    authorization_model_id?: string;
+    /**
      * defaults to false. making it true has performance implications. only use for debugging purposes, etc.
      * @type {boolean}
      * @memberof SandcastleCheckRequestParams
@@ -286,6 +292,12 @@ export interface SandcastleExpandRequestParams {
      * @memberof SandcastleExpandRequestParams
      */
     tuple_key?: SandcastleTupleKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof SandcastleExpandRequestParams
+     */
+    authorization_model_id?: string;
 }
 /**
  * 
@@ -303,32 +315,32 @@ export interface SandcastleExpandResponse {
 /**
  * 
  * @export
- * @interface SandcastleReadNamespaceConfigurationResponse
+ * @interface SandcastleReadAuthzModelResponse
  */
-export interface SandcastleReadNamespaceConfigurationResponse {
+export interface SandcastleReadAuthzModelResponse {
     /**
      * 
-     * @type {NamespaceNamespaceConfiguration}
-     * @memberof SandcastleReadNamespaceConfigurationResponse
+     * @type {AuthzmodelAuthzModel}
+     * @memberof SandcastleReadAuthzModelResponse
      */
-    configuration?: NamespaceNamespaceConfiguration;
+    authorization_model?: AuthzmodelAuthzModel;
 }
 /**
  * 
  * @export
- * @interface SandcastleReadNamespaceConfigurationsResponse
+ * @interface SandcastleReadAuthzModelsResponse
  */
-export interface SandcastleReadNamespaceConfigurationsResponse {
+export interface SandcastleReadAuthzModelsResponse {
     /**
      * 
      * @type {Array<string>}
-     * @memberof SandcastleReadNamespaceConfigurationsResponse
+     * @memberof SandcastleReadAuthzModelsResponse
      */
-    configuration_ids?: Array<string>;
+    authorization_model_ids?: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof SandcastleReadNamespaceConfigurationsResponse
+     * @memberof SandcastleReadAuthzModelsResponse
      */
     continuation_token?: string;
 }
@@ -340,10 +352,16 @@ export interface SandcastleReadNamespaceConfigurationsResponse {
 export interface SandcastleReadRequestParams {
     /**
      * 
-     * @type {SandcastleTupleKeys}
+     * @type {SandcastleTupleKey}
      * @memberof SandcastleReadRequestParams
      */
-    reads?: SandcastleTupleKeys;
+    tuple_key?: SandcastleTupleKey;
+    /**
+     * 
+     * @type {string}
+     * @memberof SandcastleReadRequestParams
+     */
+    authorization_model_id?: string;
 }
 /**
  * 
@@ -357,44 +375,6 @@ export interface SandcastleReadResponse {
      * @memberof SandcastleReadResponse
      */
     tuples?: Array<SandcastleTuple>;
-}
-/**
- * 
- * @export
- * @interface SandcastleReadTuplesRequestParams
- */
-export interface SandcastleReadTuplesRequestParams {
-    /**
-     * 
-     * @type {number}
-     * @memberof SandcastleReadTuplesRequestParams
-     */
-    page_size?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleReadTuplesRequestParams
-     */
-    continuation_token?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleReadTuplesResponse
- */
-export interface SandcastleReadTuplesResponse {
-    /**
-     * 
-     * @type {Array<SandcastleTuple>}
-     * @memberof SandcastleReadTuplesResponse
-     */
-    tuples?: Array<SandcastleTuple>;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleReadTuplesResponse
-     */
-    continuation_token?: string;
 }
 /**
  * 
@@ -507,15 +487,15 @@ export interface SandcastleUsersetTreeTupleToUserset {
 /**
  * 
  * @export
- * @interface SandcastleWriteNamespaceConfigurationResponse
+ * @interface SandcastleWriteAuthzModelResponse
  */
-export interface SandcastleWriteNamespaceConfigurationResponse {
+export interface SandcastleWriteAuthzModelResponse {
     /**
      * 
      * @type {string}
-     * @memberof SandcastleWriteNamespaceConfigurationResponse
+     * @memberof SandcastleWriteAuthzModelResponse
      */
-    id?: string;
+    authorization_model_id?: string;
 }
 /**
  * 
@@ -535,6 +515,12 @@ export interface SandcastleWriteRequestParams {
      * @memberof SandcastleWriteRequestParams
      */
     deletes?: SandcastleTupleKeys;
+    /**
+     * 
+     * @type {string}
+     * @memberof SandcastleWriteRequestParams
+     */
+    authorization_model_id?: string;
     /**
      * 
      * @type {SandcastleTuple}
@@ -633,7 +619,7 @@ export interface UsersetTreeComputed {
     userset?: string;
 }
 /**
- * A leaf node contains either  - a set of users (which may  be individual users, or usersets referencing other  relations - a computed node, which is the result of a computed   userset value in the namespace - a tupleToUserset nodes, containing the result   of expanding a tupleToUserset value in a namespace.
+ * A leaf node contains either  - a set of users (which may be individual users, or usersets   referencing other relations - a computed node, which is the result of a computed userset   value in the authorization model - a tupleToUserset nodes, containing the result of expanding   a tupleToUserset value in a authorization model.
  * @export
  * @interface UsersetTreeLeaf
  */
@@ -729,7 +715,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
     return {
         /**
          * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
-         * @summary Check: Used to check whether a user is authorized to access a system
+         * @summary Check whether a user is authorized to access an object
          * @param {SandcastleCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -807,7 +793,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the namespace configuration for document has the following configuration ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -848,8 +834,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches query filters specified in the body.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body, `reads` contains filters on what is to be queried for.  For each item in the tuple_keys array: 1. Object is mandatory.  An object can be a full object (e.g., `namespace:object_id`) or namespace only (e.g., `namespace:`). 2. User is mandatory in the case the object is namespace only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a namespace To query for all objects that `bob@auth0.com` has `reader` or `writer` relationship in the document namespace, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       {         \"object\": \"document:\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },     {       \"key\": {         \"object\": \"document:2021-fun\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-07T18:11:12.234Z\"     },   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget` and a `writer` relationship with 1 document `document:2021-fun`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
-         * @summary Read Tuples: Return tuples from the system that matches query filters, without following userset rewrite rules
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+         * @summary Get tuples from the store that matches a query, without following userset rewrite rules
          * @param {SandcastleReadRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -889,16 +875,16 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The GET namespace-configurations by id API will return a particular version of namespace configuration that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the namespace configuration for the particular version.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). ## Example To retrieve the namespace configuration for version with id `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET namespace-configurations by id API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"configuration\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"namespaces\":{       \"namespaces\":[         {           \"name\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 namespace (`document`) with 2 relations (`writer` and `reader`).
-         * @summary Return a partiruclar version of namespaces configuration
-         * @param {string} id Version id of namespace configuration
+         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+         * @summary Return a particular version of an authorization model
+         * @param {string} id The authorization model ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readNamespaceConfiguration: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        readAuthzModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('readNamespaceConfiguration', 'id', id)
-            const localVarPath = `/{store_id}/namespace-configurations/{id}`
+            assertParamExists('readAuthzModel', 'id', id)
+            const localVarPath = `/{store_id}/authorization-models/{id}`
             .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -927,15 +913,15 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The GET namespace-configurations API will return all versions of the namespace configurations for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all namespace configuration versions, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). - Each response can contain up to **50** configuration IDs.## Example Assume that the store\'s namespace has been configured twice.  To get all the configurations that had been made to this store, call GET namespace-configurations.  The API will return a response that looks like: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more namespace configurations available, the response will contain an extra field `continuation_token`: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-         * @summary Return all namespaces configuration versions
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
+         * @summary Check whether a user is authorized to access an object
          * @param {number} [pageSize] 
          * @param {string} [continuationToken] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readNamespaceConfigurations: async (pageSize?: number, continuationToken?: string, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/{store_id}/namespace-configurations`
+        readAuthzModels: async (pageSize?: number, continuationToken?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/{store_id}/authorization-models`
             .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1007,49 +993,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * 
-         * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
-         * @param {SandcastleReadTuplesRequestParams} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        readTuples: async (body: SandcastleReadTuplesRequestParams, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('readTuples', 'body', body)
-            const localVarPath = `/{store_id}/read-tuples`
-            .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
-            ;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ClientCredentials required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The POST write API will update the tuples for a certain store.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
-         * @summary Write Tuples: Create and delete tuples from the system
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+         * @summary Add or delete tuples from the store
          * @param {SandcastleWriteRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1089,16 +1034,16 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The POST namespace-configurations API will update the namespaces configuration for a certain store. Path parameter `store_id` and `namespaces` array are required.  Each item in the `namespaces` array is the configuration for the namespace as specifed in the field `name`. The response will return the configuration\'s version id in the `id` field.  ## Limits - There can be at most **10** items in the namespaces array. - Each store can have at most **10** namespaces. - Each store has a limit of **10** write namespace-configurations requests per minute (RPM). ## Example To update the configuration with a single `document` namespace, call POST namespaces-configuration API with the body:  ```json {   \"namespaces\":[     {       \"name\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this configuration, and look like  ``` {\"id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-         * @summary Create a new namespaces configuration version
-         * @param {NamespaceNamespaces} body 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+         * @summary Create a new authorization model
+         * @param {AuthzmodelTypeDefinitions} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeNamespaceConfiguration: async (body: NamespaceNamespaces, options: any = {}): Promise<RequestArgs> => {
+        writeAuthzModel: async (body: AuthzmodelTypeDefinitions, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('writeNamespaceConfiguration', 'body', body)
-            const localVarPath = `/{store_id}/namespace-configurations`
+            assertParamExists('writeAuthzModel', 'body', body)
+            const localVarPath = `/{store_id}/authorization-models`
             .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1223,7 +1168,7 @@ export const SandcastleApiFp = function(configuration: Configuration) {
     return {
         /**
          * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
-         * @summary Check: Used to check whether a user is authorized to access a system
+         * @summary Check whether a user is authorized to access an object
          * @param {SandcastleCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1244,7 +1189,7 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the namespace configuration for document has the following configuration ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -1255,8 +1200,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches query filters specified in the body.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body, `reads` contains filters on what is to be queried for.  For each item in the tuple_keys array: 1. Object is mandatory.  An object can be a full object (e.g., `namespace:object_id`) or namespace only (e.g., `namespace:`). 2. User is mandatory in the case the object is namespace only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a namespace To query for all objects that `bob@auth0.com` has `reader` or `writer` relationship in the document namespace, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       {         \"object\": \"document:\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },     {       \"key\": {         \"object\": \"document:2021-fun\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-07T18:11:12.234Z\"     },   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget` and a `writer` relationship with 1 document `document:2021-fun`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
-         * @summary Read Tuples: Return tuples from the system that matches query filters, without following userset rewrite rules
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+         * @summary Get tuples from the store that matches a query, without following userset rewrite rules
          * @param {SandcastleReadRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1266,26 +1211,26 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET namespace-configurations by id API will return a particular version of namespace configuration that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the namespace configuration for the particular version.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). ## Example To retrieve the namespace configuration for version with id `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET namespace-configurations by id API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"configuration\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"namespaces\":{       \"namespaces\":[         {           \"name\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 namespace (`document`) with 2 relations (`writer` and `reader`).
-         * @summary Return a partiruclar version of namespaces configuration
-         * @param {string} id Version id of namespace configuration
+         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+         * @summary Return a particular version of an authorization model
+         * @param {string} id The authorization model ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readNamespaceConfiguration(id: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadNamespaceConfigurationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readNamespaceConfiguration(id, options);
+        async readAuthzModel(id: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadAuthzModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readAuthzModel(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET namespace-configurations API will return all versions of the namespace configurations for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all namespace configuration versions, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). - Each response can contain up to **50** configuration IDs.## Example Assume that the store\'s namespace has been configured twice.  To get all the configurations that had been made to this store, call GET namespace-configurations.  The API will return a response that looks like: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more namespace configurations available, the response will contain an extra field `continuation_token`: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-         * @summary Return all namespaces configuration versions
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
+         * @summary Check whether a user is authorized to access an object
          * @param {number} [pageSize] 
          * @param {string} [continuationToken] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readNamespaceConfigurations(pageSize?: number, continuationToken?: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadNamespaceConfigurationsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readNamespaceConfigurations(pageSize, continuationToken, options);
+        async readAuthzModels(pageSize?: number, continuationToken?: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadAuthzModelsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readAuthzModels(pageSize, continuationToken, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1299,19 +1244,8 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * 
-         * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
-         * @param {SandcastleReadTuplesRequestParams} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async readTuples(body: SandcastleReadTuplesRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadTuplesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readTuples(body, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
-        },
-        /**
-         * The POST write API will update the tuples for a certain store.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
-         * @summary Write Tuples: Create and delete tuples from the system
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+         * @summary Add or delete tuples from the store
          * @param {SandcastleWriteRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1321,14 +1255,14 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST namespace-configurations API will update the namespaces configuration for a certain store. Path parameter `store_id` and `namespaces` array are required.  Each item in the `namespaces` array is the configuration for the namespace as specifed in the field `name`. The response will return the configuration\'s version id in the `id` field.  ## Limits - There can be at most **10** items in the namespaces array. - Each store can have at most **10** namespaces. - Each store has a limit of **10** write namespace-configurations requests per minute (RPM). ## Example To update the configuration with a single `document` namespace, call POST namespaces-configuration API with the body:  ```json {   \"namespaces\":[     {       \"name\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this configuration, and look like  ``` {\"id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-         * @summary Create a new namespaces configuration version
-         * @param {NamespaceNamespaces} body 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+         * @summary Create a new authorization model
+         * @param {AuthzmodelTypeDefinitions} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async writeNamespaceConfiguration(body: NamespaceNamespaces, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleWriteNamespaceConfigurationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.writeNamespaceConfiguration(body, options);
+        async writeAuthzModel(body: AuthzmodelTypeDefinitions, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleWriteAuthzModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeAuthzModel(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
@@ -1365,7 +1299,7 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
     return {
         /**
          * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
-         * @summary Check: Used to check whether a user is authorized to access a system
+         * @summary Check whether a user is authorized to access an object
          * @param {SandcastleCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1384,7 +1318,7 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.deleteTokenIssuer(id, options).then((request) => request(axios));
         },
         /**
-         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the namespace configuration for document has the following configuration ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
          * @param {SandcastleExpandRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -1394,8 +1328,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.expand(body, options).then((request) => request(axios));
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches query filters specified in the body.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body, `reads` contains filters on what is to be queried for.  For each item in the tuple_keys array: 1. Object is mandatory.  An object can be a full object (e.g., `namespace:object_id`) or namespace only (e.g., `namespace:`). 2. User is mandatory in the case the object is namespace only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a namespace To query for all objects that `bob@auth0.com` has `reader` or `writer` relationship in the document namespace, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       {         \"object\": \"document:\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },     {       \"key\": {         \"object\": \"document:2021-fun\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-07T18:11:12.234Z\"     },   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget` and a `writer` relationship with 1 document `document:2021-fun`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
-         * @summary Read Tuples: Return tuples from the system that matches query filters, without following userset rewrite rules
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+         * @summary Get tuples from the store that matches a query, without following userset rewrite rules
          * @param {SandcastleReadRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1404,25 +1338,25 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.read(body, options).then((request) => request(axios));
         },
         /**
-         * The GET namespace-configurations by id API will return a particular version of namespace configuration that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the namespace configuration for the particular version.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). ## Example To retrieve the namespace configuration for version with id `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET namespace-configurations by id API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"configuration\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"namespaces\":{       \"namespaces\":[         {           \"name\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 namespace (`document`) with 2 relations (`writer` and `reader`).
-         * @summary Return a partiruclar version of namespaces configuration
-         * @param {string} id Version id of namespace configuration
+         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+         * @summary Return a particular version of an authorization model
+         * @param {string} id The authorization model ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readNamespaceConfiguration(id: string, options?: any): PromiseResult<SandcastleReadNamespaceConfigurationResponse> {
-            return localVarFp.readNamespaceConfiguration(id, options).then((request) => request(axios));
+        readAuthzModel(id: string, options?: any): PromiseResult<SandcastleReadAuthzModelResponse> {
+            return localVarFp.readAuthzModel(id, options).then((request) => request(axios));
         },
         /**
-         * The GET namespace-configurations API will return all versions of the namespace configurations for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all namespace configuration versions, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). - Each response can contain up to **50** configuration IDs.## Example Assume that the store\'s namespace has been configured twice.  To get all the configurations that had been made to this store, call GET namespace-configurations.  The API will return a response that looks like: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more namespace configurations available, the response will contain an extra field `continuation_token`: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-         * @summary Return all namespaces configuration versions
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
+         * @summary Check whether a user is authorized to access an object
          * @param {number} [pageSize] 
          * @param {string} [continuationToken] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readNamespaceConfigurations(pageSize?: number, continuationToken?: string, options?: any): PromiseResult<SandcastleReadNamespaceConfigurationsResponse> {
-            return localVarFp.readNamespaceConfigurations(pageSize, continuationToken, options).then((request) => request(axios));
+        readAuthzModels(pageSize?: number, continuationToken?: string, options?: any): PromiseResult<SandcastleReadAuthzModelsResponse> {
+            return localVarFp.readAuthzModels(pageSize, continuationToken, options).then((request) => request(axios));
         },
         /**
          * The GET settings API will return the store\'s settings, including environment tag and an array of Sandcastle\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
@@ -1434,18 +1368,8 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.readSettings(options).then((request) => request(axios));
         },
         /**
-         * 
-         * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
-         * @param {SandcastleReadTuplesRequestParams} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        readTuples(body: SandcastleReadTuplesRequestParams, options?: any): PromiseResult<SandcastleReadTuplesResponse> {
-            return localVarFp.readTuples(body, options).then((request) => request(axios));
-        },
-        /**
-         * The POST write API will update the tuples for a certain store.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
-         * @summary Write Tuples: Create and delete tuples from the system
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+         * @summary Add or delete tuples from the store
          * @param {SandcastleWriteRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1454,14 +1378,14 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.write(body, options).then((request) => request(axios));
         },
         /**
-         * The POST namespace-configurations API will update the namespaces configuration for a certain store. Path parameter `store_id` and `namespaces` array are required.  Each item in the `namespaces` array is the configuration for the namespace as specifed in the field `name`. The response will return the configuration\'s version id in the `id` field.  ## Limits - There can be at most **10** items in the namespaces array. - Each store can have at most **10** namespaces. - Each store has a limit of **10** write namespace-configurations requests per minute (RPM). ## Example To update the configuration with a single `document` namespace, call POST namespaces-configuration API with the body:  ```json {   \"namespaces\":[     {       \"name\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this configuration, and look like  ``` {\"id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-         * @summary Create a new namespaces configuration version
-         * @param {NamespaceNamespaces} body 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+         * @summary Create a new authorization model
+         * @param {AuthzmodelTypeDefinitions} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeNamespaceConfiguration(body: NamespaceNamespaces, options?: any): PromiseResult<SandcastleWriteNamespaceConfigurationResponse> {
-            return localVarFp.writeNamespaceConfiguration(body, options).then((request) => request(axios));
+        writeAuthzModel(body: AuthzmodelTypeDefinitions, options?: any): PromiseResult<SandcastleWriteAuthzModelResponse> {
+            return localVarFp.writeAuthzModel(body, options).then((request) => request(axios));
         },
         /**
          * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
@@ -1495,7 +1419,7 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
 export class SandcastleApi extends BaseAPI {
     /**
      * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
-     * @summary Check: Used to check whether a user is authorized to access a system
+     * @summary Check whether a user is authorized to access an object
      * @param {SandcastleCheckRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1518,7 +1442,7 @@ export class SandcastleApi extends BaseAPI {
     }
 
     /**
-     * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the namespace configuration for document has the following configuration ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"name\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"name\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+     * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
      * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
      * @param {SandcastleExpandRequestParams} body 
      * @param {*} [options] Override http request option.
@@ -1530,8 +1454,8 @@ export class SandcastleApi extends BaseAPI {
     }
 
     /**
-     * The POST read API will return the tuples for a certain store that matches query filters specified in the body.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body, `reads` contains filters on what is to be queried for.  For each item in the tuple_keys array: 1. Object is mandatory.  An object can be a full object (e.g., `namespace:object_id`) or namespace only (e.g., `namespace:`). 2. User is mandatory in the case the object is namespace only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a namespace To query for all objects that `bob@auth0.com` has `reader` or `writer` relationship in the document namespace, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       {         \"object\": \"document:\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },     {       \"key\": {         \"object\": \"document:2021-fun\",         \"relation\": \"writer\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-07T18:11:12.234Z\"     },   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget` and a `writer` relationship with 1 document `document:2021-fun`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"reads\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\"       }     ]   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
-     * @summary Read Tuples: Return tuples from the system that matches query filters, without following userset rewrite rules
+     * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+     * @summary Get tuples from the store that matches a query, without following userset rewrite rules
      * @param {SandcastleReadRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1542,28 +1466,28 @@ export class SandcastleApi extends BaseAPI {
     }
 
     /**
-     * The GET namespace-configurations by id API will return a particular version of namespace configuration that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the namespace configuration for the particular version.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). ## Example To retrieve the namespace configuration for version with id `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET namespace-configurations by id API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"configuration\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"namespaces\":{       \"namespaces\":[         {           \"name\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 namespace (`document`) with 2 relations (`writer` and `reader`).
-     * @summary Return a partiruclar version of namespaces configuration
-     * @param {string} id Version id of namespace configuration
+     * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+     * @summary Return a particular version of an authorization model
+     * @param {string} id The authorization model ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public readNamespaceConfiguration(id: string, options?: any) {
-        return SandcastleApiFp(this.configuration).readNamespaceConfiguration(id, options).then((request) => request(this.axios));
+    public readAuthzModel(id: string, options?: any) {
+        return SandcastleApiFp(this.configuration).readAuthzModel(id, options).then((request) => request(this.axios));
     }
 
     /**
-     * The GET namespace-configurations API will return all versions of the namespace configurations for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all namespace configuration versions, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read namespace-configurations requests per minute (RPM). - Each response can contain up to **50** configuration IDs.## Example Assume that the store\'s namespace has been configured twice.  To get all the configurations that had been made to this store, call GET namespace-configurations.  The API will return a response that looks like: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more namespace configurations available, the response will contain an extra field `continuation_token`: ```json {   \"configuration_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-     * @summary Return all namespaces configuration versions
+     * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
+     * @summary Check whether a user is authorized to access an object
      * @param {number} [pageSize] 
      * @param {string} [continuationToken] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public readNamespaceConfigurations(pageSize?: number, continuationToken?: string, options?: any) {
-        return SandcastleApiFp(this.configuration).readNamespaceConfigurations(pageSize, continuationToken, options).then((request) => request(this.axios));
+    public readAuthzModels(pageSize?: number, continuationToken?: string, options?: any) {
+        return SandcastleApiFp(this.configuration).readAuthzModels(pageSize, continuationToken, options).then((request) => request(this.axios));
     }
 
     /**
@@ -1578,20 +1502,8 @@ export class SandcastleApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary ReadTuples should only be used for the playground. do not enable it for prod deployments
-     * @param {SandcastleReadTuplesRequestParams} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SandcastleApi
-     */
-    public readTuples(body: SandcastleReadTuplesRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).readTuples(body, options).then((request) => request(this.axios));
-    }
-
-    /**
-     * The POST write API will update the tuples for a certain store.  Tuples and namespace-configurations allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
-     * @summary Write Tuples: Create and delete tuples from the system
+     * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+     * @summary Add or delete tuples from the store
      * @param {SandcastleWriteRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1602,15 +1514,15 @@ export class SandcastleApi extends BaseAPI {
     }
 
     /**
-     * The POST namespace-configurations API will update the namespaces configuration for a certain store. Path parameter `store_id` and `namespaces` array are required.  Each item in the `namespaces` array is the configuration for the namespace as specifed in the field `name`. The response will return the configuration\'s version id in the `id` field.  ## Limits - There can be at most **10** items in the namespaces array. - Each store can have at most **10** namespaces. - Each store has a limit of **10** write namespace-configurations requests per minute (RPM). ## Example To update the configuration with a single `document` namespace, call POST namespaces-configuration API with the body:  ```json {   \"namespaces\":[     {       \"name\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this configuration, and look like  ``` {\"id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-     * @summary Create a new namespaces configuration version
-     * @param {NamespaceNamespaces} body 
+     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+     * @summary Create a new authorization model
+     * @param {AuthzmodelTypeDefinitions} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandcastleApi
      */
-    public writeNamespaceConfiguration(body: NamespaceNamespaces, options?: any) {
-        return SandcastleApiFp(this.configuration).writeNamespaceConfiguration(body, options).then((request) => request(this.axios));
+    public writeAuthzModel(body: AuthzmodelTypeDefinitions, options?: any) {
+        return SandcastleApiFp(this.configuration).writeAuthzModel(body, options).then((request) => request(this.axios));
     }
 
     /**
