@@ -1,6 +1,16 @@
 import * as nock from 'nock';
 
-import { NamespaceNamespaces, SandcastleApi, SandcastleTupleKey } from "../api";
+import {
+  AuthzmodelAuthzModel,
+  AuthzmodelTypeDefinitions,
+  SandcastleApi,
+  SandcastleCheckResponse,
+  SandcastleExpandResponse,
+  SandcastleReadAuthzModelsResponse,
+  SandcastleReadResponse,
+  SandcastleTupleKey,
+  SandcastleWriteAuthzModelResponse
+} from "../api";
 import { Configuration } from "../configuration";
 
 nock.disableNetConnect();
@@ -27,53 +37,53 @@ const nocks = {
         expires_in: expiresIn,
       });
   },
-  readAllNssConfigs: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
+  readAuthzModelIds: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${storeId}/namespace-configurations`)
+      .get(`/${storeId}/authorization-models`)
       .reply(200, {
         configurations: [],
-      })
+      } as SandcastleReadAuthzModelsResponse)
   },
   check: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/check`)
       .reply(200, {
         allowed: true,
-      });
+      } as SandcastleCheckResponse);
   },
   write: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/write`)
-      .reply(200, {});
+      .reply(200, {} as Promise<object>);
   },
   delete: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/write`)
-      .reply(200, {});
+      .reply(200, {} as Promise<object>);
   },
   read: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/read`)
-      .reply(200, { tuples: [] });
+      .reply(200, { tuples: [] } as SandcastleReadResponse);
   },
   expand: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/expand`)
-      .reply(200, { tree: {} });
+      .reply(200, { tree: {} } as SandcastleExpandResponse);
   },
-  readSingleNssConfig: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
+  readSingleAuthzModel: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${storeId}/namespace-configurations/${configId}`)
+      .get(`/${storeId}/authorization-models/${configId}`)
       .reply(200, {
-        configuration: { id: "some-id", namespaces: [] },
-      });
+        configuration: { id: "some-id", type_definitions: [] },
+      } as AuthzmodelAuthzModel);
   },
-  upsertNssConfig: (storeId: string, configurations: NamespaceNamespaces, serverUrl = defaultConfiguration.serverUrl) => {
+  upsertAuthzModel: (storeId: string, configurations: AuthzmodelTypeDefinitions, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/namespace-configurations`)
+      .post(`/${storeId}/authorization-models`)
       .reply(200, {
         id: "some-new-id",
-      });
+      } as SandcastleWriteAuthzModelResponse);
   }
 }
 
@@ -101,12 +111,12 @@ describe('sandcastle-sdk', function () {
 
     it('should issue a network call to get the token at the first request if client id is provided', async () => {
       const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
-      nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
+      nocks.readAuthzModelIds(SANDCASTLE_STORE_ID);
 
       const sandcastleApi = new SandcastleApi(baseConfig);
       expect(scope.isDone()).toBe(false);
 
-      await sandcastleApi.readAllNamespaceConfigurations();
+      await sandcastleApi.readAuthzModels();
 
       expect(scope.isDone()).toBe(true);
 
@@ -115,12 +125,12 @@ describe('sandcastle-sdk', function () {
 
     it('should not issue a network call to get the token at the first request if the clientId is not provided', async () => {
       const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
-      nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
+      nocks.readAuthzModelIds(SANDCASTLE_STORE_ID);
 
       const sandcastleApi = new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
       expect(scope.isDone()).toBe(false);
 
-      await sandcastleApi.readAllNamespaceConfigurations();
+      await sandcastleApi.readAuthzModels();
 
       expect(scope.isDone()).toBe(false);
 
@@ -207,45 +217,45 @@ describe('sandcastle-sdk', function () {
         const scope = nocks.read(SANDCASTLE_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.read({ reads: { tuple_keys: [tuple] } });
+        const data = await sandcastleApi.read({ tuple_key: tuple });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
       });
     });
 
-    describe('writeNamespaceConfiguration', () => {
+    describe('writeAuthzModel', () => {
       it('should call the api and return the response', async () => {
-        const nssConfig = { namespaces: [{ name: 'workspace', relations: { admin: { _this: {} } } }] };
-        const scope = nocks.upsertNssConfig(SANDCASTLE_STORE_ID, nssConfig);
+        const authzModel = { type_definitions: [{ type: 'workspace', relations: { admin: { _this: {} } } }] };
+        const scope = nocks.upsertAuthzModel(SANDCASTLE_STORE_ID, authzModel);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.writeNamespaceConfiguration(nssConfig);
+        const data = await sandcastleApi.writeAuthzModel(authzModel);
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ id: expect.any(String) });
       });
     });
 
-    describe('readNamespaceConfiguration', () => {
+    describe('readAuthzModel', () => {
       it('should call the api and return the response', async () => {
         const configId = 'string';
-        const scope = nocks.readSingleNssConfig(SANDCASTLE_STORE_ID, configId);
+        const scope = nocks.readSingleAuthzModel(SANDCASTLE_STORE_ID, configId);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.readNamespaceConfiguration(configId);
+        const data = await sandcastleApi.readAuthzModel(configId);
 
         expect(scope.isDone()).toBe(true);
-        expect(data).toMatchObject({ configuration: { id: expect.any(String), namespaces: expect.arrayContaining([]) } });
+        expect(data).toMatchObject({ configuration: { id: expect.any(String), type_definitions: expect.arrayContaining([]) } });
       });
     });
 
-    describe('readAllNamespaceConfigurations', () => {
+    describe('readAuthzModels', () => {
       it('should call the api and return the response', async () => {
-        const scope = nocks.readAllNssConfigs(SANDCASTLE_STORE_ID);
+        const scope = nocks.readAuthzModelIds(SANDCASTLE_STORE_ID);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.readAllNamespaceConfigurations();
+        const data = await sandcastleApi.readAuthzModels();
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ configurations: expect.arrayContaining([]) });

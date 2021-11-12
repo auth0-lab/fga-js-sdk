@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.0](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.2.0...v0.3.0) (2021-11-12)
+
+Note: Previous versions of the SDK will no longer work with the API
+
+## Changes:
+- feat!: rename namespaces configurations ac357c1
+    * `namespaces` are now `types`
+    * `/namespace-configurations` endpoint is now `/authorization-models`
+    * Some methods were renamed:
+      * `readNamespaceConfigurations` is now `readAuthzModels`
+      * `readNamespaceConfiguration` is now `readAuthzModel`
+      * `writeNamespaceConfiguration` is now `writeAuthzModel`
+
+- feat!: support pagination 64782e2
+    * Some methods now support passing `authorization_model_id` to run against a specific version of the model
+      * This is supported by the `read`, `write`, `expand` and `check` methods
+    * `readNamespaceConfigurations` allows passing in `pageSize` and `continuationToken` for pagination
+    * rename `readAllNamespaceConfigurations` to `readNamespaceConfigurations`
+
 ## [0.2.0](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.1.2...v0.2.0) (2021-10-04)
 
 ## Changes:
