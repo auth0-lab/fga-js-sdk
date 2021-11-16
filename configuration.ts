@@ -70,7 +70,7 @@ export interface EnvironmentConfiguration {
     requireAuth?: boolean;
 }
 
-const environmentConfigurationString = `{"playground":{"host":"api.playground.sandcastle.cloud","scheme":"https","apiTokenIssuer":"sandcastle-dev.us.auth0.com","apiAudience":"https://api.playground.sandcastle.cloud"},"staging":{"host":"api.staging.sandcastle.cloud","scheme":"https","apiTokenIssuer":"sandcastle-dev.us.auth0.com","apiAudience":"https://api.staging.sandcastle.cloud","requireAuth":true}}`;
+const environmentConfigurationString = `{"playground":{"apiAudience":"https://api.playground.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.playground.sandcastle.cloud"},"staging":{"apiAudience":"https://api.staging.sandcastle.cloud","requireAuth":true,"apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.staging.sandcastle.cloud"},"poc":{"apiAudience":"https://api.poc.sandcastle.cloud","requireAuth":true,"apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.poc.sandcastle.cloud"}}`;
 
 /**
  *

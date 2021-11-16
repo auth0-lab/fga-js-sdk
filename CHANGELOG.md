@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.3.0...v0.3.1) (2021-11-16)
+
+## Changes:
+- feat: add support for the `poc` environment 87c3da3
+
 ## [0.3.0](https://github.com/auth0-lab/sandcastle-js-sdk/compare/v0.2.0...v0.3.0) (2021-11-12)
 
 Note: Previous versions of the SDK will no longer work with the API
