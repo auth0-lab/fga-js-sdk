@@ -74,7 +74,7 @@ const sandcastleApi = new SandcastleApi({
 
 Currently, Sandcastle is at a PoC stage. You can request to join the PoC at https://discord.gg/8naAwJfWN6
 
-If you are in the PoC, you need to set the `SANDCASTLE_ENVIRONMENT` variable to "staging". Provide the store id, client id and client secret you have received from us.
+If you are in the PoC, you need to set the `SANDCASTLE_ENVIRONMENT` variable to "poc". Provide the store id, client id and client secret you have received from us.
 
 #### Playground
 
