@@ -1,29 +1,29 @@
 import * as nock from 'nock';
 
 import {
-  AuthzmodelAuthzModel,
-  AuthzmodelTypeDefinitions,
-  SandcastleApi,
-  SandcastleCheckResponse,
-  SandcastleExpandResponse,
-  SandcastleReadAuthzModelsResponse,
-  SandcastleReadResponse,
-  SandcastleTupleKey,
-  SandcastleWriteAuthzModelResponse
+  AuthorizationmodelAuthorizationModel,
+  AuthorizationmodelTypeDefinitions,
+  Auth0FgaApi,
+  Auth0FgaCheckResponse,
+  Auth0FgaExpandResponse,
+  Auth0FgaReadAuthorizationModelsResponse,
+  Auth0FgaReadAuthorizationModelResponse,
+  Auth0FgaReadResponse,
+  Auth0FgaTupleKey,
 } from "../api";
 import { Configuration } from "../configuration";
 
 nock.disableNetConnect();
 
-const { SANDCASTLE_ENVIRONMENT, SANDCASTLE_STORE_ID, SANDCASTLE_CLIENT_ID, SANDCASTLE_CLIENT_SECRET } = process.env as {
-  SANDCASTLE_ENVIRONMENT: string; SANDCASTLE_STORE_ID: string; SANDCASTLE_CLIENT_ID: string; SANDCASTLE_CLIENT_SECRET: string;
+const { AUTH0_FGA_ENVIRONMENT, AUTH0_FGA_STORE_ID, AUTH0_FGA_CLIENT_ID, AUTH0_FGA_CLIENT_SECRET } = process.env as {
+  AUTH0_FGA_ENVIRONMENT: string; AUTH0_FGA_STORE_ID: string; AUTH0_FGA_CLIENT_ID: string; AUTH0_FGA_CLIENT_SECRET: string;
 } & any;
 
 const baseConfig = {
-  storeId: SANDCASTLE_STORE_ID,
-  environment: SANDCASTLE_ENVIRONMENT,
-  clientId: SANDCASTLE_CLIENT_ID,
-  clientSecret: SANDCASTLE_CLIENT_SECRET,
+  storeId: AUTH0_FGA_STORE_ID,
+  environment: AUTH0_FGA_ENVIRONMENT,
+  clientId: AUTH0_FGA_CLIENT_ID,
+  clientSecret: AUTH0_FGA_CLIENT_SECRET,
 };
 
 const defaultConfiguration = new Configuration(baseConfig);
@@ -37,86 +37,86 @@ const nocks = {
         expires_in: expiresIn,
       });
   },
-  readAuthzModelIds: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
+  readAuthorizationModels: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .get(`/${storeId}/authorization-models`)
       .reply(200, {
         configurations: [],
-      } as SandcastleReadAuthzModelsResponse)
+      } as Auth0FgaReadAuthorizationModelsResponse)
   },
-  check: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  check: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/check`)
       .reply(200, {
         allowed: true,
-      } as SandcastleCheckResponse);
+      } as Auth0FgaCheckResponse);
   },
-  write: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  write: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/write`)
       .reply(200, {} as Promise<object>);
   },
-  delete: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  delete: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/write`)
       .reply(200, {} as Promise<object>);
   },
-  read: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  read: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/read`)
-      .reply(200, { tuples: [] } as SandcastleReadResponse);
+      .reply(200, { tuples: [] } as Auth0FgaReadResponse);
   },
-  expand: (storeId: string, tuple: SandcastleTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  expand: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/expand`)
-      .reply(200, { tree: {} } as SandcastleExpandResponse);
+      .reply(200, { tree: {} } as Auth0FgaExpandResponse);
   },
   readSingleAuthzModel: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .get(`/${storeId}/authorization-models/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", type_definitions: [] },
-      } as AuthzmodelAuthzModel);
+      } as AuthorizationmodelAuthorizationModel);
   },
-  upsertAuthzModel: (storeId: string, configurations: AuthzmodelTypeDefinitions, serverUrl = defaultConfiguration.serverUrl) => {
+  writeAuthorizationModel: (storeId: string, configurations: AuthorizationmodelTypeDefinitions, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/authorization-models`)
       .reply(200, {
         id: "some-new-id",
-      } as SandcastleWriteAuthzModelResponse);
+      } as Auth0FgaReadAuthorizationModelResponse);
   }
 }
 
-describe('sandcastle-sdk', function () {
+describe('auth0-fga-sdk', function () {
   describe('initializing the sdk', () => {
     it('should require storeId in configuration', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, storeId: undefined! })).toThrowError();
+      expect(() => new Auth0FgaApi({ ...baseConfig, storeId: undefined! })).toThrowError();
     });
 
-    it('should require environment in configuration', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, environment: undefined! })).toThrowError();
+    it('should allow not passing in an environment in configuration', () => {
+      expect(() => new Auth0FgaApi({ ...baseConfig, environment: undefined! })).not.toThrowError();
     });
 
     it('should require a valid environment in configuration', () => {
-      expect(() => new SandcastleApi({ ...baseConfig, environment: 'non_existent_environment'! })).toThrowError();
+      expect(() => new Auth0FgaApi({ ...baseConfig, environment: 'non_existent_environment'! })).toThrowError();
     });
 
     it('should not require clientId or clientSecret in configuration in environments that don\'t require it', () => {
-      expect(() => new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! })).not.toThrowError();
+      expect(() => new Auth0FgaApi({ storeId: AUTH0_FGA_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! })).not.toThrowError();
     });
 
     it('should require clientId or clientSecret in configuration in environments that require it', () => {
-      expect(() => new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'staging', clientId: undefined!, clientSecret: undefined! })).toThrowError();
+      expect(() => new Auth0FgaApi({ storeId: AUTH0_FGA_STORE_ID, environment: 'staging', clientId: undefined!, clientSecret: undefined! })).toThrowError();
     });
 
     it('should issue a network call to get the token at the first request if client id is provided', async () => {
       const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
-      nocks.readAuthzModelIds(SANDCASTLE_STORE_ID);
+      nocks.readAuthorizationModels(AUTH0_FGA_STORE_ID);
 
-      const sandcastleApi = new SandcastleApi(baseConfig);
+      const auth0FgaApi = new Auth0FgaApi(baseConfig);
       expect(scope.isDone()).toBe(false);
 
-      await sandcastleApi.readAuthzModels();
+      await auth0FgaApi.readAuthorizationModels();
 
       expect(scope.isDone()).toBe(true);
 
@@ -125,12 +125,12 @@ describe('sandcastle-sdk', function () {
 
     it('should not issue a network call to get the token at the first request if the clientId is not provided', async () => {
       const scope = nocks.tokenExchange(defaultConfiguration.apiTokenIssuer!);
-      nocks.readAuthzModelIds(SANDCASTLE_STORE_ID);
+      nocks.readAuthorizationModels(AUTH0_FGA_STORE_ID);
 
-      const sandcastleApi = new SandcastleApi({ storeId: SANDCASTLE_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
+      const auth0FgaApi = new Auth0FgaApi({ storeId: AUTH0_FGA_STORE_ID, environment: 'playground', clientId: undefined!, clientSecret: undefined! });
       expect(scope.isDone()).toBe(false);
 
-      await sandcastleApi.readAuthzModels();
+      await auth0FgaApi.readAuthorizationModels();
 
       expect(scope.isDone()).toBe(false);
 
@@ -139,16 +139,16 @@ describe('sandcastle-sdk', function () {
 
     it('should allow passing in a configuration instance', async () => {
       const configuration = new Configuration(baseConfig);
-      configuration.apiAudience = 'api.playground.sandcastle.example';
-      expect(() => new SandcastleApi(configuration)).not.toThrowError();
+      configuration.apiAudience = 'api.fga.auth0.example';
+      expect(() => new Auth0FgaApi(configuration)).not.toThrowError();
     });
   });
 
   describe('using the sdk', () => {
-    let sandcastleApi: SandcastleApi;
+    let auth0FgaApi: Auth0FgaApi;
 
     beforeAll(() => {
-      sandcastleApi = new SandcastleApi({ ...baseConfig });
+      auth0FgaApi = new Auth0FgaApi({ ...baseConfig });
     });
 
     beforeEach(() => {
@@ -162,10 +162,10 @@ describe('sandcastle-sdk', function () {
     describe('check', () => {
       it('should properly pass the request and return an allowed API response', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.check(SANDCASTLE_STORE_ID, tuple);
+        const scope = nocks.check(AUTH0_FGA_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.check({ tuple_key: tuple });
+        const data = await auth0FgaApi.check({ tuple_key: tuple });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ allowed: expect.any(Boolean) });
@@ -173,12 +173,12 @@ describe('sandcastle-sdk', function () {
     });
 
     describe('write: write tuples', () => {
-      it('should properly pass the errors that the sandcastle api returns', async () => {
+      it('should properly pass the errors that the Auth0 FGA API returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.write(SANDCASTLE_STORE_ID, tuple);
+        const scope = nocks.write(AUTH0_FGA_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.write({ writes: { tuple_keys: [tuple] } });
+        const data = await auth0FgaApi.write({ writes: { tuple_keys: [tuple] } });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -186,12 +186,12 @@ describe('sandcastle-sdk', function () {
     });
 
     describe('write: delete tuples', () => {
-      it('should properly pass the errors that the sandcastle api returns', async () => {
+      it('should properly pass the errors that the Auth0 FGA API returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.delete(SANDCASTLE_STORE_ID, tuple);
+        const scope = nocks.delete(AUTH0_FGA_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.write({ deletes: { tuple_keys: [tuple] } });
+        const data = await auth0FgaApi.write({ deletes: { tuple_keys: [tuple] } });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -199,12 +199,12 @@ describe('sandcastle-sdk', function () {
     });
 
     describe('expand', () => {
-      it('should properly pass the errors that the sandcastle api returns', async () => {
+      it('should properly pass the errors that the Auth0 FGA API returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.expand(SANDCASTLE_STORE_ID, tuple);
+        const scope = nocks.expand(AUTH0_FGA_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.expand({ tuple_key: tuple });
+        const data = await auth0FgaApi.expand({ tuple_key: tuple });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
@@ -212,50 +212,50 @@ describe('sandcastle-sdk', function () {
     });
 
     describe('read', () => {
-      it('should properly pass the errors that the sandcastle api returns', async () => {
+      it('should properly pass the errors that the Auth0 FGA API returns', async () => {
         const tuple = { user: 'user543', relation: 'admin', object: 'workspace:1' };
-        const scope = nocks.read(SANDCASTLE_STORE_ID, tuple);
+        const scope = nocks.read(AUTH0_FGA_STORE_ID, tuple);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.read({ tuple_key: tuple });
+        const data = await auth0FgaApi.read({ tuple_key: tuple });
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({});
       });
     });
 
-    describe('writeAuthzModel', () => {
+    describe('writeAuthorizationModel', () => {
       it('should call the api and return the response', async () => {
-        const authzModel = { type_definitions: [{ type: 'workspace', relations: { admin: { _this: {} } } }] };
-        const scope = nocks.upsertAuthzModel(SANDCASTLE_STORE_ID, authzModel);
+        const authorizationModel = { type_definitions: [{ type: 'workspace', relations: { admin: { _this: {} } } }] };
+        const scope = nocks.writeAuthorizationModel(AUTH0_FGA_STORE_ID, authorizationModel);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.writeAuthzModel(authzModel);
+        const data = await auth0FgaApi.writeAuthorizationModel(authorizationModel);
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ id: expect.any(String) });
       });
     });
 
-    describe('readAuthzModel', () => {
+    describe('readAuthorizationModel', () => {
       it('should call the api and return the response', async () => {
         const configId = 'string';
-        const scope = nocks.readSingleAuthzModel(SANDCASTLE_STORE_ID, configId);
+        const scope = nocks.readSingleAuthzModel(AUTH0_FGA_STORE_ID, configId);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.readAuthzModel(configId);
+        const data = await auth0FgaApi.readAuthorizationModel(configId);
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ configuration: { id: expect.any(String), type_definitions: expect.arrayContaining([]) } });
       });
     });
 
-    describe('readAuthzModels', () => {
+    describe('readAuthorizationModels', () => {
       it('should call the api and return the response', async () => {
-        const scope = nocks.readAuthzModelIds(SANDCASTLE_STORE_ID);
+        const scope = nocks.readAuthorizationModels(AUTH0_FGA_STORE_ID);
 
         expect(scope.isDone()).toBe(false);
-        const data = await sandcastleApi.readAuthzModels();
+        const data = await auth0FgaApi.readAuthorizationModels();
 
         expect(scope.isDone()).toBe(true);
         expect(data).toMatchObject({ configurations: expect.arrayContaining([]) });

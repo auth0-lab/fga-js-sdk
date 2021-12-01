@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Project Sandcastle
- * Project Sandcastle is the internal codename of an early-stage product we are building at Auth0 as part of Auth0Lab to solve fine-grained authorization at scale. If you are interested in learning more about our plans, please reach out via our Discord chat.  The limits and information described in this document is subject to change.
+ * Auth0 Fine Grained Authorization (FGA)
+ * Auth0 Fine Grained Authorization (FGA) is an early-stage product we are building at Auth0 as part of Auth0Lab to solve fine-grained authorization at scale. If you are interested in learning more about our plans, please reach out via our Discord chat.  The limits and information described in this document is subject to change.
  *
  * The version of the OpenAPI document: 0.1
  * Contact: https://discord.gg/8naAwJfWN6
@@ -29,533 +29,584 @@ import {
 import { assertParamExists, Configuration, RequiredError } from './configuration';
 
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelAuthzModel
+ * @interface Auth0FgaAssertion
  */
-export interface AuthzmodelAuthzModel {
+export interface Auth0FgaAssertion {
     /**
-     * 
-     * @type {string}
-     * @memberof AuthzmodelAuthzModel
+     *
+     * @type {Auth0FgaTupleKey}
+     * @memberof Auth0FgaAssertion
      */
-    id?: string;
+    tuple_key: Auth0FgaTupleKey;
     /**
-     * 
-     * @type {AuthzmodelTypeDefinitions}
-     * @memberof AuthzmodelAuthzModel
+     *
+     * @type {boolean}
+     * @memberof Auth0FgaAssertion
      */
-    type_definitions?: AuthzmodelTypeDefinitions;
+    expectation: boolean;
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelDifference
+ * @interface Auth0FgaCheckRequestParams
  */
-export interface AuthzmodelDifference {
+export interface Auth0FgaCheckRequestParams {
     /**
-     * 
-     * @type {AuthzmodelUserset}
-     * @memberof AuthzmodelDifference
+     *
+     * @type {Auth0FgaTupleKey}
+     * @memberof Auth0FgaCheckRequestParams
      */
-    base: AuthzmodelUserset;
+    tuple_key?: Auth0FgaTupleKey;
     /**
-     * 
-     * @type {AuthzmodelUserset}
-     * @memberof AuthzmodelDifference
+     *
+     * @type {string}
+     * @memberof Auth0FgaCheckRequestParams
      */
-    subtract: AuthzmodelUserset;
+    authorization_model_id?: string;
+    /**
+     * defaults to false. making it true has performance implications. only use for debugging purposes, etc.
+     * @type {boolean}
+     * @memberof Auth0FgaCheckRequestParams
+     */
+    trace?: boolean;
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelObjectRelation
+ * @interface Auth0FgaCheckResponse
  */
-export interface AuthzmodelObjectRelation {
+export interface Auth0FgaCheckResponse {
     /**
-     * 
+     *
+     * @type {boolean}
+     * @memberof Auth0FgaCheckResponse
+     */
+    allowed?: boolean;
+    /**
+     *
      * @type {string}
-     * @memberof AuthzmodelObjectRelation
+     * @memberof Auth0FgaCheckResponse
+     */
+    resolution?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaExpandRequestParams
+ */
+export interface Auth0FgaExpandRequestParams {
+    /**
+     *
+     * @type {Auth0FgaTupleKey}
+     * @memberof Auth0FgaExpandRequestParams
+     */
+    tuple_key?: Auth0FgaTupleKey;
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaExpandRequestParams
+     */
+    authorization_model_id?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaExpandResponse
+ */
+export interface Auth0FgaExpandResponse {
+    /**
+     *
+     * @type {Auth0FgaUsersetTree}
+     * @memberof Auth0FgaExpandResponse
+     */
+    tree?: Auth0FgaUsersetTree;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaReadAssertionsResponse
+ */
+export interface Auth0FgaReadAssertionsResponse {
+    /**
+     * The authorization model ID
+     * @type {string}
+     * @memberof Auth0FgaReadAssertionsResponse
+     */
+    authorization_model_id?: string;
+    /**
+     *
+     * @type {Array<Auth0FgaAssertion>}
+     * @memberof Auth0FgaReadAssertionsResponse
+     */
+    assertions?: Array<Auth0FgaAssertion>;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaReadAuthorizationModelResponse
+ */
+export interface Auth0FgaReadAuthorizationModelResponse {
+    /**
+     *
+     * @type {AuthorizationmodelAuthorizationModel}
+     * @memberof Auth0FgaReadAuthorizationModelResponse
+     */
+    authorization_model?: AuthorizationmodelAuthorizationModel;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaReadAuthorizationModelsResponse
+ */
+export interface Auth0FgaReadAuthorizationModelsResponse {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof Auth0FgaReadAuthorizationModelsResponse
+     */
+    authorization_model_ids?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaReadAuthorizationModelsResponse
+     */
+    continuation_token?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaReadRequestParams
+ */
+export interface Auth0FgaReadRequestParams {
+    /**
+     *
+     * @type {Auth0FgaTupleKey}
+     * @memberof Auth0FgaReadRequestParams
+     */
+    tuple_key?: Auth0FgaTupleKey;
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaReadRequestParams
+     */
+    authorization_model_id?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaReadResponse
+ */
+export interface Auth0FgaReadResponse {
+    /**
+     *
+     * @type {Array<Auth0FgaTuple>}
+     * @memberof Auth0FgaReadResponse
+     */
+    tuples?: Array<Auth0FgaTuple>;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaTuple
+ */
+export interface Auth0FgaTuple {
+    /**
+     *
+     * @type {Auth0FgaTupleKey}
+     * @memberof Auth0FgaTuple
+     */
+    key?: Auth0FgaTupleKey;
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaTuple
+     */
+    timestamp?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaTupleKey
+ */
+export interface Auth0FgaTupleKey {
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaTupleKey
      */
     object?: string;
     /**
-     * 
+     *
      * @type {string}
-     * @memberof AuthzmodelObjectRelation
+     * @memberof Auth0FgaTupleKey
+     */
+    relation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaTupleKey
+     */
+    user?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaTupleKeys
+ */
+export interface Auth0FgaTupleKeys {
+    /**
+     *
+     * @type {Array<Auth0FgaTupleKey>}
+     * @memberof Auth0FgaTupleKeys
+     */
+    tuple_keys: Array<Auth0FgaTupleKey>;
+}
+/**
+ * A UsersetTree contains the result of an Expansion.
+ * @export
+ * @interface Auth0FgaUsersetTree
+ */
+export interface Auth0FgaUsersetTree {
+    /**
+     *
+     * @type {UsersetTreeNode}
+     * @memberof Auth0FgaUsersetTree
+     */
+    root?: UsersetTreeNode;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaUsersetTreeDifference
+ */
+export interface Auth0FgaUsersetTreeDifference {
+    /**
+     *
+     * @type {UsersetTreeNode}
+     * @memberof Auth0FgaUsersetTreeDifference
+     */
+    base?: UsersetTreeNode;
+    /**
+     *
+     * @type {UsersetTreeNode}
+     * @memberof Auth0FgaUsersetTreeDifference
+     */
+    subtract?: UsersetTreeNode;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaUsersetTreeTupleToUserset
+ */
+export interface Auth0FgaUsersetTreeTupleToUserset {
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaUsersetTreeTupleToUserset
+     */
+    tupleset?: string;
+    /**
+     *
+     * @type {Array<UsersetTreeComputed>}
+     * @memberof Auth0FgaUsersetTreeTupleToUserset
+     */
+    computed?: Array<UsersetTreeComputed>;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaWriteAssertionsRequestParams
+ */
+export interface Auth0FgaWriteAssertionsRequestParams {
+    /**
+     *
+     * @type {Array<Auth0FgaAssertion>}
+     * @memberof Auth0FgaWriteAssertionsRequestParams
+     */
+    assertions: Array<Auth0FgaAssertion>;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaWriteAuthorizationModelResponse
+ */
+export interface Auth0FgaWriteAuthorizationModelResponse {
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaWriteAuthorizationModelResponse
+     */
+    authorization_model_id?: string;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaWriteRequestParams
+ */
+export interface Auth0FgaWriteRequestParams {
+    /**
+     *
+     * @type {Auth0FgaTupleKeys}
+     * @memberof Auth0FgaWriteRequestParams
+     */
+    writes?: Auth0FgaTupleKeys;
+    /**
+     *
+     * @type {Auth0FgaTupleKeys}
+     * @memberof Auth0FgaWriteRequestParams
+     */
+    deletes?: Auth0FgaTupleKeys;
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaWriteRequestParams
+     */
+    authorization_model_id?: string;
+    /**
+     *
+     * @type {Auth0FgaTuple}
+     * @memberof Auth0FgaWriteRequestParams
+     */
+    lock_tuple?: Auth0FgaTuple;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaWriteSettingsRequestParams
+ */
+export interface Auth0FgaWriteSettingsRequestParams {
+    /**
+     *
+     * @type {SettingsEnvironment}
+     * @memberof Auth0FgaWriteSettingsRequestParams
+     */
+    environment?: SettingsEnvironment;
+}
+/**
+ *
+ * @export
+ * @interface Auth0FgaWriteTokenIssuersRequestParams
+ */
+export interface Auth0FgaWriteTokenIssuersRequestParams {
+    /**
+     *
+     * @type {string}
+     * @memberof Auth0FgaWriteTokenIssuersRequestParams
+     */
+    issuer_url?: string;
+}
+/**
+ *
+ * @export
+ * @interface AuthorizationmodelAuthorizationModel
+ */
+export interface AuthorizationmodelAuthorizationModel {
+    /**
+     *
+     * @type {string}
+     * @memberof AuthorizationmodelAuthorizationModel
+     */
+    id?: string;
+    /**
+     *
+     * @type {Array<AuthorizationmodelTypeDefinition>}
+     * @memberof AuthorizationmodelAuthorizationModel
+     */
+    type_definitions?: Array<AuthorizationmodelTypeDefinition>;
+}
+/**
+ *
+ * @export
+ * @interface AuthorizationmodelDifference
+ */
+export interface AuthorizationmodelDifference {
+    /**
+     *
+     * @type {AuthorizationmodelUserset}
+     * @memberof AuthorizationmodelDifference
+     */
+    base: AuthorizationmodelUserset;
+    /**
+     *
+     * @type {AuthorizationmodelUserset}
+     * @memberof AuthorizationmodelDifference
+     */
+    subtract: AuthorizationmodelUserset;
+}
+/**
+ *
+ * @export
+ * @interface AuthorizationmodelObjectRelation
+ */
+export interface AuthorizationmodelObjectRelation {
+    /**
+     *
+     * @type {string}
+     * @memberof AuthorizationmodelObjectRelation
+     */
+    object?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AuthorizationmodelObjectRelation
      */
     relation?: string;
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelTupleToUserset
+ * @interface AuthorizationmodelTupleToUserset
  */
-export interface AuthzmodelTupleToUserset {
+export interface AuthorizationmodelTupleToUserset {
     /**
-     * 
-     * @type {AuthzmodelObjectRelation}
-     * @memberof AuthzmodelTupleToUserset
+     *
+     * @type {AuthorizationmodelObjectRelation}
+     * @memberof AuthorizationmodelTupleToUserset
      */
-    tupleset?: AuthzmodelObjectRelation;
+    tupleset?: AuthorizationmodelObjectRelation;
     /**
-     * 
-     * @type {AuthzmodelObjectRelation}
-     * @memberof AuthzmodelTupleToUserset
+     *
+     * @type {AuthorizationmodelObjectRelation}
+     * @memberof AuthorizationmodelTupleToUserset
      */
-    computedUserset?: AuthzmodelObjectRelation;
+    computedUserset?: AuthorizationmodelObjectRelation;
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelTypeDefinition
+ * @interface AuthorizationmodelTypeDefinition
  */
-export interface AuthzmodelTypeDefinition {
+export interface AuthorizationmodelTypeDefinition {
     /**
-     * 
+     *
      * @type {string}
-     * @memberof AuthzmodelTypeDefinition
+     * @memberof AuthorizationmodelTypeDefinition
      */
     type: string;
     /**
-     * 
-     * @type {{ [key: string]: AuthzmodelUserset; }}
-     * @memberof AuthzmodelTypeDefinition
+     *
+     * @type {{ [key: string]: AuthorizationmodelUserset; }}
+     * @memberof AuthorizationmodelTypeDefinition
      */
-    relations: { [key: string]: AuthzmodelUserset; };
+    relations: { [key: string]: AuthorizationmodelUserset; };
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelTypeDefinitions
+ * @interface AuthorizationmodelTypeDefinitions
  */
-export interface AuthzmodelTypeDefinitions {
+export interface AuthorizationmodelTypeDefinitions {
     /**
-     * 
-     * @type {Array<AuthzmodelTypeDefinition>}
-     * @memberof AuthzmodelTypeDefinitions
+     *
+     * @type {Array<AuthorizationmodelTypeDefinition>}
+     * @memberof AuthorizationmodelTypeDefinitions
      */
-    type_definitions?: Array<AuthzmodelTypeDefinition>;
+    type_definitions?: Array<AuthorizationmodelTypeDefinition>;
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelUserset
+ * @interface AuthorizationmodelUserset
  */
-export interface AuthzmodelUserset {
+export interface AuthorizationmodelUserset {
     /**
      * A DirectUserset is a sentinel message for referencing the direct members specified by an object/relation mapping.
      * @type {object}
-     * @memberof AuthzmodelUserset
+     * @memberof AuthorizationmodelUserset
      */
     _this?: object;
     /**
-     * 
-     * @type {AuthzmodelObjectRelation}
-     * @memberof AuthzmodelUserset
+     *
+     * @type {AuthorizationmodelObjectRelation}
+     * @memberof AuthorizationmodelUserset
      */
-    computedUserset?: AuthzmodelObjectRelation;
+    computedUserset?: AuthorizationmodelObjectRelation;
     /**
-     * 
-     * @type {AuthzmodelTupleToUserset}
-     * @memberof AuthzmodelUserset
+     *
+     * @type {AuthorizationmodelTupleToUserset}
+     * @memberof AuthorizationmodelUserset
      */
-    tupleToUserset?: AuthzmodelTupleToUserset;
+    tupleToUserset?: AuthorizationmodelTupleToUserset;
     /**
-     * 
-     * @type {AuthzmodelUsersets}
-     * @memberof AuthzmodelUserset
+     *
+     * @type {AuthorizationmodelUsersets}
+     * @memberof AuthorizationmodelUserset
      */
-    union?: AuthzmodelUsersets;
+    union?: AuthorizationmodelUsersets;
     /**
-     * 
-     * @type {AuthzmodelUsersets}
-     * @memberof AuthzmodelUserset
+     *
+     * @type {AuthorizationmodelUsersets}
+     * @memberof AuthorizationmodelUserset
      */
-    intersection?: AuthzmodelUsersets;
+    intersection?: AuthorizationmodelUsersets;
     /**
-     * 
-     * @type {AuthzmodelDifference}
-     * @memberof AuthzmodelUserset
+     *
+     * @type {AuthorizationmodelDifference}
+     * @memberof AuthorizationmodelUserset
      */
-    difference?: AuthzmodelDifference;
+    difference?: AuthorizationmodelDifference;
 }
 /**
- * 
+ *
  * @export
- * @interface AuthzmodelUsersets
+ * @interface AuthorizationmodelUsersets
  */
-export interface AuthzmodelUsersets {
+export interface AuthorizationmodelUsersets {
     /**
-     * 
-     * @type {Array<AuthzmodelUserset>}
-     * @memberof AuthzmodelUsersets
+     *
+     * @type {Array<AuthorizationmodelUserset>}
+     * @memberof AuthorizationmodelUsersets
      */
-    child?: Array<AuthzmodelUserset>;
+    child?: Array<AuthorizationmodelUserset>;
 }
 /**
- * 
+ *
  * @export
  * @interface ProtobufAny
  */
 export interface ProtobufAny {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ProtobufAny
      */
     typeUrl?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ProtobufAny
      */
     value?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface RpcStatus
  */
 export interface RpcStatus {
     /**
-     * 
+     *
      * @type {number}
      * @memberof RpcStatus
      */
     code?: number;
     /**
-     * 
+     *
      * @type {string}
      * @memberof RpcStatus
      */
     message?: string;
     /**
-     * 
+     *
      * @type {Array<ProtobufAny>}
      * @memberof RpcStatus
      */
     details?: Array<ProtobufAny>;
 }
 /**
- * 
- * @export
- * @interface SandcastleCheckRequestParams
- */
-export interface SandcastleCheckRequestParams {
-    /**
-     * 
-     * @type {SandcastleTupleKey}
-     * @memberof SandcastleCheckRequestParams
-     */
-    tuple_key?: SandcastleTupleKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleCheckRequestParams
-     */
-    authorization_model_id?: string;
-    /**
-     * defaults to false. making it true has performance implications. only use for debugging purposes, etc.
-     * @type {boolean}
-     * @memberof SandcastleCheckRequestParams
-     */
-    trace?: boolean;
-}
-/**
- * 
- * @export
- * @interface SandcastleCheckResponse
- */
-export interface SandcastleCheckResponse {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SandcastleCheckResponse
-     */
-    allowed?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleCheckResponse
-     */
-    resolution?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleExpandRequestParams
- */
-export interface SandcastleExpandRequestParams {
-    /**
-     * 
-     * @type {SandcastleTupleKey}
-     * @memberof SandcastleExpandRequestParams
-     */
-    tuple_key?: SandcastleTupleKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleExpandRequestParams
-     */
-    authorization_model_id?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleExpandResponse
- */
-export interface SandcastleExpandResponse {
-    /**
-     * 
-     * @type {SandcastleUsersetTree}
-     * @memberof SandcastleExpandResponse
-     */
-    tree?: SandcastleUsersetTree;
-}
-/**
- * 
- * @export
- * @interface SandcastleReadAuthzModelResponse
- */
-export interface SandcastleReadAuthzModelResponse {
-    /**
-     * 
-     * @type {AuthzmodelAuthzModel}
-     * @memberof SandcastleReadAuthzModelResponse
-     */
-    authorization_model?: AuthzmodelAuthzModel;
-}
-/**
- * 
- * @export
- * @interface SandcastleReadAuthzModelsResponse
- */
-export interface SandcastleReadAuthzModelsResponse {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof SandcastleReadAuthzModelsResponse
-     */
-    authorization_model_ids?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleReadAuthzModelsResponse
-     */
-    continuation_token?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleReadRequestParams
- */
-export interface SandcastleReadRequestParams {
-    /**
-     * 
-     * @type {SandcastleTupleKey}
-     * @memberof SandcastleReadRequestParams
-     */
-    tuple_key?: SandcastleTupleKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleReadRequestParams
-     */
-    authorization_model_id?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleReadResponse
- */
-export interface SandcastleReadResponse {
-    /**
-     * 
-     * @type {Array<SandcastleTuple>}
-     * @memberof SandcastleReadResponse
-     */
-    tuples?: Array<SandcastleTuple>;
-}
-/**
- * 
- * @export
- * @interface SandcastleTuple
- */
-export interface SandcastleTuple {
-    /**
-     * 
-     * @type {SandcastleTupleKey}
-     * @memberof SandcastleTuple
-     */
-    key?: SandcastleTupleKey;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleTuple
-     */
-    timestamp?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleTupleKey
- */
-export interface SandcastleTupleKey {
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleTupleKey
-     */
-    object?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleTupleKey
-     */
-    relation?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleTupleKey
-     */
-    user?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleTupleKeys
- */
-export interface SandcastleTupleKeys {
-    /**
-     * 
-     * @type {Array<SandcastleTupleKey>}
-     * @memberof SandcastleTupleKeys
-     */
-    tuple_keys: Array<SandcastleTupleKey>;
-}
-/**
- * A UsersetTree contains the result of an Expansion.
- * @export
- * @interface SandcastleUsersetTree
- */
-export interface SandcastleUsersetTree {
-    /**
-     * 
-     * @type {UsersetTreeNode}
-     * @memberof SandcastleUsersetTree
-     */
-    root?: UsersetTreeNode;
-}
-/**
- * 
- * @export
- * @interface SandcastleUsersetTreeDifference
- */
-export interface SandcastleUsersetTreeDifference {
-    /**
-     * 
-     * @type {UsersetTreeNode}
-     * @memberof SandcastleUsersetTreeDifference
-     */
-    base?: UsersetTreeNode;
-    /**
-     * 
-     * @type {UsersetTreeNode}
-     * @memberof SandcastleUsersetTreeDifference
-     */
-    subtract?: UsersetTreeNode;
-}
-/**
- * 
- * @export
- * @interface SandcastleUsersetTreeTupleToUserset
- */
-export interface SandcastleUsersetTreeTupleToUserset {
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleUsersetTreeTupleToUserset
-     */
-    tupleset?: string;
-    /**
-     * 
-     * @type {Array<UsersetTreeComputed>}
-     * @memberof SandcastleUsersetTreeTupleToUserset
-     */
-    computed?: Array<UsersetTreeComputed>;
-}
-/**
- * 
- * @export
- * @interface SandcastleWriteAuthzModelResponse
- */
-export interface SandcastleWriteAuthzModelResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteAuthzModelResponse
-     */
-    authorization_model_id?: string;
-}
-/**
- * 
- * @export
- * @interface SandcastleWriteRequestParams
- */
-export interface SandcastleWriteRequestParams {
-    /**
-     * 
-     * @type {SandcastleTupleKeys}
-     * @memberof SandcastleWriteRequestParams
-     */
-    writes?: SandcastleTupleKeys;
-    /**
-     * 
-     * @type {SandcastleTupleKeys}
-     * @memberof SandcastleWriteRequestParams
-     */
-    deletes?: SandcastleTupleKeys;
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteRequestParams
-     */
-    authorization_model_id?: string;
-    /**
-     * 
-     * @type {SandcastleTuple}
-     * @memberof SandcastleWriteRequestParams
-     */
-    lock_tuple?: SandcastleTuple;
-}
-/**
- * 
- * @export
- * @interface SandcastleWriteSettingsRequestParams
- */
-export interface SandcastleWriteSettingsRequestParams {
-    /**
-     * 
-     * @type {SettingsEnvironment}
-     * @memberof SandcastleWriteSettingsRequestParams
-     */
-    environment?: SettingsEnvironment;
-}
-/**
- * 
- * @export
- * @interface SandcastleWriteTokenIssuersRequestParams
- */
-export interface SandcastleWriteTokenIssuersRequestParams {
-    /**
-     * 
-     * @type {string}
-     * @memberof SandcastleWriteTokenIssuersRequestParams
-     */
-    issuer_url?: string;
-}
-/**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -568,51 +619,51 @@ export enum SettingsEnvironment {
 }
 
 /**
- * 
+ *
  * @export
  * @interface SettingsSettings
  */
 export interface SettingsSettings {
     /**
-     * 
+     *
      * @type {SettingsEnvironment}
      * @memberof SettingsSettings
      */
     environment?: SettingsEnvironment;
     /**
-     * 
+     *
      * @type {Array<SettingsTokenIssuer>}
      * @memberof SettingsSettings
      */
     token_issuers?: Array<SettingsTokenIssuer>;
 }
 /**
- * 
+ *
  * @export
  * @interface SettingsTokenIssuer
  */
 export interface SettingsTokenIssuer {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SettingsTokenIssuer
      */
     id?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof SettingsTokenIssuer
      */
     issuer_url?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface UsersetTreeComputed
  */
 export interface UsersetTreeComputed {
     /**
-     * 
+     *
      * @type {string}
      * @memberof UsersetTreeComputed
      */
@@ -625,82 +676,82 @@ export interface UsersetTreeComputed {
  */
 export interface UsersetTreeLeaf {
     /**
-     * 
+     *
      * @type {UsersetTreeUsers}
      * @memberof UsersetTreeLeaf
      */
     users?: UsersetTreeUsers;
     /**
-     * 
+     *
      * @type {UsersetTreeComputed}
      * @memberof UsersetTreeLeaf
      */
     computed?: UsersetTreeComputed;
     /**
-     * 
-     * @type {SandcastleUsersetTreeTupleToUserset}
+     *
+     * @type {Auth0FgaUsersetTreeTupleToUserset}
      * @memberof UsersetTreeLeaf
      */
-    tupleToUserset?: SandcastleUsersetTreeTupleToUserset;
+    tupleToUserset?: Auth0FgaUsersetTreeTupleToUserset;
 }
 /**
- * 
+ *
  * @export
  * @interface UsersetTreeNode
  */
 export interface UsersetTreeNode {
     /**
-     * 
+     *
      * @type {string}
      * @memberof UsersetTreeNode
      */
     name?: string;
     /**
-     * 
+     *
      * @type {UsersetTreeLeaf}
      * @memberof UsersetTreeNode
      */
     leaf?: UsersetTreeLeaf;
     /**
-     * 
-     * @type {SandcastleUsersetTreeDifference}
+     *
+     * @type {Auth0FgaUsersetTreeDifference}
      * @memberof UsersetTreeNode
      */
-    difference?: SandcastleUsersetTreeDifference;
+    difference?: Auth0FgaUsersetTreeDifference;
     /**
-     * 
+     *
      * @type {UsersetTreeNodes}
      * @memberof UsersetTreeNode
      */
     union?: UsersetTreeNodes;
     /**
-     * 
+     *
      * @type {UsersetTreeNodes}
      * @memberof UsersetTreeNode
      */
     intersection?: UsersetTreeNodes;
 }
 /**
- * 
+ *
  * @export
  * @interface UsersetTreeNodes
  */
 export interface UsersetTreeNodes {
     /**
-     * 
+     *
      * @type {Array<UsersetTreeNode>}
      * @memberof UsersetTreeNodes
      */
     nodes?: Array<UsersetTreeNode>;
 }
 /**
- * 
+ *
  * @export
  * @interface UsersetTreeUsers
  */
 export interface UsersetTreeUsers {
     /**
-     * 
+     *
      * @type {Array<string>}
      * @memberof UsersetTreeUsers
      */
@@ -708,19 +759,19 @@ export interface UsersetTreeUsers {
 }
 
 /**
- * SandcastleApi - axios parameter creator
+ * Auth0FgaApi - axios parameter creator
  * @export
  */
-export const SandcastleApiAxiosParamCreator = function (configuration: Configuration) {
+export const Auth0FgaApiAxiosParamCreator = function (configuration: Configuration) {
     return {
         /**
-         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
+         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @summary Check whether a user is authorized to access an object
-         * @param {SandcastleCheckRequestParams} body 
+         * @param {Auth0FgaCheckRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        check: async (body: SandcastleCheckRequestParams, options: any = {}): Promise<RequestArgs> => {
+        check: async (body: Auth0FgaCheckRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('check', 'body', body)
             const localVarPath = `/{store_id}/check`
@@ -741,7 +792,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -755,8 +806,8 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Sandcastle.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
-         * @summary Remove 3rd party token issuer for Sandcastle read and write operation
+         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+         * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
          * @param {string} id Id of token issuer to be removed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -782,7 +833,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -793,13 +844,13 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-         * @param {SandcastleExpandRequestParams} body 
+         * @param {Auth0FgaExpandRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        expand: async (body: SandcastleExpandRequestParams, options: any = {}): Promise<RequestArgs> => {
+        expand: async (body: Auth0FgaExpandRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('expand', 'body', body)
             const localVarPath = `/{store_id}/expand`
@@ -820,7 +871,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -834,13 +885,13 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
          * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-         * @param {SandcastleReadRequestParams} body 
+         * @param {Auth0FgaReadRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        read: async (body: SandcastleReadRequestParams, options: any = {}): Promise<RequestArgs> => {
+        read: async (body: Auth0FgaReadRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('read', 'body', body)
             const localVarPath = `/{store_id}/read`
@@ -861,7 +912,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -875,15 +926,53 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * @summary Read assertions for an authorization model ID
+         * @param {string} authorizationModelId The authorization model ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readAssertions: async (authorizationModelId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorizationModelId' is not null or undefined
+            assertParamExists('readAssertions', 'authorizationModelId', authorizationModelId)
+            const localVarPath = `/{store_id}/assertions/{authorization_model_id}`
+            .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
+                        .replace(`{${"authorization_model_id"}}`, encodeURIComponent(String(authorizationModelId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ClientCredentials required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":[       {         \"type\":\"document\",         \"relations\":{           \"reader\":{             \"union\":{               \"child\":[                 {                   \"this\":{}                 },                 {                   \"computedUserset\":{                     \"object\":\"\",                     \"relation\":\"writer\"                   }                 }               ]             }           },           \"writer\":{             \"this\":{}           }         }       }     ]   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
          * @summary Return a particular version of an authorization model
          * @param {string} id The authorization model ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readAuthzModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        readAuthorizationModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('readAuthzModel', 'id', id)
+            assertParamExists('readAuthorizationModel', 'id', id)
             const localVarPath = `/{store_id}/authorization-models/{id}`
             .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
                         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -902,7 +991,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -913,14 +1002,14 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-         * @summary Check whether a user is authorized to access an object
-         * @param {number} [pageSize] 
-         * @param {string} [continuationToken] 
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+         * @summary Return all the authorization model IDs for a particular store
+         * @param {number} [pageSize]
+         * @param {string} [continuationToken]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readAuthzModels: async (pageSize?: number, continuationToken?: string, options: any = {}): Promise<RequestArgs> => {
+        readAuthorizationModels: async (pageSize?: number, continuationToken?: string, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/{store_id}/authorization-models`
             .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -947,7 +1036,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -958,7 +1047,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The GET settings API will return the store\'s settings, including environment tag and an array of Sandcastle\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
+         * The GET settings API will return the store\'s settings, including environment tag and an array of Auth0 FGA\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
          * @summary Return store settings, including the environment tag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -982,7 +1071,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -993,13 +1082,13 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
          * @summary Add or delete tuples from the store
-         * @param {SandcastleWriteRequestParams} body 
+         * @param {Auth0FgaWriteRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        write: async (body: SandcastleWriteRequestParams, options: any = {}): Promise<RequestArgs> => {
+        write: async (body: Auth0FgaWriteRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('write', 'body', body)
             const localVarPath = `/{store_id}/write`
@@ -1020,7 +1109,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1034,15 +1123,59 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-         * @summary Create a new authorization model
-         * @param {AuthzmodelTypeDefinitions} body 
+         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * @summary Upsert assertions for an authorization model ID
+         * @param {string} authorizationModelId The authorization model ID
+         * @param {Auth0FgaWriteAssertionsRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeAuthzModel: async (body: AuthzmodelTypeDefinitions, options: any = {}): Promise<RequestArgs> => {
+        writeAssertions: async (authorizationModelId: string, body: Auth0FgaWriteAssertionsRequestParams, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorizationModelId' is not null or undefined
+            assertParamExists('writeAssertions', 'authorizationModelId', authorizationModelId)
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('writeAuthzModel', 'body', body)
+            assertParamExists('writeAssertions', 'body', body)
+            const localVarPath = `/{store_id}/assertions/{authorization_model_id}`
+            .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
+                        .replace(`{${"authorization_model_id"}}`, encodeURIComponent(String(authorizationModelId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ClientCredentials required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+         * @summary Create a new authorization model
+         * @param {AuthorizationmodelTypeDefinitions} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        writeAuthorizationModel: async (body: AuthorizationmodelTypeDefinitions, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('writeAuthorizationModel', 'body', body)
             const localVarPath = `/{store_id}/authorization-models`
             .replace(`{${"store_id"}}`, encodeURIComponent(String(configuration.storeId)))
             ;
@@ -1061,7 +1194,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1075,13 +1208,13 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
+         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
          * @summary Update the environment tag for a store
-         * @param {SandcastleWriteSettingsRequestParams} body 
+         * @param {Auth0FgaWriteSettingsRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeSettings: async (body: SandcastleWriteSettingsRequestParams, options: any = {}): Promise<RequestArgs> => {
+        writeSettings: async (body: Auth0FgaWriteSettingsRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('writeSettings', 'body', body)
             const localVarPath = `/{store_id}/settings`
@@ -1102,7 +1235,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1116,13 +1249,13 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             };
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Sandcastle\'s read and write operations.  Otherwise, only tokens issued by Sandcastle\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Sandcastle stores API.  Other tokens issued by providers external to Sandcastle will be rejected. An example use case is to have browsers directly calling Sandcastle API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Sandcastle\'s read and write operations : 1. In the 3rd party issuer, configure Sandcastle API with the following audience (`https://api.staging.sandcastle.cloud`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Sandcastle\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
-         * @summary Add 3rd party token issuer for Sandcastle read and write operations
-         * @param {SandcastleWriteTokenIssuersRequestParams} body 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+         * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
+         * @param {Auth0FgaWriteTokenIssuersRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeTokenIssuer: async (body: SandcastleWriteTokenIssuersRequestParams, options: any = {}): Promise<RequestArgs> => {
+        writeTokenIssuer: async (body: Auth0FgaWriteTokenIssuersRequestParams, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('writeTokenIssuer', 'body', body)
             const localVarPath = `/{store_id}/settings/token-issuers`
@@ -1143,7 +1276,7 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1160,26 +1293,26 @@ export const SandcastleApiAxiosParamCreator = function (configuration: Configura
 };
 
 /**
- * SandcastleApi - functional programming interface
+ * Auth0FgaApi - functional programming interface
  * @export
  */
-export const SandcastleApiFp = function(configuration: Configuration) {
-    const localVarAxiosParamCreator = SandcastleApiAxiosParamCreator(configuration)
+export const Auth0FgaApiFp = function(configuration: Configuration) {
+    const localVarAxiosParamCreator = Auth0FgaApiAxiosParamCreator(configuration)
     return {
         /**
-         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
+         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @summary Check whether a user is authorized to access an object
-         * @param {SandcastleCheckRequestParams} body 
+         * @param {Auth0FgaCheckRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async check(body: SandcastleCheckRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleCheckResponse>> {
+        async check(body: Auth0FgaCheckRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaCheckResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.check(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Sandcastle.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
-         * @summary Remove 3rd party token issuer for Sandcastle read and write operation
+         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+         * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
          * @param {string} id Id of token issuer to be removed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1189,52 +1322,63 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-         * @param {SandcastleExpandRequestParams} body 
+         * @param {Auth0FgaExpandRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async expand(body: SandcastleExpandRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleExpandResponse>> {
+        async expand(body: Auth0FgaExpandRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaExpandResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.expand(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
          * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-         * @param {SandcastleReadRequestParams} body 
+         * @param {Auth0FgaReadRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async read(body: SandcastleReadRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadResponse>> {
+        async read(body: Auth0FgaReadRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaReadResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.read(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * @summary Read assertions for an authorization model ID
+         * @param {string} authorizationModelId The authorization model ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readAssertions(authorizationModelId: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaReadAssertionsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readAssertions(authorizationModelId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
+        },
+        /**
+         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":[       {         \"type\":\"document\",         \"relations\":{           \"reader\":{             \"union\":{               \"child\":[                 {                   \"this\":{}                 },                 {                   \"computedUserset\":{                     \"object\":\"\",                     \"relation\":\"writer\"                   }                 }               ]             }           },           \"writer\":{             \"this\":{}           }         }       }     ]   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
          * @summary Return a particular version of an authorization model
          * @param {string} id The authorization model ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readAuthzModel(id: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadAuthzModelResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readAuthzModel(id, options);
+        async readAuthorizationModel(id: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaReadAuthorizationModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readAuthorizationModel(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-         * @summary Check whether a user is authorized to access an object
-         * @param {number} [pageSize] 
-         * @param {string} [continuationToken] 
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+         * @summary Return all the authorization model IDs for a particular store
+         * @param {number} [pageSize]
+         * @param {string} [continuationToken]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readAuthzModels(pageSize?: number, continuationToken?: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleReadAuthzModelsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readAuthzModels(pageSize, continuationToken, options);
+        async readAuthorizationModels(pageSize?: number, continuationToken?: string, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaReadAuthorizationModelsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readAuthorizationModels(pageSize, continuationToken, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET settings API will return the store\'s settings, including environment tag and an array of Sandcastle\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
+         * The GET settings API will return the store\'s settings, including environment tag and an array of Auth0 FGA\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
          * @summary Return store settings, including the environment tag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1244,46 +1388,58 @@ export const SandcastleApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
          * @summary Add or delete tuples from the store
-         * @param {SandcastleWriteRequestParams} body 
+         * @param {Auth0FgaWriteRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async write(body: SandcastleWriteRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<object>> {
+        async write(body: Auth0FgaWriteRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.write(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-         * @summary Create a new authorization model
-         * @param {AuthzmodelTypeDefinitions} body 
+         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * @summary Upsert assertions for an authorization model ID
+         * @param {string} authorizationModelId The authorization model ID
+         * @param {Auth0FgaWriteAssertionsRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async writeAuthzModel(body: AuthzmodelTypeDefinitions, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SandcastleWriteAuthzModelResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.writeAuthzModel(body, options);
+        async writeAssertions(authorizationModelId: string, body: Auth0FgaWriteAssertionsRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeAssertions(authorizationModelId, body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
-         * @summary Update the environment tag for a store
-         * @param {SandcastleWriteSettingsRequestParams} body 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+         * @summary Create a new authorization model
+         * @param {AuthorizationmodelTypeDefinitions} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async writeSettings(body: SandcastleWriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsSettings>> {
+        async writeAuthorizationModel(body: AuthorizationmodelTypeDefinitions, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<Auth0FgaWriteAuthorizationModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.writeAuthorizationModel(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
+        },
+        /**
+         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
+         * @summary Update the environment tag for a store
+         * @param {Auth0FgaWriteSettingsRequestParams} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async writeSettings(body: Auth0FgaWriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.writeSettings(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Sandcastle\'s read and write operations.  Otherwise, only tokens issued by Sandcastle\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Sandcastle stores API.  Other tokens issued by providers external to Sandcastle will be rejected. An example use case is to have browsers directly calling Sandcastle API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Sandcastle\'s read and write operations : 1. In the 3rd party issuer, configure Sandcastle API with the following audience (`https://api.staging.sandcastle.cloud`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Sandcastle\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
-         * @summary Add 3rd party token issuer for Sandcastle read and write operations
-         * @param {SandcastleWriteTokenIssuersRequestParams} body 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+         * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
+         * @param {Auth0FgaWriteTokenIssuersRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async writeTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsTokenIssuer>> {
+        async writeTokenIssuer(body: Auth0FgaWriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosInstance) => PromiseResult<SettingsTokenIssuer>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.writeTokenIssuer(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
@@ -1291,25 +1447,25 @@ export const SandcastleApiFp = function(configuration: Configuration) {
 };
 
 /**
- * SandcastleApi - factory interface
+ * Auth0FgaApi - factory interface
  * @export
  */
-export const SandcastleApiFactory = function (configuration: Configuration, axios?: AxiosInstance) {
-    const localVarFp = SandcastleApiFp(configuration)
+export const Auth0FgaApiFactory = function (configuration: Configuration, axios?: AxiosInstance) {
+    const localVarFp = Auth0FgaApiFp(configuration)
     return {
         /**
-         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
+         * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @summary Check whether a user is authorized to access an object
-         * @param {SandcastleCheckRequestParams} body 
+         * @param {Auth0FgaCheckRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        check(body: SandcastleCheckRequestParams, options?: any): PromiseResult<SandcastleCheckResponse> {
+        check(body: Auth0FgaCheckRequestParams, options?: any): PromiseResult<Auth0FgaCheckResponse> {
             return localVarFp.check(body, options).then((request) => request(axios));
         },
         /**
-         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Sandcastle.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
-         * @summary Remove 3rd party token issuer for Sandcastle read and write operation
+         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+         * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
          * @param {string} id Id of token issuer to be removed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1318,48 +1474,58 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.deleteTokenIssuer(id, options).then((request) => request(axios));
         },
         /**
-         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+         * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-         * @param {SandcastleExpandRequestParams} body 
+         * @param {Auth0FgaExpandRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        expand(body: SandcastleExpandRequestParams, options?: any): PromiseResult<SandcastleExpandResponse> {
+        expand(body: Auth0FgaExpandRequestParams, options?: any): PromiseResult<Auth0FgaExpandResponse> {
             return localVarFp.expand(body, options).then((request) => request(axios));
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
          * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-         * @param {SandcastleReadRequestParams} body 
+         * @param {Auth0FgaReadRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        read(body: SandcastleReadRequestParams, options?: any): PromiseResult<SandcastleReadResponse> {
+        read(body: Auth0FgaReadRequestParams, options?: any): PromiseResult<Auth0FgaReadResponse> {
             return localVarFp.read(body, options).then((request) => request(axios));
         },
         /**
-         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * @summary Read assertions for an authorization model ID
+         * @param {string} authorizationModelId The authorization model ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readAssertions(authorizationModelId: string, options?: any): PromiseResult<Auth0FgaReadAssertionsResponse> {
+            return localVarFp.readAssertions(authorizationModelId, options).then((request) => request(axios));
+        },
+        /**
+         * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":[       {         \"type\":\"document\",         \"relations\":{           \"reader\":{             \"union\":{               \"child\":[                 {                   \"this\":{}                 },                 {                   \"computedUserset\":{                     \"object\":\"\",                     \"relation\":\"writer\"                   }                 }               ]             }           },           \"writer\":{             \"this\":{}           }         }       }     ]   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
          * @summary Return a particular version of an authorization model
          * @param {string} id The authorization model ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readAuthzModel(id: string, options?: any): PromiseResult<SandcastleReadAuthzModelResponse> {
-            return localVarFp.readAuthzModel(id, options).then((request) => request(axios));
+        readAuthorizationModel(id: string, options?: any): PromiseResult<Auth0FgaReadAuthorizationModelResponse> {
+            return localVarFp.readAuthorizationModel(id, options).then((request) => request(axios));
         },
         /**
-         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-         * @summary Check whether a user is authorized to access an object
-         * @param {number} [pageSize] 
-         * @param {string} [continuationToken] 
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+         * @summary Return all the authorization model IDs for a particular store
+         * @param {number} [pageSize]
+         * @param {string} [continuationToken]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readAuthzModels(pageSize?: number, continuationToken?: string, options?: any): PromiseResult<SandcastleReadAuthzModelsResponse> {
-            return localVarFp.readAuthzModels(pageSize, continuationToken, options).then((request) => request(axios));
+        readAuthorizationModels(pageSize?: number, continuationToken?: string, options?: any): PromiseResult<Auth0FgaReadAuthorizationModelsResponse> {
+            return localVarFp.readAuthorizationModels(pageSize, continuationToken, options).then((request) => request(axios));
         },
         /**
-         * The GET settings API will return the store\'s settings, including environment tag and an array of Sandcastle\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
+         * The GET settings API will return the store\'s settings, including environment tag and an array of Auth0 FGA\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
          * @summary Return store settings, including the environment tag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1368,186 +1534,223 @@ export const SandcastleApiFactory = function (configuration: Configuration, axio
             return localVarFp.readSettings(options).then((request) => request(axios));
         },
         /**
-         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
          * @summary Add or delete tuples from the store
-         * @param {SandcastleWriteRequestParams} body 
+         * @param {Auth0FgaWriteRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        write(body: SandcastleWriteRequestParams, options?: any): PromiseResult<object> {
+        write(body: Auth0FgaWriteRequestParams, options?: any): PromiseResult<object> {
             return localVarFp.write(body, options).then((request) => request(axios));
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
-         * @summary Create a new authorization model
-         * @param {AuthzmodelTypeDefinitions} body 
+         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * @summary Upsert assertions for an authorization model ID
+         * @param {string} authorizationModelId The authorization model ID
+         * @param {Auth0FgaWriteAssertionsRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeAuthzModel(body: AuthzmodelTypeDefinitions, options?: any): PromiseResult<SandcastleWriteAuthzModelResponse> {
-            return localVarFp.writeAuthzModel(body, options).then((request) => request(axios));
+        writeAssertions(authorizationModelId: string, body: Auth0FgaWriteAssertionsRequestParams, options?: any): PromiseResult<object> {
+            return localVarFp.writeAssertions(authorizationModelId, body, options).then((request) => request(axios));
         },
         /**
-         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
-         * @summary Update the environment tag for a store
-         * @param {SandcastleWriteSettingsRequestParams} body 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+         * @summary Create a new authorization model
+         * @param {AuthorizationmodelTypeDefinitions} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeSettings(body: SandcastleWriteSettingsRequestParams, options?: any): PromiseResult<SettingsSettings> {
+        writeAuthorizationModel(body: AuthorizationmodelTypeDefinitions, options?: any): PromiseResult<Auth0FgaWriteAuthorizationModelResponse> {
+            return localVarFp.writeAuthorizationModel(body, options).then((request) => request(axios));
+        },
+        /**
+         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
+         * @summary Update the environment tag for a store
+         * @param {Auth0FgaWriteSettingsRequestParams} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        writeSettings(body: Auth0FgaWriteSettingsRequestParams, options?: any): PromiseResult<SettingsSettings> {
             return localVarFp.writeSettings(body, options).then((request) => request(axios));
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Sandcastle\'s read and write operations.  Otherwise, only tokens issued by Sandcastle\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Sandcastle stores API.  Other tokens issued by providers external to Sandcastle will be rejected. An example use case is to have browsers directly calling Sandcastle API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Sandcastle\'s read and write operations : 1. In the 3rd party issuer, configure Sandcastle API with the following audience (`https://api.staging.sandcastle.cloud`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Sandcastle\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
-         * @summary Add 3rd party token issuer for Sandcastle read and write operations
-         * @param {SandcastleWriteTokenIssuersRequestParams} body 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+         * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
+         * @param {Auth0FgaWriteTokenIssuersRequestParams} body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        writeTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any): PromiseResult<SettingsTokenIssuer> {
+        writeTokenIssuer(body: Auth0FgaWriteTokenIssuersRequestParams, options?: any): PromiseResult<SettingsTokenIssuer> {
             return localVarFp.writeTokenIssuer(body, options).then((request) => request(axios));
         },
     };
 };
 
 /**
- * SandcastleApi - object-oriented interface
+ * Auth0FgaApi - object-oriented interface
  * @export
- * @class SandcastleApi
+ * @class Auth0FgaApi
  * @extends {BaseAPI}
  */
-export class SandcastleApi extends BaseAPI {
+export class Auth0FgaApi extends BaseAPI {
     /**
-     * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"owner\"     \"user\": \"anne@auth0.com\"   } } ``` Sandcastle\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
+     * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
      * @summary Check whether a user is authorized to access an object
-     * @param {SandcastleCheckRequestParams} body 
+     * @param {Auth0FgaCheckRequestParams} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public check(body: SandcastleCheckRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).check(body, options).then((request) => request(this.axios));
+    public check(body: Auth0FgaCheckRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).check(body, options).then((request) => request(this.axios));
     }
 
     /**
-     * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Sandcastle.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
-     * @summary Remove 3rd party token issuer for Sandcastle read and write operation
+     * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+     * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
      * @param {string} id Id of token issuer to be removed
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
     public deleteTokenIssuer(id: string, options?: any) {
-        return SandcastleApiFp(this.configuration).deleteTokenIssuer(id, options).then((request) => request(this.axios));
+        return Auth0FgaApiFp(this.configuration).deleteTokenIssuer(id, options).then((request) => request(this.axios));
     }
 
     /**
-     * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   - name: document     relations:       reader:         anyOf:           - self           - usersRelatedToObjectAs: writer       writer:         self ``` In order to expand all users that have reader relationship with object document:2021-budget, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Sandcastle\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the writer relationship for the `document:2021-budget`.
+     * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
      * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-     * @param {SandcastleExpandRequestParams} body 
+     * @param {Auth0FgaExpandRequestParams} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public expand(body: SandcastleExpandRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).expand(body, options).then((request) => request(this.axios));
+    public expand(body: Auth0FgaExpandRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).expand(body, options).then((request) => request(this.axios));
     }
 
     /**
-     * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"object\": \"document:\",      \"relation\": \"reader\",      \"user\": \"bob@auth0.com\"   } } ``` The API will return something like  ```json {       \"tuple_key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\" } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     },   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
+     * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
      * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-     * @param {SandcastleReadRequestParams} body 
+     * @param {Auth0FgaReadRequestParams} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public read(body: SandcastleReadRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).read(body, options).then((request) => request(this.axios));
+    public read(body: Auth0FgaReadRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).read(body, options).then((request) => request(this.axios));
     }
 
     /**
-     * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":{       \"type_definitions\":[         {           \"type\":\"document\",           \"relations\":{             \"reader\":{               \"union\":{                 \"child\":[                   {                     \"this\":{                      }                   },                   {                     \"computedUserset\":{                       \"object\":\"\",                       \"relation\":\"writer\"                     }                   }                 ]               }             },             \"writer\":{               \"this\":{                }             }           }         }       ]     }   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
+     * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+     * @summary Read assertions for an authorization model ID
+     * @param {string} authorizationModelId The authorization model ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof Auth0FgaApi
+     */
+    public readAssertions(authorizationModelId: string, options?: any) {
+        return Auth0FgaApiFp(this.configuration).readAssertions(authorizationModelId, options).then((request) => request(this.axios));
+    }
+
+    /**
+     * The GET authorization-models by ID API will return a particular version of authorization model that had been configured for a certain store.   Path parameter `store_id` and `id` are required. The response will return the authorization model for the particular version.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). ## Example To retrieve the authorization model with ID `1yunpF9DkzXMzm0dHrsCuWsooEV` for the store, call the GET authorization-models by ID API with `1yunpF9DkzXMzm0dHrsCuWsooEV` as the `id` path parameter.  The API will return: ```json {   \"authorization_model\":{     \"id\":\"1yunpF9DkzXMzm0dHrsCuWsooEV\",     \"type_definitions\":[       {         \"type\":\"document\",         \"relations\":{           \"reader\":{             \"union\":{               \"child\":[                 {                   \"this\":{}                 },                 {                   \"computedUserset\":{                     \"object\":\"\",                     \"relation\":\"writer\"                   }                 }               ]             }           },           \"writer\":{             \"this\":{}           }         }       }     ]   } } ``` In the above example, there is only 1 type (`document`) with 2 relations (`writer` and `reader`).
      * @summary Return a particular version of an authorization model
      * @param {string} id The authorization model ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public readAuthzModel(id: string, options?: any) {
-        return SandcastleApiFp(this.configuration).readAuthzModel(id, options).then((request) => request(this.axios));
+    public readAuthorizationModel(id: string, options?: any) {
+        return Auth0FgaApiFp(this.configuration).readAuthorizationModel(id, options).then((request) => request(this.axios));
     }
 
     /**
-     * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Sandcastle\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-     * @summary Check whether a user is authorized to access an object
-     * @param {number} [pageSize] 
-     * @param {string} [continuationToken] 
+     * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+     * @summary Return all the authorization model IDs for a particular store
+     * @param {number} [pageSize]
+     * @param {string} [continuationToken]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public readAuthzModels(pageSize?: number, continuationToken?: string, options?: any) {
-        return SandcastleApiFp(this.configuration).readAuthzModels(pageSize, continuationToken, options).then((request) => request(this.axios));
+    public readAuthorizationModels(pageSize?: number, continuationToken?: string, options?: any) {
+        return Auth0FgaApiFp(this.configuration).readAuthorizationModels(pageSize, continuationToken, options).then((request) => request(this.axios));
     }
 
     /**
-     * The GET settings API will return the store\'s settings, including environment tag and an array of Sandcastle\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
+     * The GET settings API will return the store\'s settings, including environment tag and an array of Auth0 FGA\'s allowed 3rd party token issuers. The environment tag is used to differentiate between development, staging, and production environments.   Path parameter `store_id` is required. ## Example GET settings API\'s response looks like: ```json {   \"environment\":\"STAGING\",   \"token_issuers\":[     {       \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",       \"issuer_url\":\"https://example.issuer.com\"     }   ] } ``` In the above response, the store is configured as STAGING and there is one allowed 3rd party token issuer `https://example.issuer.com`.
      * @summary Return store settings, including the environment tag
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
     public readSettings(options?: any) {
-        return SandcastleApiFp(this.configuration).readSettings(options).then((request) => request(this.axios));
+        return Auth0FgaApiFp(this.configuration).readSettings(options).then((request) => request(this.axios));
     }
 
     /**
-     * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Sandcastle to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"writer\",         \"user\": \"anne@auth0.com\"       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"object\": \"document:2021-budget\",         \"relation\": \"reader\",         \"user\": \"bob@auth0.com\"       }     ]   } } ``` 
+     * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
      * @summary Add or delete tuples from the store
-     * @param {SandcastleWriteRequestParams} body 
+     * @param {Auth0FgaWriteRequestParams} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public write(body: SandcastleWriteRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).write(body, options).then((request) => request(this.axios));
+    public write(body: Auth0FgaWriteRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).write(body, options).then((request) => request(this.axios));
     }
 
     /**
-     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Sandcastle\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+     * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+     * @summary Upsert assertions for an authorization model ID
+     * @param {string} authorizationModelId The authorization model ID
+     * @param {Auth0FgaWriteAssertionsRequestParams} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof Auth0FgaApi
+     */
+    public writeAssertions(authorizationModelId: string, body: Auth0FgaWriteAssertionsRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).writeAssertions(authorizationModelId, body, options).then((request) => request(this.axios));
+    }
+
+    /**
+     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
      * @summary Create a new authorization model
-     * @param {AuthzmodelTypeDefinitions} body 
+     * @param {AuthorizationmodelTypeDefinitions} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public writeAuthzModel(body: AuthzmodelTypeDefinitions, options?: any) {
-        return SandcastleApiFp(this.configuration).writeAuthzModel(body, options).then((request) => request(this.axios));
+    public writeAuthorizationModel(body: AuthorizationmodelTypeDefinitions, options?: any) {
+        return Auth0FgaApiFp(this.configuration).writeAuthorizationModel(body, options).then((request) => request(this.axios));
     }
 
     /**
-     * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
+     * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
      * @summary Update the environment tag for a store
-     * @param {SandcastleWriteSettingsRequestParams} body 
+     * @param {Auth0FgaWriteSettingsRequestParams} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public writeSettings(body: SandcastleWriteSettingsRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).writeSettings(body, options).then((request) => request(this.axios));
+    public writeSettings(body: Auth0FgaWriteSettingsRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).writeSettings(body, options).then((request) => request(this.axios));
     }
 
     /**
-     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Sandcastle\'s read and write operations.  Otherwise, only tokens issued by Sandcastle\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Sandcastle stores API.  Other tokens issued by providers external to Sandcastle will be rejected. An example use case is to have browsers directly calling Sandcastle API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Sandcastle\'s read and write operations : 1. In the 3rd party issuer, configure Sandcastle API with the following audience (`https://api.staging.sandcastle.cloud`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Sandcastle\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
-     * @summary Add 3rd party token issuer for Sandcastle read and write operations
-     * @param {SandcastleWriteTokenIssuersRequestParams} body 
+     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+     * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
+     * @param {Auth0FgaWriteTokenIssuersRequestParams} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SandcastleApi
+     * @memberof Auth0FgaApi
      */
-    public writeTokenIssuer(body: SandcastleWriteTokenIssuersRequestParams, options?: any) {
-        return SandcastleApiFp(this.configuration).writeTokenIssuer(body, options).then((request) => request(this.axios));
+    public writeTokenIssuer(body: Auth0FgaWriteTokenIssuersRequestParams, options?: any) {
+        return Auth0FgaApiFp(this.configuration).writeTokenIssuer(body, options).then((request) => request(this.axios));
     }
 }
 
-
+// For backward compatibility -  will be removed soon
+export const SandcastleAPI = Auth0FgaApi;
