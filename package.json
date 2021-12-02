@@ -1,6 +1,6 @@
 {
   "name": "sandcastle-sdk",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Auth0 FGA SDK for JavaScript",
   "author": "Auth0Lab",
   "keywords": [
