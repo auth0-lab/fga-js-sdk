@@ -1,4 +1,4 @@
-By submitting a PR to this repository, you agree to the terms within the [Auth0 Code of Conduct](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md). Please see the [contributing guidelines](https://github.com/auth0-lab/sandcastle-js-sdk/blob/main/CONTRIBUTING.md) for how to create and submit a high-quality PR for this repo.
+By submitting a PR to this repository, you agree to the terms within the [Auth0 Code of Conduct](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md). Please see the [contributing guidelines](https://github.com/auth0-lab/auth0-fga-js-sdk/blob/main/CONTRIBUTING.md) for how to create and submit a high-quality PR for this repo.
 
 ### Description
 

@@ -3,16 +3,16 @@ import MockAdapter from 'axios-mock-adapter';
 
 const mock = new MockAdapter(axios);
 
-import { SandcastleApi, SandcastleCheckResponse } from '../api';
+import { Auth0FgaApi, Auth0FgaCheckResponse } from '../api';
 import { CallResult } from '../common';
 
 const storeId = 'test';
 
-describe('Sandcastle API', () => {
-  let api: SandcastleApi;
+describe('Auth0 FGA API', () => {
+  let api: Auth0FgaApi;
 
   beforeAll(() => {
-    api = new SandcastleApi({
+    api = new Auth0FgaApi({
       storeId,
       clientId: 'test1234',
       clientSecret: 'test456',
@@ -21,7 +21,7 @@ describe('Sandcastle API', () => {
   })
 
   describe('happy path of CHECK', () => {
-    let result: CallResult<SandcastleCheckResponse>;
+    let result: CallResult<Auth0FgaCheckResponse>;
 
     beforeAll(async () => {
       const tupleKey = {
@@ -34,7 +34,7 @@ describe('Sandcastle API', () => {
       });
 
       mock.onPost(
-        `https://api.staging.sandcastle.cloud/${storeId}/check`,
+        `https://api.staging.fga.dev/${storeId}/check`,
         {
           tuple_key: tupleKey
         },

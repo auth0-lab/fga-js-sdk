@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Project Sandcastle
- * Project Sandcastle is the internal codename of an early-stage product we are building at Auth0 as part of Auth0Lab to solve fine-grained authorization at scale. If you are interested in learning more about our plans, please reach out via our Discord chat.  The limits and information described in this document is subject to change.
+ * Auth0 Fine Grained Authorization (FGA)
+ * Auth0 Fine Grained Authorization (FGA) is an early-stage product we are building at Auth0 as part of Auth0Lab to solve fine-grained authorization at scale. If you are interested in learning more about our plans, please reach out via our Discord chat.  The limits and information described in this document is subject to change.
  *
  * The version of the OpenAPI document: 0.1
  * Contact: https://discord.gg/8naAwJfWN6
@@ -56,8 +56,7 @@ export interface UserConfigurationParams {
     storeId: string;
     clientId: string;
     clientSecret: string;
-    environment: string;
-    deploymentId?: string;
+    environment?: string;
     baseOptions?: any;
 }
 
@@ -66,11 +65,10 @@ export interface EnvironmentConfiguration {
     scheme: string;
     apiTokenIssuer: string;
     apiAudience: string;
-    deploymentId: string;
-    requireAuth?: boolean;
+    allowNoAuth?: boolean;
 }
 
-const environmentConfigurationString = `{"playground":{"apiAudience":"https://api.playground.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.playground.sandcastle.cloud"},"staging":{"apiAudience":"https://api.staging.sandcastle.cloud","requireAuth":true,"apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.staging.sandcastle.cloud"},"poc":{"apiAudience":"https://api.poc.sandcastle.cloud","requireAuth":true,"apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.poc.sandcastle.cloud"}}`;
+const environmentConfigurationString = `{"default":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"us":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"playground":{"allowNoAuth":true,"apiAudience":"https://api.playground.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.playground.sandcastle.cloud"},"staging":{"apiAudience":"https://api.staging.fga.dev/","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.staging.fga.dev"},"poc":{"apiAudience":"https://api.poc.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.poc.sandcastle.cloud"}}`;
 
 /**
  *
@@ -78,7 +76,7 @@ const environmentConfigurationString = `{"playground":{"apiAudience":"https://ap
  * @param environment - Environment from user config
  * @return EnvironmentConfiguration
  */
-const getEnvironmentConfiguration = function (environment: string): EnvironmentConfiguration {
+const getEnvironmentConfiguration = function (environment: string = 'default'): EnvironmentConfiguration {
   let environmentConfigs;
   try {
     environmentConfigs = JSON.parse(environmentConfigurationString);
@@ -119,40 +117,33 @@ export class Configuration {
      */
     storeId: string;
     /**
-     * Sandcastle Client ID
+     * Auth0 FGA Client ID
      *
      * @type {string}
      * @memberof Configuration
      */
     clientId?: string;
     /**
-     * Sandcastle Client Secret
+     * Auth0 FGA Client Secret
      *
      * @type {string}
      * @memberof Configuration
      */
     clientSecret?: string;
     /**
-     * Sandcastle API Token Issuer
+     * Auth0 FGA API Token Issuer
      *
      * @type {string}
      * @memberof Configuration
      */
     apiTokenIssuer?: string;
     /**
-     * Sandcastle API Audience
+     * Auth0 FGA API Audience
      *
      * @type {string}
      * @memberof Configuration
      */
     apiAudience?: string;
-    /**
-     * Sandcastle Deployment ID
-     *
-     * @type {string}
-     * @memberof Configuration
-     */
-    deploymentId?: string;
     /**
      * base options for axios calls
      *
@@ -163,27 +154,21 @@ export class Configuration {
 
     constructor(params: UserConfigurationParams = {} as unknown as UserConfigurationParams, private axios: AxiosInstance = globalAxios) {
         assertParamExists('Configuration', 'storeId', params.storeId);
-        assertParamExists('Configuration', 'environment', params.environment);
 
         const environmentConfiguration = getEnvironmentConfiguration(params.environment);
 
         this.storeId = params.storeId!;
         this.clientId = params.clientId;
         this.clientSecret = params.clientSecret;
-        this.deploymentId  = params.deploymentId;
         const baseOptions = params.baseOptions || {};
         baseOptions.headers = baseOptions.headers || {};
 
         this.serverUrl = `${environmentConfiguration.scheme}://${environmentConfiguration.host}`;
         this.apiTokenIssuer = environmentConfiguration.apiTokenIssuer;
         this.apiAudience = environmentConfiguration.apiAudience;
-
-        if (this.deploymentId) {
-          baseOptions.headers['X-SANDCASTLE-DEPLOYMENT-ID'] = this.deploymentId;
-        }
         this.baseOptions = baseOptions;
 
-        if (environmentConfiguration.requireAuth) {
+        if (!environmentConfiguration.allowNoAuth) {
             assertParamExists('Configuration', 'clientId', this.clientId);
             assertParamExists('Configuration', 'clientSecret', this.clientSecret);
         }
