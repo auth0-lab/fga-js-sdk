@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.1](https://github.com/auth0-lab/auth0-fga-js-sdk/compare/v0.4.0...v0.4.1) (2021-12-03)
+
+## Breaking Changes
+- rename package `@auth0/fga` 7220b4d
+
+Old package is no longer supported, please install the latest package from `@auth0/fga`
+
+## [0.4.0](https://github.com/auth0-lab/auth0-fga-js-sdk/compare/v0.3.1...v0.4.0) (2021-12-02)
+
+## Breaking Changes
+* Package and Type prefixes have been renamed from Sandcastle to Auth0Fga 805730d
+
+## Features
+* Support Assertions API 805730d
+* Support us environment 805730d
+
 ## [0.3.1](https://github.com/auth0-lab/auth0-fga-js-sdk/compare/v0.3.0...v0.3.1) (2021-11-16)
 
 ## Changes:
