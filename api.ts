@@ -29,38 +29,38 @@ import {
 import { assertParamExists, Configuration, RequiredError } from './configuration';
 
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaAssertion
  */
 export interface Auth0FgaAssertion {
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKey}
      * @memberof Auth0FgaAssertion
      */
     tuple_key: Auth0FgaTupleKey;
     /**
-     *
+     * 
      * @type {boolean}
      * @memberof Auth0FgaAssertion
      */
     expectation: boolean;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaCheckRequestParams
  */
 export interface Auth0FgaCheckRequestParams {
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKey}
      * @memberof Auth0FgaCheckRequestParams
      */
     tuple_key?: Auth0FgaTupleKey;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaCheckRequestParams
      */
@@ -73,58 +73,58 @@ export interface Auth0FgaCheckRequestParams {
     trace?: boolean;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaCheckResponse
  */
 export interface Auth0FgaCheckResponse {
     /**
-     *
+     * 
      * @type {boolean}
      * @memberof Auth0FgaCheckResponse
      */
     allowed?: boolean;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaCheckResponse
      */
     resolution?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaExpandRequestParams
  */
 export interface Auth0FgaExpandRequestParams {
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKey}
      * @memberof Auth0FgaExpandRequestParams
      */
     tuple_key?: Auth0FgaTupleKey;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaExpandRequestParams
      */
     authorization_model_id?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaExpandResponse
  */
 export interface Auth0FgaExpandResponse {
     /**
-     *
+     * 
      * @type {Auth0FgaUsersetTree}
      * @memberof Auth0FgaExpandResponse
      */
     tree?: Auth0FgaUsersetTree;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaReadAssertionsResponse
  */
@@ -136,128 +136,128 @@ export interface Auth0FgaReadAssertionsResponse {
      */
     authorization_model_id?: string;
     /**
-     *
+     * 
      * @type {Array<Auth0FgaAssertion>}
      * @memberof Auth0FgaReadAssertionsResponse
      */
     assertions?: Array<Auth0FgaAssertion>;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaReadAuthorizationModelResponse
  */
 export interface Auth0FgaReadAuthorizationModelResponse {
     /**
-     *
+     * 
      * @type {AuthorizationmodelAuthorizationModel}
      * @memberof Auth0FgaReadAuthorizationModelResponse
      */
     authorization_model?: AuthorizationmodelAuthorizationModel;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaReadAuthorizationModelsResponse
  */
 export interface Auth0FgaReadAuthorizationModelsResponse {
     /**
-     *
+     * 
      * @type {Array<string>}
      * @memberof Auth0FgaReadAuthorizationModelsResponse
      */
     authorization_model_ids?: Array<string>;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaReadAuthorizationModelsResponse
      */
     continuation_token?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaReadRequestParams
  */
 export interface Auth0FgaReadRequestParams {
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKey}
      * @memberof Auth0FgaReadRequestParams
      */
     tuple_key?: Auth0FgaTupleKey;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaReadRequestParams
      */
     authorization_model_id?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaReadResponse
  */
 export interface Auth0FgaReadResponse {
     /**
-     *
+     * 
      * @type {Array<Auth0FgaTuple>}
      * @memberof Auth0FgaReadResponse
      */
     tuples?: Array<Auth0FgaTuple>;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaTuple
  */
 export interface Auth0FgaTuple {
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKey}
      * @memberof Auth0FgaTuple
      */
     key?: Auth0FgaTupleKey;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaTuple
      */
     timestamp?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaTupleKey
  */
 export interface Auth0FgaTupleKey {
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaTupleKey
      */
     object?: string;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaTupleKey
      */
     relation?: string;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaTupleKey
      */
     user?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaTupleKeys
  */
 export interface Auth0FgaTupleKeys {
     /**
-     *
+     * 
      * @type {Array<Auth0FgaTupleKey>}
      * @memberof Auth0FgaTupleKeys
      */
@@ -270,243 +270,243 @@ export interface Auth0FgaTupleKeys {
  */
 export interface Auth0FgaUsersetTree {
     /**
-     *
+     * 
      * @type {UsersetTreeNode}
      * @memberof Auth0FgaUsersetTree
      */
     root?: UsersetTreeNode;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaUsersetTreeDifference
  */
 export interface Auth0FgaUsersetTreeDifference {
     /**
-     *
+     * 
      * @type {UsersetTreeNode}
      * @memberof Auth0FgaUsersetTreeDifference
      */
     base?: UsersetTreeNode;
     /**
-     *
+     * 
      * @type {UsersetTreeNode}
      * @memberof Auth0FgaUsersetTreeDifference
      */
     subtract?: UsersetTreeNode;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaUsersetTreeTupleToUserset
  */
 export interface Auth0FgaUsersetTreeTupleToUserset {
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaUsersetTreeTupleToUserset
      */
     tupleset?: string;
     /**
-     *
+     * 
      * @type {Array<UsersetTreeComputed>}
      * @memberof Auth0FgaUsersetTreeTupleToUserset
      */
     computed?: Array<UsersetTreeComputed>;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaWriteAssertionsRequestParams
  */
 export interface Auth0FgaWriteAssertionsRequestParams {
     /**
-     *
+     * 
      * @type {Array<Auth0FgaAssertion>}
      * @memberof Auth0FgaWriteAssertionsRequestParams
      */
     assertions: Array<Auth0FgaAssertion>;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaWriteAuthorizationModelResponse
  */
 export interface Auth0FgaWriteAuthorizationModelResponse {
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaWriteAuthorizationModelResponse
      */
     authorization_model_id?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaWriteRequestParams
  */
 export interface Auth0FgaWriteRequestParams {
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKeys}
      * @memberof Auth0FgaWriteRequestParams
      */
     writes?: Auth0FgaTupleKeys;
     /**
-     *
+     * 
      * @type {Auth0FgaTupleKeys}
      * @memberof Auth0FgaWriteRequestParams
      */
     deletes?: Auth0FgaTupleKeys;
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaWriteRequestParams
      */
     authorization_model_id?: string;
     /**
-     *
+     * 
      * @type {Auth0FgaTuple}
      * @memberof Auth0FgaWriteRequestParams
      */
     lock_tuple?: Auth0FgaTuple;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaWriteSettingsRequestParams
  */
 export interface Auth0FgaWriteSettingsRequestParams {
     /**
-     *
+     * 
      * @type {SettingsEnvironment}
      * @memberof Auth0FgaWriteSettingsRequestParams
      */
     environment?: SettingsEnvironment;
 }
 /**
- *
+ * 
  * @export
  * @interface Auth0FgaWriteTokenIssuersRequestParams
  */
 export interface Auth0FgaWriteTokenIssuersRequestParams {
     /**
-     *
+     * 
      * @type {string}
      * @memberof Auth0FgaWriteTokenIssuersRequestParams
      */
     issuer_url?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelAuthorizationModel
  */
 export interface AuthorizationmodelAuthorizationModel {
     /**
-     *
+     * 
      * @type {string}
      * @memberof AuthorizationmodelAuthorizationModel
      */
     id?: string;
     /**
-     *
+     * 
      * @type {Array<AuthorizationmodelTypeDefinition>}
      * @memberof AuthorizationmodelAuthorizationModel
      */
     type_definitions?: Array<AuthorizationmodelTypeDefinition>;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelDifference
  */
 export interface AuthorizationmodelDifference {
     /**
-     *
+     * 
      * @type {AuthorizationmodelUserset}
      * @memberof AuthorizationmodelDifference
      */
     base: AuthorizationmodelUserset;
     /**
-     *
+     * 
      * @type {AuthorizationmodelUserset}
      * @memberof AuthorizationmodelDifference
      */
     subtract: AuthorizationmodelUserset;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelObjectRelation
  */
 export interface AuthorizationmodelObjectRelation {
     /**
-     *
+     * 
      * @type {string}
      * @memberof AuthorizationmodelObjectRelation
      */
     object?: string;
     /**
-     *
+     * 
      * @type {string}
      * @memberof AuthorizationmodelObjectRelation
      */
     relation?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelTupleToUserset
  */
 export interface AuthorizationmodelTupleToUserset {
     /**
-     *
+     * 
      * @type {AuthorizationmodelObjectRelation}
      * @memberof AuthorizationmodelTupleToUserset
      */
     tupleset?: AuthorizationmodelObjectRelation;
     /**
-     *
+     * 
      * @type {AuthorizationmodelObjectRelation}
      * @memberof AuthorizationmodelTupleToUserset
      */
     computedUserset?: AuthorizationmodelObjectRelation;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelTypeDefinition
  */
 export interface AuthorizationmodelTypeDefinition {
     /**
-     *
+     * 
      * @type {string}
      * @memberof AuthorizationmodelTypeDefinition
      */
     type: string;
     /**
-     *
+     * 
      * @type {{ [key: string]: AuthorizationmodelUserset; }}
      * @memberof AuthorizationmodelTypeDefinition
      */
     relations: { [key: string]: AuthorizationmodelUserset; };
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelTypeDefinitions
  */
 export interface AuthorizationmodelTypeDefinitions {
     /**
-     *
+     * 
      * @type {Array<AuthorizationmodelTypeDefinition>}
      * @memberof AuthorizationmodelTypeDefinitions
      */
     type_definitions?: Array<AuthorizationmodelTypeDefinition>;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelUserset
  */
@@ -518,95 +518,95 @@ export interface AuthorizationmodelUserset {
      */
     _this?: object;
     /**
-     *
+     * 
      * @type {AuthorizationmodelObjectRelation}
      * @memberof AuthorizationmodelUserset
      */
     computedUserset?: AuthorizationmodelObjectRelation;
     /**
-     *
+     * 
      * @type {AuthorizationmodelTupleToUserset}
      * @memberof AuthorizationmodelUserset
      */
     tupleToUserset?: AuthorizationmodelTupleToUserset;
     /**
-     *
+     * 
      * @type {AuthorizationmodelUsersets}
      * @memberof AuthorizationmodelUserset
      */
     union?: AuthorizationmodelUsersets;
     /**
-     *
+     * 
      * @type {AuthorizationmodelUsersets}
      * @memberof AuthorizationmodelUserset
      */
     intersection?: AuthorizationmodelUsersets;
     /**
-     *
+     * 
      * @type {AuthorizationmodelDifference}
      * @memberof AuthorizationmodelUserset
      */
     difference?: AuthorizationmodelDifference;
 }
 /**
- *
+ * 
  * @export
  * @interface AuthorizationmodelUsersets
  */
 export interface AuthorizationmodelUsersets {
     /**
-     *
+     * 
      * @type {Array<AuthorizationmodelUserset>}
      * @memberof AuthorizationmodelUsersets
      */
     child?: Array<AuthorizationmodelUserset>;
 }
 /**
- *
+ * 
  * @export
  * @interface ProtobufAny
  */
 export interface ProtobufAny {
     /**
-     *
+     * 
      * @type {string}
      * @memberof ProtobufAny
      */
     typeUrl?: string;
     /**
-     *
+     * 
      * @type {string}
      * @memberof ProtobufAny
      */
     value?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface RpcStatus
  */
 export interface RpcStatus {
     /**
-     *
+     * 
      * @type {number}
      * @memberof RpcStatus
      */
     code?: number;
     /**
-     *
+     * 
      * @type {string}
      * @memberof RpcStatus
      */
     message?: string;
     /**
-     *
+     * 
      * @type {Array<ProtobufAny>}
      * @memberof RpcStatus
      */
     details?: Array<ProtobufAny>;
 }
 /**
- *
+ * 
  * @export
  * @enum {string}
  */
@@ -619,51 +619,51 @@ export enum SettingsEnvironment {
 }
 
 /**
- *
+ * 
  * @export
  * @interface SettingsSettings
  */
 export interface SettingsSettings {
     /**
-     *
+     * 
      * @type {SettingsEnvironment}
      * @memberof SettingsSettings
      */
     environment?: SettingsEnvironment;
     /**
-     *
+     * 
      * @type {Array<SettingsTokenIssuer>}
      * @memberof SettingsSettings
      */
     token_issuers?: Array<SettingsTokenIssuer>;
 }
 /**
- *
+ * 
  * @export
  * @interface SettingsTokenIssuer
  */
 export interface SettingsTokenIssuer {
     /**
-     *
+     * 
      * @type {string}
      * @memberof SettingsTokenIssuer
      */
     id?: string;
     /**
-     *
+     * 
      * @type {string}
      * @memberof SettingsTokenIssuer
      */
     issuer_url?: string;
 }
 /**
- *
+ * 
  * @export
  * @interface UsersetTreeComputed
  */
 export interface UsersetTreeComputed {
     /**
-     *
+     * 
      * @type {string}
      * @memberof UsersetTreeComputed
      */
@@ -676,82 +676,82 @@ export interface UsersetTreeComputed {
  */
 export interface UsersetTreeLeaf {
     /**
-     *
+     * 
      * @type {UsersetTreeUsers}
      * @memberof UsersetTreeLeaf
      */
     users?: UsersetTreeUsers;
     /**
-     *
+     * 
      * @type {UsersetTreeComputed}
      * @memberof UsersetTreeLeaf
      */
     computed?: UsersetTreeComputed;
     /**
-     *
+     * 
      * @type {Auth0FgaUsersetTreeTupleToUserset}
      * @memberof UsersetTreeLeaf
      */
     tupleToUserset?: Auth0FgaUsersetTreeTupleToUserset;
 }
 /**
- *
+ * 
  * @export
  * @interface UsersetTreeNode
  */
 export interface UsersetTreeNode {
     /**
-     *
+     * 
      * @type {string}
      * @memberof UsersetTreeNode
      */
     name?: string;
     /**
-     *
+     * 
      * @type {UsersetTreeLeaf}
      * @memberof UsersetTreeNode
      */
     leaf?: UsersetTreeLeaf;
     /**
-     *
+     * 
      * @type {Auth0FgaUsersetTreeDifference}
      * @memberof UsersetTreeNode
      */
     difference?: Auth0FgaUsersetTreeDifference;
     /**
-     *
+     * 
      * @type {UsersetTreeNodes}
      * @memberof UsersetTreeNode
      */
     union?: UsersetTreeNodes;
     /**
-     *
+     * 
      * @type {UsersetTreeNodes}
      * @memberof UsersetTreeNode
      */
     intersection?: UsersetTreeNodes;
 }
 /**
- *
+ * 
  * @export
  * @interface UsersetTreeNodes
  */
 export interface UsersetTreeNodes {
     /**
-     *
+     * 
      * @type {Array<UsersetTreeNode>}
      * @memberof UsersetTreeNodes
      */
     nodes?: Array<UsersetTreeNode>;
 }
 /**
- *
+ * 
  * @export
  * @interface UsersetTreeUsers
  */
 export interface UsersetTreeUsers {
     /**
-     *
+     * 
      * @type {Array<string>}
      * @memberof UsersetTreeUsers
      */
@@ -767,7 +767,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
         /**
          * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @summary Check whether a user is authorized to access an object
-         * @param {Auth0FgaCheckRequestParams} body
+         * @param {Auth0FgaCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -792,7 +792,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -833,7 +833,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -846,7 +846,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
         /**
          * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-         * @param {Auth0FgaExpandRequestParams} body
+         * @param {Auth0FgaExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -871,7 +871,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -885,9 +885,9 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
          * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-         * @param {Auth0FgaReadRequestParams} body
+         * @param {Auth0FgaReadRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -912,7 +912,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -926,7 +926,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
          * @summary Read assertions for an authorization model ID
          * @param {string} authorizationModelId The authorization model ID
          * @param {*} [options] Override http request option.
@@ -953,7 +953,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -991,7 +991,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -1002,10 +1002,10 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
          * @summary Return all the authorization model IDs for a particular store
-         * @param {number} [pageSize]
-         * @param {string} [continuationToken]
+         * @param {number} [pageSize] 
+         * @param {string} [continuationToken] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1036,7 +1036,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             }
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -1071,7 +1071,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -1082,9 +1082,9 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` 
          * @summary Add or delete tuples from the store
-         * @param {Auth0FgaWriteRequestParams} body
+         * @param {Auth0FgaWriteRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1109,7 +1109,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1123,10 +1123,10 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
          * @summary Upsert assertions for an authorization model ID
          * @param {string} authorizationModelId The authorization model ID
-         * @param {Auth0FgaWriteAssertionsRequestParams} body
+         * @param {Auth0FgaWriteAssertionsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1153,7 +1153,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1167,9 +1167,9 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
          * @summary Create a new authorization model
-         * @param {AuthorizationmodelTypeDefinitions} body
+         * @param {AuthorizationmodelTypeDefinitions} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1194,7 +1194,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1208,9 +1208,9 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
+         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
          * @summary Update the environment tag for a store
-         * @param {Auth0FgaWriteSettingsRequestParams} body
+         * @param {Auth0FgaWriteSettingsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1235,7 +1235,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1249,9 +1249,9 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
-         * @param {Auth0FgaWriteTokenIssuersRequestParams} body
+         * @param {Auth0FgaWriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1276,7 +1276,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
@@ -1302,7 +1302,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
         /**
          * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @summary Check whether a user is authorized to access an object
-         * @param {Auth0FgaCheckRequestParams} body
+         * @param {Auth0FgaCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1324,7 +1324,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
         /**
          * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-         * @param {Auth0FgaExpandRequestParams} body
+         * @param {Auth0FgaExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1333,9 +1333,9 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
          * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-         * @param {Auth0FgaReadRequestParams} body
+         * @param {Auth0FgaReadRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1344,7 +1344,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
          * @summary Read assertions for an authorization model ID
          * @param {string} authorizationModelId The authorization model ID
          * @param {*} [options] Override http request option.
@@ -1366,10 +1366,10 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
          * @summary Return all the authorization model IDs for a particular store
-         * @param {number} [pageSize]
-         * @param {string} [continuationToken]
+         * @param {number} [pageSize] 
+         * @param {string} [continuationToken] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1388,9 +1388,9 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` 
          * @summary Add or delete tuples from the store
-         * @param {Auth0FgaWriteRequestParams} body
+         * @param {Auth0FgaWriteRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1399,10 +1399,10 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
          * @summary Upsert assertions for an authorization model ID
          * @param {string} authorizationModelId The authorization model ID
-         * @param {Auth0FgaWriteAssertionsRequestParams} body
+         * @param {Auth0FgaWriteAssertionsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1411,9 +1411,9 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
          * @summary Create a new authorization model
-         * @param {AuthorizationmodelTypeDefinitions} body
+         * @param {AuthorizationmodelTypeDefinitions} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1422,9 +1422,9 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
+         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
          * @summary Update the environment tag for a store
-         * @param {Auth0FgaWriteSettingsRequestParams} body
+         * @param {Auth0FgaWriteSettingsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1433,9 +1433,9 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
-         * @param {Auth0FgaWriteTokenIssuersRequestParams} body
+         * @param {Auth0FgaWriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1456,7 +1456,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
         /**
          * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
          * @summary Check whether a user is authorized to access an object
-         * @param {Auth0FgaCheckRequestParams} body
+         * @param {Auth0FgaCheckRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1476,7 +1476,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
         /**
          * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
          * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-         * @param {Auth0FgaExpandRequestParams} body
+         * @param {Auth0FgaExpandRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1484,9 +1484,9 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.expand(body, options).then((request) => request(axios));
         },
         /**
-         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
+         * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
          * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-         * @param {Auth0FgaReadRequestParams} body
+         * @param {Auth0FgaReadRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1494,7 +1494,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.read(body, options).then((request) => request(axios));
         },
         /**
-         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
          * @summary Read assertions for an authorization model ID
          * @param {string} authorizationModelId The authorization model ID
          * @param {*} [options] Override http request option.
@@ -1514,10 +1514,10 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.readAuthorizationModel(id, options).then((request) => request(axios));
         },
         /**
-         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+         * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
          * @summary Return all the authorization model IDs for a particular store
-         * @param {number} [pageSize]
-         * @param {string} [continuationToken]
+         * @param {number} [pageSize] 
+         * @param {string} [continuationToken] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1534,9 +1534,9 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.readSettings(options).then((request) => request(axios));
         },
         /**
-         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
+         * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` 
          * @summary Add or delete tuples from the store
-         * @param {Auth0FgaWriteRequestParams} body
+         * @param {Auth0FgaWriteRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1544,10 +1544,10 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.write(body, options).then((request) => request(axios));
         },
         /**
-         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+         * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
          * @summary Upsert assertions for an authorization model ID
          * @param {string} authorizationModelId The authorization model ID
-         * @param {Auth0FgaWriteAssertionsRequestParams} body
+         * @param {Auth0FgaWriteAssertionsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1555,9 +1555,9 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.writeAssertions(authorizationModelId, body, options).then((request) => request(axios));
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
          * @summary Create a new authorization model
-         * @param {AuthorizationmodelTypeDefinitions} body
+         * @param {AuthorizationmodelTypeDefinitions} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1565,9 +1565,9 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.writeAuthorizationModel(body, options).then((request) => request(axios));
         },
         /**
-         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
+         * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
          * @summary Update the environment tag for a store
-         * @param {Auth0FgaWriteSettingsRequestParams} body
+         * @param {Auth0FgaWriteSettingsRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1575,9 +1575,9 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.writeSettings(body, options).then((request) => request(axios));
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
-         * @param {Auth0FgaWriteTokenIssuersRequestParams} body
+         * @param {Auth0FgaWriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1597,7 +1597,7 @@ export class Auth0FgaApi extends BaseAPI {
     /**
      * The check API will return whether the user has a certain relationship with an object in a certain store. Path parameter `store_id` as well as body parameter `object`, `relation` and `user` are all required. The response will return whether the relationship exists in the field `allowed`.  ## Limits - Each store has a limit of **50** check requests per second (RPS). ## Example In order to check if user `anne@auth0.com` has an owner relationship with object document:2021-budget, a check API call should be fired with the following body ```json {   \"tuple_key\": {     \"user\": \"anne@auth0.com\"     \"relation\": \"owner\"     \"object\": \"document:2021-budget\",   } } ``` Auth0 FGA\'s response will include `{ \"allowed\": true }` if there is a relationship and `{ \"allowed\": false }` if there isn\'t.
      * @summary Check whether a user is authorized to access an object
-     * @param {Auth0FgaCheckRequestParams} body
+     * @param {Auth0FgaCheckRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1621,7 +1621,7 @@ export class Auth0FgaApi extends BaseAPI {
     /**
      * The expand API will return all users (including user and userset) that have certain relationship with an object in a certain store. This is different from the `/{store_id}/read` API in that both direct and indirect references are returned. Path parameter `store_id` as well as body parameter `object`, `relation` are all required. The response will return a userset tree whose leaves are the user id and usersets.  Union, intersection and difference operator are located in the intermediate nodes.  ## Limits - Each store has a limit of **30** expand requests per minute (RPM). ## Example Assume the following type definition for document: ```yaml   type document     relations       define reader as self or writer       define writer as self ``` In order to expand all users that have `reader` relationship with object `document:2021-budget`, an expand API call should be fired with the following body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"bob@auth0.com\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
      * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
-     * @param {Auth0FgaExpandRequestParams} body
+     * @param {Auth0FgaExpandRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1631,9 +1631,9 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`).
+     * The POST read API will return the tuples for a certain store that matches a query filter specified in the body. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. It is different from the `/{store_id}/expand` API in that only direct relationships are returned. Path parameter `store_id` is required.  In the body: 1. Object is mandatory. An object can be a full object (e.g., `type:object_id`) or type only (e.g., `type:`). 2. User is mandatory in the case the object is type only. ## Limits - Each store has a limit of **2** read requests per second (RPS). ## Examples ### Query for all objects in a type definition To query for all objects that `bob@auth0.com` has `reader` relationship in the document type definition, call read API with body of  ```json {  \"tuple_key\": {      \"user\": \"bob@auth0.com\"      \"relation\": \"reader\",      \"object\": \"document:\",   } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `bob@auth0.com` has a `reader` relationship with 1 document `document:2021-budget`. ### Query for all users with particular relationships for a particular document To query for all users that have `reader` relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {      \"object\": \"document:2021-budget\",      \"relation\": \"reader\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`).  Note that the API will not return writers such as `anne@auth0.com` even when all writers are readers.  This is because only direct relationship are returned for the READ API. ### Query for all users with all relationships for a particular document To query for all users that have any relationship with `document:2021-budget`, call read API with body of  ```json {   \"tuple_key\": {       \"object\": \"document:2021-budget\"    } } ``` The API will return something like  ```json {   \"tuples\": [     {       \"key\": {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-05T13:42:12.356Z\"     },     {       \"key\": {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       },       \"timestamp\": \"2021-10-06T15:32:11.128Z\"     }   ] } ``` This means that `document:2021-budget` has 1 `reader` (`bob@auth0.com`) and 1 `writer` (`anne@auth0.com`). 
      * @summary Get tuples from the store that matches a query, without following userset rewrite rules
-     * @param {Auth0FgaReadRequestParams} body
+     * @param {Auth0FgaReadRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1643,7 +1643,7 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+     * The GET assertions API will return, for a given authorization model id, all the assertions stored for it. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
      * @summary Read assertions for an authorization model ID
      * @param {string} authorizationModelId The authorization model ID
      * @param {*} [options] Override http request option.
@@ -1667,10 +1667,10 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ```
+     * The GET authorization-models API will return all the IDs of the authorization models for a certain store. Path parameter `store_id` is required. Auth0 FGA\'s response will contain an array of all authorization model IDs, sorted in descending order of creation.  ## Limits - Each store has a limit of **30** read authorization-models requests per minute (RPM). - Each response can contain up to **50** authorization model IDs. ## Example Assume that the store\'s authorization model has been configured twice.  To get all the IDs of the authorization models that had been created in this store, call GET authorization-models.  The API will return a response that looks like: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ] } ``` If there are more authorization model IDs available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_model_ids\": [       \"1yunpF9DkzXMzm0dHrsCuWsooEV\",       \"1yundoHpJHlodgn4EOVar2DhmKp\"   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
      * @summary Return all the authorization model IDs for a particular store
-     * @param {number} [pageSize]
-     * @param {string} [continuationToken]
+     * @param {number} [pageSize] 
+     * @param {string} [continuationToken] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1691,9 +1691,9 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ```
+     * The POST write API will update the tuples for a certain store.  Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. Path parameter `store_id` is required.  In the body, `writes` adds new tuples while `deletes` remove existing tuples.  `lock_tuple` is reserved for future use.  ## Limits - Each write API call allows at most **25** tuples. - Each store has a limit of **50000** tuples. - Each store has a limit of **1** write requests per second (RPS). ## Example ### Adding relationships To add `anne@auth0.com` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"anne@auth0.com\"         \"relation\": \"writer\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` ### Removing relationships To remove `bob@auth0.com` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"bob@auth0.com\"         \"relation\": \"reader\",         \"object\": \"document:2021-budget\",       }     ]   } } ``` 
      * @summary Add or delete tuples from the store
-     * @param {Auth0FgaWriteRequestParams} body
+     * @param {Auth0FgaWriteRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1703,10 +1703,10 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false.
+     * The POST assertions API will add new assertions for an authorization model id, or overwrite the existing ones. An assertion is an object that contains a tuple key, and the expectation of whether a call to the Check API of that tuple key will return true or false. 
      * @summary Upsert assertions for an authorization model ID
      * @param {string} authorizationModelId The authorization model ID
-     * @param {Auth0FgaWriteAssertionsRequestParams} body
+     * @param {Auth0FgaWriteAssertionsRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1716,9 +1716,9 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ```
+     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## Limits - There can be at most **10** items in the type_definitions array. - Each store can have at most **10** authorization models. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
      * @summary Create a new authorization model
-     * @param {AuthorizationmodelTypeDefinitions} body
+     * @param {AuthorizationmodelTypeDefinitions} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1728,9 +1728,9 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ```
+     * The PATCH settings API will update the environment tag to differentiate between development, staging, and production environments. Path parameter `store_id` is required. The response will return the updated environment tag as well as other configuration settings.  ## Example To update store\'s environment tag to `STAGING`, call PATCH settings API with the following with the body:  ```json {\"environment\": \"STAGING\"} ``` 
      * @summary Update the environment tag for a store
-     * @param {Auth0FgaWriteSettingsRequestParams} body
+     * @param {Auth0FgaWriteSettingsRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1740,9 +1740,9 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ```
+     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `auth0Fga.us.auth0.com` and `auth0Fga-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
      * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
-     * @param {Auth0FgaWriteTokenIssuersRequestParams} body
+     * @param {Auth0FgaWriteTokenIssuersRequestParams} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof Auth0FgaApi
@@ -1752,5 +1752,4 @@ export class Auth0FgaApi extends BaseAPI {
     }
 }
 
-// For backward compatibility -  will be removed soon
-export const SandcastleAPI = Auth0FgaApi;
+
