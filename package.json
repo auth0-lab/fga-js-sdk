@@ -46,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/auth0-lab/fga-js-sdk/issues"
   },
-  "homepage": "https://github.com/auth0-lab/fga-js-sdk#readme"
+  "homepage": "https://github.com/auth0-lab/fga-js-sdk#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
