@@ -10,7 +10,7 @@ Reading and following these guidelines will help us make the contribution proces
 * [Getting Started](#getting-started)
     * [Making Changes](#making-changes)
     * [Opening Issues](#opening-issues)
-    * [Submitting Pull Requests](#submitting-pull-requests)
+    * [Submitting Pull Requests](#submitting-pull-requests) [Note: We are not accepting Pull Requests at this time!]
 * [Getting in Touch](#getting-in-touch)
     * [Have a question or problem?](#have-a-question-or-problem)
     * [Vulnerability Reporting](#vulnerability-reporting)
@@ -39,8 +39,8 @@ Pull Requests are not currently open, please [raise an issue](https://github.com
 
 ### Have a question or problem?
 
-Please do not open issues for general support or usage questions. Instead, join us over in the Auth0 community at [community.auth0.com](https://community.auth0.com) and post your question there in the correct category with a descriptive tag.
+Please do not open issues for general support or usage questions. Instead, join us over in the [Auth0Lab Discord community](https://discord.gg/8naAwJfWN6).
 
 ### Vulnerability Reporting
 
-Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
