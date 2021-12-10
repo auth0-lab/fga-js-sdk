@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 const mock = new MockAdapter(axios);
 
-import { Auth0FgaApi, Auth0FgaCheckResponse } from '../api';
+import { Auth0FgaApi, CheckResponse } from '../api';
 import { CallResult } from '../common';
 
 const storeId = 'test';
@@ -21,7 +21,7 @@ describe('Auth0 FGA API', () => {
   })
 
   describe('happy path of CHECK', () => {
-    let result: CallResult<Auth0FgaCheckResponse>;
+    let result: CallResult<CheckResponse>;
 
     beforeAll(async () => {
       const tupleKey = {

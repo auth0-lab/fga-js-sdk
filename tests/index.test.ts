@@ -1,15 +1,15 @@
 import * as nock from 'nock';
 
 import {
-  AuthorizationmodelAuthorizationModel,
-  AuthorizationmodelTypeDefinitions,
+  AuthorizationModel,
+  TypeDefinitions,
   Auth0FgaApi,
-  Auth0FgaCheckResponse,
-  Auth0FgaExpandResponse,
-  Auth0FgaReadAuthorizationModelsResponse,
-  Auth0FgaReadAuthorizationModelResponse,
-  Auth0FgaReadResponse,
-  Auth0FgaTupleKey,
+  CheckResponse,
+  ExpandResponse,
+  ReadAuthorizationModelsResponse,
+  ReadAuthorizationModelResponse,
+  ReadResponse,
+  TupleKey,
 } from "../api";
 import { Configuration } from "../configuration";
 
@@ -42,48 +42,48 @@ const nocks = {
       .get(`/${storeId}/authorization-models`)
       .reply(200, {
         configurations: [],
-      } as Auth0FgaReadAuthorizationModelsResponse)
+      } as ReadAuthorizationModelsResponse)
   },
-  check: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  check: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/check`)
       .reply(200, {
         allowed: true,
-      } as Auth0FgaCheckResponse);
+      } as CheckResponse);
   },
-  write: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  write: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/write`)
       .reply(200, {} as Promise<object>);
   },
-  delete: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  delete: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/write`)
       .reply(200, {} as Promise<object>);
   },
-  read: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  read: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/read`)
-      .reply(200, { tuples: [] } as Auth0FgaReadResponse);
+      .reply(200, { tuples: [] } as ReadResponse);
   },
-  expand: (storeId: string, tuple: Auth0FgaTupleKey, serverUrl = defaultConfiguration.serverUrl) => {
+  expand: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/expand`)
-      .reply(200, { tree: {} } as Auth0FgaExpandResponse);
+      .reply(200, { tree: {} } as ExpandResponse);
   },
   readSingleAuthzModel: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .get(`/${storeId}/authorization-models/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", type_definitions: [] },
-      } as AuthorizationmodelAuthorizationModel);
+      } as AuthorizationModel);
   },
-  writeAuthorizationModel: (storeId: string, configurations: AuthorizationmodelTypeDefinitions, serverUrl = defaultConfiguration.serverUrl) => {
+  writeAuthorizationModel: (storeId: string, configurations: TypeDefinitions, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
       .post(`/${storeId}/authorization-models`)
       .reply(200, {
         id: "some-new-id",
-      } as Auth0FgaReadAuthorizationModelResponse);
+      } as ReadAuthorizationModelResponse);
   }
 }
 
