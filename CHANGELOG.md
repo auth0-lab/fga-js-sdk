@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.0](https://github.com/auth0-lab/auth0-fga-js-sdk/compare/v0.4.1...v0.5.0) (2021-12-10)
+
+## Breaking Changes
+- Auth0Fga prefixes have been removed from the interfaces  90e146a
+
 ## [0.4.1](https://github.com/auth0-lab/auth0-fga-js-sdk/compare/v0.4.0...v0.4.1) (2021-12-03)
 
 ## Breaking Changes
