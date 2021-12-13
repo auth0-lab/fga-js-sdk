@@ -1,6 +1,6 @@
 {
   "name": "@auth0/fga",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Auth0 FGA SDK for JavaScript",
   "author": "Auth0Lab",
   "keywords": [

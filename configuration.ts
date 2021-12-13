@@ -68,7 +68,7 @@ export interface EnvironmentConfiguration {
     allowNoAuth?: boolean;
 }
 
-const environmentConfigurationString = `{"default":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"us":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"playground":{"allowNoAuth":true,"apiAudience":"https://api.playground.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.playground.sandcastle.cloud"},"staging":{"apiAudience":"https://api.staging.fga.dev/","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.staging.fga.dev"},"poc":{"apiAudience":"https://api.poc.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.poc.sandcastle.cloud"}}`;
+const environmentConfigurationString = `{"default":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"us":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"playground":{"allowNoAuth":true,"apiAudience":"https://api.playground.fga.dev/","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.playground.fga.dev"},"staging":{"apiAudience":"https://api.staging.fga.dev/","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.staging.fga.dev"},"poc":{"apiAudience":"https://api.poc.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.poc.sandcastle.cloud"}}`;
 
 /**
  *
