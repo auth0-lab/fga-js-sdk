@@ -33,7 +33,7 @@ This repo includes an issue template that will walk through all the places to ch
 
 ### Submitting Pull Requests
 
-Pull Requests are not currently open, please [raise an issue](https://github.com/auth0-lab/fga-js-sdk/issues) or contact a team member on {{supportInfo}} if there is a feature you'd like us to implement.
+Pull Requests are not currently open, please [raise an issue](https://github.com/auth0-lab/fga-js-sdk/issues) or contact a team member on https://discord.gg/8naAwJfWN6 if there is a feature you'd like us to implement.
 
 ## Getting in touch
 

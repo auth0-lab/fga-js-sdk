@@ -3,8 +3,8 @@ node_modules
 typings
 dist
 git_push.sh
-.openapi-generator
-
+.DS_Store
+VERSION.txt
 tests/coverage
 .idea/
 .vscode/

@@ -1,6 +1,6 @@
 {
   "name": "@auth0/fga",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Auth0 FGA SDK for JavaScript",
   "author": "Auth0Lab",
   "keywords": [
@@ -19,19 +19,23 @@
   "scripts": {
     "build": "tsc --outDir dist/",
     "prepublishOnly": "rm -r dist/ && npm run build",
-    "test": "jest --config ./tests/jest.config.js"
+    "test": "jest --config ./tests/jest.config.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "axios": "^0.24.0"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.11",
-    "axios-mock-adapter": "^1.20.0",
-    "jest": "^27.4.2",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^16.11.19",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "eslint": "^8.6.0",
+    "jest": "^27.4.7",
     "nock": "^13.2.1",
-    "ts-jest": "^27.0.7",
-    "typescript": "^4.5.2"
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.5.4"
   },
   "files": [
     "README.md",

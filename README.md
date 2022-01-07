@@ -84,10 +84,6 @@ Make sure you have created your credentials on the Auth0 FGA Dashboard. [Learn h
 
 You will need to set the `AUTH0_FGA_ENVIRONMENT` variable to `"us"`. Provide the store id, client id and client secret you have created on the Dashboard.
 
-#### PoC
-
-If you are an Auth0 FGA PoC participant, you need to set the `AUTH0_FGA_ENVIRONMENT` variable to `"poc"`. Provide the store id, client id and client secret you have received from us.
-
 #### Playground
 
 If you are testing this on the public playground, you need to set your `AUTH0_FGA_ENVIRONMENT` to `"playground"`.
@@ -307,7 +303,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **authorizationModelId** | **string** | The authorization model ID | [default to undefined]|
+| **authorizationModelId** | **string** |  | [default to undefined]|
 
 ##### Return type
 
@@ -319,7 +315,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **id** | **string** | The authorization model ID | [default to undefined]|
+| **id** | **string** |  | [default to undefined]|
 
 ##### Return type
 
@@ -367,7 +363,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **authorizationModelId** | **string** | The authorization model ID | [default to undefined]|| **body** | [**WriteAssertionsRequestParams**](#WriteAssertionsRequestParams) |  | |
+| **authorizationModelId** | **string** |  | [default to undefined]|| **body** | [**WriteAssertionsRequestParams**](#WriteAssertionsRequestParams) |  | |
 
 ##### Return type
 
@@ -507,7 +503,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuple_key** | [**TupleKey**](#TupleKey) |  | [optional] [default to undefined]
 **authorization_model_id** | **string** |  | [optional] [default to undefined]
-**trace** | **boolean** | defaults to false. making it true has performance implications. only use for debugging purposes, etc. | [optional] [readonly] [default to undefined]
+**trace** | **boolean** | Defaults to false. Making it true has performance implications. | [optional] [readonly] [default to undefined]
 
 #### CheckResponse
 
@@ -516,7 +512,7 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed** | **boolean** |  | [optional] [default to undefined]
-**resolution** | **string** |  | [optional] [default to undefined]
+**resolution** | **string** | For internal use only. | [optional] [default to undefined]
 
 #### Computed
 
@@ -602,7 +598,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**authorization_model_id** | **string** | The authorization model ID | [optional] [default to undefined]
+**authorization_model_id** | **string** |  | [optional] [default to undefined]
 **assertions** | [**Assertion**[]](#Assertion) |  | [optional] [default to undefined]
 
 #### ReadAuthorizationModelResponse
