@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Auth0 Fine Grained Authorization (FGA)/Auth0 FGA SDK for JavaScript
+ * JavaScript and Node.js SDK for Auth0 Fine Grained Authorization (FGA)
  *
  * Auth0 Fine Grained Authorization (FGA) is an early-stage product we are building at Auth0 as part of Auth0Lab to solve fine-grained authorization at scale. If you are interested in learning more about our plans, please reach out via our Discord chat.  The limits and information described in this document is subject to change.
  *

@@ -25,7 +25,7 @@ Warning: This SDK comes with no SLAs and is not production-ready!
     - [Read](#read)
   - [API Endpoints](#api-endpoints)
   - [Models](#models)
-- [Contributing](#models)
+- [Contributing](#contributing)
   - [Issues](#issues)
   - [Pull Requests](#pull-requests) [Note: We are not accepting Pull Requests at this time!]
 - [License](#license)
@@ -825,13 +825,15 @@ Name | Type | Description | Notes
 
 
 
-## Issue Reporting
+## Contributing
+
+### Issue Reporting
 
 If you have found a bug or if you have a feature request, please report them at this repository [issues](https://github.com/auth0-lab/fga-js-sdk/issues) section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
 
 For auth0 related questions/support please use the [Support Center](https://support.auth0.com).
 
-## Pull Requests
+### Pull Requests
 
 Pull Requests are not currently open, please [raise an issue](https://github.com/auth0-lab/fga-js-sdk/issues) or contact a team member on https://discord.gg/8naAwJfWN6 if there is a feature you'd like us to implement.
 
