@@ -24,12 +24,18 @@ import {
 
 import { assertParamExists } from './validation';
 
+export interface RetryParams {
+    maxRetry: number;
+    minWaitInMs: number;
+}
+
 export interface UserConfigurationParams {
     storeId: string;
     clientId: string;
     clientSecret: string;
     environment?: string;
     baseOptions?: any;
+    retryParams?: RetryParams;
 }
 
 export interface EnvironmentConfiguration {
@@ -41,6 +47,13 @@ export interface EnvironmentConfiguration {
 }
 
 const environmentConfigurationString = `{"default":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"us":{"apiAudience":"https://api.us1.fga.dev/","apiTokenIssuer":"fga.us.auth0.com","scheme":"https","host":"api.us1.fga.dev"},"playground":{"allowNoAuth":true,"apiAudience":"https://api.playground.fga.dev/","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.playground.fga.dev"},"staging":{"apiAudience":"https://api.staging.fga.dev/","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.staging.fga.dev"},"poc":{"apiAudience":"https://api.poc.sandcastle.cloud","apiTokenIssuer":"sandcastle-dev.us.auth0.com","scheme":"https","host":"api.poc.sandcastle.cloud"}}`;
+
+export function GetDefaultRetryParams (maxRetry: number = 3, minWaitInMs: number = 100) {
+  return {
+    maxRetry: maxRetry,
+    minWaitInMs: minWaitInMs,
+  }
+}
 
 /**
  *
@@ -123,6 +136,13 @@ export class Configuration {
      * @memberof Configuration
      */
     baseOptions?: BaseOptions;
+    /**
+     * retry options in the case of too many requests
+     *
+     * @type {RetryParams}
+     * @memberof Configuration
+     */
+     retryParams?: RetryParams;
 
     constructor(params: UserConfigurationParams = {} as unknown as UserConfigurationParams, private axios: AxiosInstance = globalAxios) {
         assertParamExists('Configuration', 'storeId', params.storeId);
@@ -139,6 +159,8 @@ export class Configuration {
         this.apiTokenIssuer = environmentConfiguration.apiTokenIssuer;
         this.apiAudience = environmentConfiguration.apiAudience;
         this.baseOptions = baseOptions;
+
+        this.retryParams = params.retryParams;
 
         if (!environmentConfiguration.allowNoAuth) {
             assertParamExists('Configuration', 'clientId', this.clientId);

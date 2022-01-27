@@ -30,6 +30,11 @@ import {
 import { Configuration } from './configuration';
 import { assertParamExists } from './validation';
 
+// default maximum number of retry
+const cDefaultMaxRetry = 3;
+// default minimum wait period in retry - but will backoff exponentially
+const cDefaultMinWaitMs = 100;
+
 /**
  * 
  * @export
@@ -842,7 +847,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that is allowed by Auth0 FGA. The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
          * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
          * @param {string} id Id of token issuer to be removed
          * @param {*} [options] Override http request option.
@@ -1285,7 +1290,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
          * @param {WriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -1347,7 +1352,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that is allowed by Auth0 FGA. The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
          * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
          * @param {string} id Id of token issuer to be removed
          * @param {*} [options] Override http request option.
@@ -1469,7 +1474,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
          * @param {WriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -1500,7 +1505,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.check(body, options).then((request) => request(axios));
         },
         /**
-         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+         * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that is allowed by Auth0 FGA. The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
          * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
          * @param {string} id Id of token issuer to be removed
          * @param {*} [options] Override http request option.
@@ -1611,7 +1616,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.writeSettings(body, options).then((request) => request(axios));
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
          * @param {WriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -1643,7 +1648,7 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that are allowed by Auth0 FGA.  The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
+     * The DELETE token-issuers API will remove the 3rd party token issuer as a token issuer that is allowed by Auth0 FGA. The specified id is the id associated with the issuer url that is to be removed. Path parameter `store_id` and `id` are all required. ## Example To remove the 3rd party token issuer `https://example.issuer.com` (which has the id `0ujsszwN8NRY24YaXiTIE2VWDTS`), call DELETE token-issuers API with the path parameter id `0ujsszwN8NRY24YaXiTIE2VWDTS`.
      * @summary Remove 3rd party token issuer for Auth0 FGA read and write operation
      * @param {string} id Id of token issuer to be removed
      * @param {*} [options] Override http request option.
@@ -1776,7 +1781,7 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations : 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience (`https://api.staging.fga.dev`) in its issuer configuration. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
      * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
      * @param {WriteTokenIssuersRequestParams} body 
      * @param {*} [options] Override http request option.

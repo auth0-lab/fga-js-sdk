@@ -18,6 +18,7 @@ import {
   TypeDefinitions,
 } from "../";
 import { CallResult } from "../common";
+import { GetDefaultRetryParams } from "../configuration";
 
 nock.disableNetConnect();
 
@@ -214,6 +215,14 @@ describe("auth0-fga-sdk", function () {
       };
 
       beforeAll(async () => {
+        const updateBaseConfig = {
+          storeId: AUTH0_FGA_STORE_ID,
+          environment: AUTH0_FGA_ENVIRONMENT,
+          clientId: AUTH0_FGA_CLIENT_ID,
+          clientSecret: AUTH0_FGA_CLIENT_SECRET, 
+          retryParams: GetDefaultRetryParams(2, 10)        
+        };
+        auth0FgaApi = new Auth0FgaApi({ ...updateBaseConfig });
         nock(`https://${defaultConfiguration.apiTokenIssuer}`)
           .post("/oauth/token")
           .reply(200, {
@@ -228,15 +237,98 @@ describe("auth0-fga-sdk", function () {
             },
             expect.objectContaining({ Authorization: "Bearer test-token" })
           )
+          .times(3)
           .reply(429, {
-            code: 5,
+            code: 3,
             message: "nock error",
           });
       });
       it("should throw Auth0FgaApiValidationError", async () => {
-        await expect(auth0FgaApi.check({ tuple_key: tupleKey })).rejects.toThrow(
+        await expect(auth0FgaApi.check({ tuple_key: tupleKey }, {})).rejects.toThrow(
           Auth0FgaApiRateLimitExceededError
         );
+      });
+    });
+
+    describe("429 with retry in config and retry is successful", () => {
+      const tupleKey = {
+        object: "foobar:x",
+        user: "user:xyz",
+      };
+
+      beforeAll(async () => {
+        const updateBaseConfig = {
+          storeId: AUTH0_FGA_STORE_ID,
+          environment: AUTH0_FGA_ENVIRONMENT,
+          clientId: AUTH0_FGA_CLIENT_ID,
+          clientSecret: AUTH0_FGA_CLIENT_SECRET, 
+          retryParams: GetDefaultRetryParams(2, 10)        
+        };
+        auth0FgaApi = new Auth0FgaApi({ ...updateBaseConfig });
+
+        nock(`https://${defaultConfiguration.apiTokenIssuer}`)
+          .post("/oauth/token")
+          .reply(200, {
+            access_token: "test-token",
+          });
+
+        nock(serverUrl)
+          .post(
+            `/${storeId}/check`,
+            {
+              tuple_key: tupleKey,
+            },
+            expect.objectContaining({ Authorization: "Bearer test-token" })
+          )
+          .times(1)
+          .reply(429, {
+            code: 3,
+            message: "nock error",
+          });
+
+        nocks.check(AUTH0_FGA_STORE_ID, tupleKey);
+      });
+      it("should return allowed", async () => {
+        const result = await auth0FgaApi.check({ tuple_key: tupleKey }, {});
+  
+        expect(result.allowed).toBe(true);
+      });
+    });
+
+    describe("429 with retry in call and retry is successful", () => {
+      const tupleKey = {
+        object: "foobar:x",
+        user: "user:xyz",
+      };
+
+      beforeAll(async () => {
+
+        nock(`https://${defaultConfiguration.apiTokenIssuer}`)
+          .post("/oauth/token")
+          .reply(200, {
+            access_token: "test-token",
+          });
+
+        nock(serverUrl)
+          .post(
+            `/${storeId}/check`,
+            {
+              tuple_key: tupleKey,
+            },
+            expect.objectContaining({ Authorization: "Bearer test-token" })
+          )
+          .times(1)
+          .reply(429, {
+            code: 3,
+            message: "nock error",
+          });
+
+        nocks.check(AUTH0_FGA_STORE_ID, tupleKey);
+      });
+      it("should return allowed", async () => {
+        const result = await auth0FgaApi.check({ tuple_key: tupleKey }, {retryParams: GetDefaultRetryParams(2, 10)});
+  
+        expect(result.allowed).toBe(true);
       });
     });
 

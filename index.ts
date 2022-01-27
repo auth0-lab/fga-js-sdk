@@ -15,7 +15,7 @@
 
 
 export * from './api';
-export { Configuration, UserConfigurationParams } from './configuration';
+export { Configuration, UserConfigurationParams, GetDefaultRetryParams } from './configuration';
 export * from './errors';
 
 

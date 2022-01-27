@@ -103,39 +103,53 @@ export type CallResult<T extends {}> = T & {
 
 export type PromiseResult<T extends {}> = Promise<CallResult<T>>;
 
+function randomTime(loopCount: number, minWaitInMs: number): number {
+    const min = Math.ceil(2 ** loopCount * minWaitInMs);
+    const max = Math.ceil(2 ** (loopCount + 1) * minWaitInMs);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
 /**
  * creates an axios request function
  */
 export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxios: AxiosStatic, configuration: Configuration) {
+    const retryParams = axiosArgs.options?.retryParams ? axiosArgs.options?.retryParams : configuration.retryParams;
+    const maxRetry:number = retryParams ? retryParams.maxRetry : 0;
+    const minWaitInMs:number = retryParams ? retryParams.minWaitInMs : 0;
     return async (axios: AxiosStatic = globalAxios) : PromiseResult<any> => {
-        try {
-            const axiosRequestArgs = {...axiosArgs.options, url: configuration.serverUrl + axiosArgs.url};
-            const response = await axios.request(axiosRequestArgs);
-            const data = typeof response.data === 'undefined' ? {} : response.data;
-            const result: CallResult<any> = { ...data };
-            Object.defineProperty(result, '$response', {
-                enumerable: false,
-                writable: false,
-                value: response
-            });
-            return result;
-        } catch (err: unknown) {
-            if (axios.isAxiosError(err)) {
-                if (err.response?.status) {
-                    if (err.response?.status === 400 || err.response?.status === 422) {
-                        throw new Auth0FgaApiValidationError(err);
-                    } else if (err.response?.status === 401) {
-                        throw new Auth0FgaAuthenticationError(err);
-                    } else if (err.response?.status === 429) {
-                        throw new Auth0FgaApiRateLimitExceededError(err);
-                    } else if (err.response?.status >= 500) {
-                        throw new Auth0FgaApiInternalError(err);
-                    }
+        for (let i = 0; i < maxRetry + 1; i++) {
+            try {
+                const axiosRequestArgs = {...axiosArgs.options, url: configuration.serverUrl + axiosArgs.url};
+                const response = await axios.request(axiosRequestArgs);
+                const data = typeof response.data === 'undefined' ? {} : response.data;
+                const result: CallResult<any> = { ...data };
+                Object.defineProperty(result, '$response', {
+                    enumerable: false,
+                    writable: false,
+                    value: response
+                });
+                return result;
+            } catch (err: unknown) {
+                if (!axios.isAxiosError(err) || !err.response?.status) {
+                    throw new Auth0FgaError(err as Error);
                 }
-                throw new Auth0FgaApiError(err);
+                if (err.response?.status === 400 || err.response?.status === 422) {
+                    throw new Auth0FgaApiValidationError(err);
+                } else if (err.response?.status === 401) {
+                    throw new Auth0FgaAuthenticationError(err);
+                } else if (err.response?.status === 429) {
+                    if (i >= maxRetry) {
+                        // We have reached the max retry limit
+                        // Thus, we have no choice but to throw
+                        throw new Auth0FgaApiRateLimitExceededError(err);
+                    }
+                    await new Promise(r => setTimeout(r, randomTime(i, minWaitInMs)));
+                } else if (err.response?.status >= 500) {
+                    throw new Auth0FgaApiInternalError(err);
+                } else {
+                    throw new Auth0FgaApiError(err);
+                }
             }
-
-            throw new Auth0FgaError(err as Error);
         }
     };
 }
