@@ -408,6 +408,25 @@ export interface ReadResponse {
 /**
  * 
  * @export
+ * @interface ReadSettingsResponse
+ */
+export interface ReadSettingsResponse {
+    /**
+     * 
+     * @type {Environment}
+     * @memberof ReadSettingsResponse
+     */
+    environment?: Environment;
+    /**
+     * 
+     * @type {Array<TokenIssuer>}
+     * @memberof ReadSettingsResponse
+     */
+    token_issuers?: Array<TokenIssuer>;
+}
+/**
+ * 
+ * @export
  * @interface ReadTuplesRequestParams
  */
 export interface ReadTuplesRequestParams {
@@ -442,25 +461,6 @@ export interface ReadTuplesResponse {
      * @memberof ReadTuplesResponse
      */
     continuation_token?: string;
-}
-/**
- * 
- * @export
- * @interface Settings
- */
-export interface Settings {
-    /**
-     * 
-     * @type {Environment}
-     * @memberof Settings
-     */
-    environment?: Environment;
-    /**
-     * 
-     * @type {Array<TokenIssuer>}
-     * @memberof Settings
-     */
-    token_issuers?: Array<TokenIssuer>;
 }
 /**
  * 
@@ -788,6 +788,25 @@ export interface WriteSettingsRequestParams {
 /**
  * 
  * @export
+ * @interface WriteSettingsResponse
+ */
+export interface WriteSettingsResponse {
+    /**
+     * 
+     * @type {Environment}
+     * @memberof WriteSettingsResponse
+     */
+    environment?: Environment;
+    /**
+     * 
+     * @type {Array<TokenIssuer>}
+     * @memberof WriteSettingsResponse
+     */
+    token_issuers?: Array<TokenIssuer>;
+}
+/**
+ * 
+ * @export
  * @interface WriteTokenIssuersRequestParams
  */
 export interface WriteTokenIssuersRequestParams {
@@ -797,6 +816,19 @@ export interface WriteTokenIssuersRequestParams {
      * @memberof WriteTokenIssuersRequestParams
      */
     issuer_url?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WriteTokenIssuersResponse
+ */
+export interface WriteTokenIssuersResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof WriteTokenIssuersResponse
+     */
+    id?: string;
 }
 
 /**
@@ -1186,7 +1218,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1208,7 +1240,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **10** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **24** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
          * @summary Create a new authorization model
          * @param {TypeDefinitions} body 
          * @param {*} [options] Override http request option.
@@ -1290,7 +1322,7 @@ export const Auth0FgaApiAxiosParamCreator = function (configuration: Configurati
             };
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will be the id that is associated with the token issuer as in: ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
          * @param {WriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
@@ -1424,7 +1456,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        async readSettings(options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<Settings>> {
+        async readSettings(options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<ReadSettingsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.readSettings(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
@@ -1452,7 +1484,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **10** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **24** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
          * @summary Create a new authorization model
          * @param {TypeDefinitions} body 
          * @param {*} [options] Override http request option.
@@ -1469,18 +1501,18 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        async writeSettings(body: WriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<Settings>> {
+        async writeSettings(body: WriteSettingsRequestParams, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<WriteSettingsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.writeSettings(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will be the id that is associated with the token issuer as in: ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
          * @param {WriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        async writeTokenIssuer(body: WriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<TokenIssuer>> {
+        async writeTokenIssuer(body: WriteTokenIssuersRequestParams, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<WriteTokenIssuersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.writeTokenIssuer(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
@@ -1571,7 +1603,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        readSettings(options?: any): PromiseResult<Settings> {
+        readSettings(options?: any): PromiseResult<ReadSettingsResponse> {
             return localVarFp.readSettings(options).then((request) => request(axios));
         },
         /**
@@ -1596,7 +1628,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
             return localVarFp.writeAssertions(authorizationModelId, body, options).then((request) => request(axios));
         },
         /**
-         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **10** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+         * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **24** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
          * @summary Create a new authorization model
          * @param {TypeDefinitions} body 
          * @param {*} [options] Override http request option.
@@ -1612,17 +1644,17 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        writeSettings(body: WriteSettingsRequestParams, options?: any): PromiseResult<Settings> {
+        writeSettings(body: WriteSettingsRequestParams, options?: any): PromiseResult<WriteSettingsResponse> {
             return localVarFp.writeSettings(body, options).then((request) => request(axios));
         },
         /**
-         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+         * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will be the id that is associated with the token issuer as in: ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\" } ``` 
          * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
          * @param {WriteTokenIssuersRequestParams} body 
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        writeTokenIssuer(body: WriteTokenIssuersRequestParams, options?: any): PromiseResult<TokenIssuer> {
+        writeTokenIssuer(body: WriteTokenIssuersRequestParams, options?: any): PromiseResult<WriteTokenIssuersResponse> {
             return localVarFp.writeTokenIssuer(body, options).then((request) => request(axios));
         },
     };
@@ -1757,7 +1789,7 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **10** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
+     * The POST authorization-model API will update the authorization model for a certain store. Path parameter `store_id` and `type_definitions` array in the body are required.  Each item in the `type_definitions` array is a type definition as specified in the field `type_definition`. The response will return the authorization model\'s ID in the `id` field.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - There can be at most **24** items in the type_definitions array. - Each store has a limit of **10** POST authorization-models requests per minute (RPM). ## Example To update the authorization model with a single `document` authorization model, call POST authorization-models API with the body:  ```json {   \"type_definitions\":[     {       \"type\":\"document\",       \"relations\":{         \"reader\":{           \"union\":{             \"child\":[               {                 \"this\":{                  }               },               {                 \"computedUserset\":{                   \"object\":\"\",                   \"relation\":\"writer\"                 }               }             ]           }         },         \"writer\":{           \"this\":{            }         }       }     }   ] } ``` Auth0 FGA\'s response will include the version id for this authorization model, which will look like  ``` {\"authorization_model_id\": \"1yunpF9DkzXMzm0dHrsCuWsooEV\"} ``` 
      * @summary Create a new authorization model
      * @param {TypeDefinitions} body 
      * @param {*} [options] Override http request option.
@@ -1781,7 +1813,7 @@ export class Auth0FgaApi extends BaseAPI {
     }
 
     /**
-     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will include the id that is associated with the token issuer as well as the issuer url, and looks like  ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\",   \"issuer_url\":\"https://example.issuer.com\" } ``` 
+     * The POST token-issuers API will configure system so that tokens issued by the specified 3rd party token issuer will be allowed for Auth0 FGA\'s read and write operations.  Otherwise, only tokens issued by Auth0 FGA\'s issuer (such as `sandcastle.us.auth0.com` and `sandcastle-dev.us.auth0.com`) are accepted by Auth0 FGA stores API.  Other tokens issued by providers external to Auth0 FGA will be rejected. An example use case is to have browsers directly calling Auth0 FGA API. Path parameter `store_id` as well as body parameter `issuer_url` are all required. ## Example To allow tokens issued by the 3rd party token issuer `https://example.issuer.com` for Auth0 FGA\'s read and write operations: 1. In the 3rd party issuer, configure Auth0 FGA API with the following audience in its issuer configuration: `https://api.us1.fga.dev`. 2. Call POST token-issuers API with the body: `{\"issuer_url\": \"https://example.issuer.com\"}`  Auth0 FGA\'s response will be the id that is associated with the token issuer as in: ```json {   \"id\":\"0ujsszwN8NRY24YaXiTIE2VWDTS\" } ``` 
      * @summary Add 3rd party token issuer for Auth0 FGA read and write operations
      * @param {WriteTokenIssuersRequestParams} body 
      * @param {*} [options] Override http request option.

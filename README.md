@@ -245,7 +245,7 @@ const { tuples } = await auth0Fga.read(body);
 | [**readAuthorizationModels**](#readauthorizationmodels) | **GET** /{store_id}/authorization-models | Return all the authorization model IDs for a particular store |
 | [**readSettings**](#readsettings) | **GET** /{store_id}/settings | Return store settings, including the environment tag |
 | [**write**](#write) | **POST** /{store_id}/write | Add or delete tuples from the store |
-| [**writeAssertions**](#writeassertions) | **POST** /{store_id}/assertions/{authorization_model_id} | Upsert assertions for an authorization model ID |
+| [**writeAssertions**](#writeassertions) | **PUT** /{store_id}/assertions/{authorization_model_id} | Upsert assertions for an authorization model ID |
 | [**writeAuthorizationModel**](#writeauthorizationmodel) | **POST** /{store_id}/authorization-models | Create a new authorization model |
 | [**writeSettings**](#writesettings) | **PATCH** /{store_id}/settings | Update the environment tag for a store |
 | [**writeTokenIssuer**](#writetokenissuer) | **POST** /{store_id}/settings/token-issuers | Add 3rd party token issuer for Auth0 FGA read and write operations |
@@ -343,7 +343,7 @@ const { tuples } = await auth0Fga.read(body);
 
 ##### Return type
 
-[**Settings**](#Settings)
+[**ReadSettingsResponse**](#ReadSettingsResponse)
 
 
 #### write
@@ -391,7 +391,7 @@ const { tuples } = await auth0Fga.read(body);
 
 ##### Return type
 
-[**Settings**](#Settings)
+[**WriteSettingsResponse**](#WriteSettingsResponse)
 
 
 #### writeTokenIssuer
@@ -403,7 +403,7 @@ const { tuples } = await auth0Fga.read(body);
 
 ##### Return type
 
-[**TokenIssuer**](#TokenIssuer)
+[**WriteTokenIssuersResponse**](#WriteTokenIssuersResponse)
 
 
 ### Models
@@ -428,9 +428,9 @@ const { tuples } = await auth0Fga.read(body);
  - [ReadAuthorizationModelsResponse](#ReadAuthorizationModelsResponse)
  - [ReadRequestParams](#ReadRequestParams)
  - [ReadResponse](#ReadResponse)
+ - [ReadSettingsResponse](#ReadSettingsResponse)
  - [ReadTuplesRequestParams](#ReadTuplesRequestParams)
  - [ReadTuplesResponse](#ReadTuplesResponse)
- - [Settings](#Settings)
  - [Status](#Status)
  - [TokenIssuer](#TokenIssuer)
  - [Tuple](#Tuple)
@@ -448,7 +448,9 @@ const { tuples } = await auth0Fga.read(body);
  - [WriteAuthorizationModelResponse](#WriteAuthorizationModelResponse)
  - [WriteRequestParams](#WriteRequestParams)
  - [WriteSettingsRequestParams](#WriteSettingsRequestParams)
+ - [WriteSettingsResponse](#WriteSettingsResponse)
  - [WriteTokenIssuersRequestParams](#WriteTokenIssuersRequestParams)
+ - [WriteTokenIssuersResponse](#WriteTokenIssuersResponse)
 
 
 #### Any
@@ -635,6 +637,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuples** | [**Tuple**[]](#Tuple) |  | [optional] [default to undefined]
 
+#### ReadSettingsResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**environment** | [**Environment**](#Environment) |  | [optional] [default to undefined]
+**token_issuers** | [**TokenIssuer**[]](#TokenIssuer) |  | [optional] [default to undefined]
+
 #### ReadTuplesRequestParams
 
 ##### Properties
@@ -652,15 +663,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuples** | [**Tuple**[]](#Tuple) |  | [optional] [default to undefined]
 **continuation_token** | **string** |  | [optional] [default to undefined]
-
-#### Settings
-
-##### Properties
-
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**environment** | [**Environment**](#Environment) |  | [optional] [default to undefined]
-**token_issuers** | [**TokenIssuer**[]](#TokenIssuer) |  | [optional] [default to undefined]
 
 #### Status
 
@@ -815,6 +817,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **environment** | [**Environment**](#Environment) |  | [optional] [default to undefined]
 
+#### WriteSettingsResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**environment** | [**Environment**](#Environment) |  | [optional] [default to undefined]
+**token_issuers** | [**TokenIssuer**[]](#TokenIssuer) |  | [optional] [default to undefined]
+
 #### WriteTokenIssuersRequestParams
 
 ##### Properties
@@ -822,6 +833,14 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **issuer_url** | **string** |  | [optional] [default to undefined]
+
+#### WriteTokenIssuersResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **string** |  | [optional] [default to undefined]
 
 
 
