@@ -51,6 +51,11 @@
     "url": "https://github.com/auth0-lab/fga-js-sdk/issues"
   },
   "homepage": "https://github.com/auth0-lab/fga-js-sdk#readme",
+  "overrides": {
+    "axios": {
+      "follow-redirects": "1.14.8"
+    }
+  },
   "publishConfig": {
     "access": "public"
   }
