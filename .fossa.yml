@@ -1,0 +1,9 @@
+version: 3
+
+server: https://app.fossa.com
+
+project:
+  id: github.com/auth0-lab/fga-js-sdk
+  name: github.com/auth0-lab/fga-js-sdk
+  link: fga.dev
+  url: github.com/auth0-lab/fga-js-sdk
