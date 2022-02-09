@@ -46,48 +46,48 @@ const nocks = {
   },
   readAuthorizationModels: (storeId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${storeId}/authorization-models`)
+      .get(`/stores/${storeId}/authorization-models`)
       .reply(200, {
         configurations: [],
       } as ReadAuthorizationModelsResponse);
   },
   check: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/check`)
+      .post(`/stores/${storeId}/check`)
       .reply(200, {
         allowed: true,
       } as CheckResponse);
   },
   write: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/write`)
+      .post(`/stores/${storeId}/write`)
       .reply(200, {} as Promise<object>);
   },
   delete: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/write`)
+      .post(`/stores/${storeId}/write`)
       .reply(200, {} as Promise<object>);
   },
   read: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/read`)
+      .post(`/stores/${storeId}/read`)
       .reply(200, { tuples: [] } as ReadResponse);
   },
   expand: (storeId: string, tuple: TupleKey, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/expand`)
+      .post(`/stores/${storeId}/expand`)
       .reply(200, { tree: {} } as ExpandResponse);
   },
   readSingleAuthzModel: (storeId: string, configId: string, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .get(`/${storeId}/authorization-models/${configId}`)
+      .get(`/stores/${storeId}/authorization-models/${configId}`)
       .reply(200, {
         configuration: { id: "some-id", type_definitions: [] },
       } as AuthorizationModel);
   },
   writeAuthorizationModel: (storeId: string, configurations: TypeDefinitions, serverUrl = defaultConfiguration.serverUrl) => {
     return nock(serverUrl)
-      .post(`/${storeId}/authorization-models`)
+      .post(`/stores/${storeId}/authorization-models`)
       .reply(200, {
         id: "some-new-id",
       } as ReadAuthorizationModelResponse);
@@ -190,7 +190,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },
@@ -231,7 +231,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },
@@ -274,7 +274,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },
@@ -311,7 +311,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },
@@ -347,7 +347,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },
@@ -380,7 +380,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },
@@ -413,7 +413,7 @@ describe("auth0-fga-sdk", function () {
 
         nock(serverUrl)
           .post(
-            `/${storeId}/check`,
+            `/stores/${storeId}/check`,
             {
               tuple_key: tupleKey,
             },

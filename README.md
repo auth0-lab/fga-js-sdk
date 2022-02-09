@@ -236,19 +236,19 @@ const { tuples } = await auth0Fga.read(body);
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**check**](#check) | **POST** /{store_id}/check | Check whether a user is authorized to access an object |
-| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /{store_id}/settings/token-issuers/{id} | Remove 3rd party token issuer for Auth0 FGA read and write operation |
-| [**expand**](#expand) | **POST** /{store_id}/expand | Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship |
-| [**read**](#read) | **POST** /{store_id}/read | Get tuples from the store that matches a query, without following userset rewrite rules |
-| [**readAssertions**](#readassertions) | **GET** /{store_id}/assertions/{authorization_model_id} | Read assertions for an authorization model ID |
-| [**readAuthorizationModel**](#readauthorizationmodel) | **GET** /{store_id}/authorization-models/{id} | Return a particular version of an authorization model |
-| [**readAuthorizationModels**](#readauthorizationmodels) | **GET** /{store_id}/authorization-models | Return all the authorization model IDs for a particular store |
-| [**readSettings**](#readsettings) | **GET** /{store_id}/settings | Return store settings, including the environment tag |
-| [**write**](#write) | **POST** /{store_id}/write | Add or delete tuples from the store |
-| [**writeAssertions**](#writeassertions) | **PUT** /{store_id}/assertions/{authorization_model_id} | Upsert assertions for an authorization model ID |
-| [**writeAuthorizationModel**](#writeauthorizationmodel) | **POST** /{store_id}/authorization-models | Create a new authorization model |
-| [**writeSettings**](#writesettings) | **PATCH** /{store_id}/settings | Update the environment tag for a store |
-| [**writeTokenIssuer**](#writetokenissuer) | **POST** /{store_id}/settings/token-issuers | Add 3rd party token issuer for Auth0 FGA read and write operations |
+| [**check**](#check) | **POST** /stores/{store_id}/check | Check whether a user is authorized to access an object |
+| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /stores/{store_id}/settings/token-issuers/{id} | Remove 3rd party token issuer for Auth0 FGA read and write operation |
+| [**expand**](#expand) | **POST** /stores/{store_id}/expand | Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship |
+| [**read**](#read) | **POST** /stores/{store_id}/read | Get tuples from the store that matches a query, without following userset rewrite rules |
+| [**readAssertions**](#readassertions) | **GET** /stores/{store_id}/assertions/{authorization_model_id} | Read assertions for an authorization model ID |
+| [**readAuthorizationModel**](#readauthorizationmodel) | **GET** /stores/{store_id}/authorization-models/{id} | Return a particular version of an authorization model |
+| [**readAuthorizationModels**](#readauthorizationmodels) | **GET** /stores/{store_id}/authorization-models | Return all the authorization model IDs for a particular store |
+| [**readSettings**](#readsettings) | **GET** /stores/{store_id}/settings | Return store settings, including the environment tag |
+| [**write**](#write) | **POST** /stores/{store_id}/write | Add or delete tuples from the store |
+| [**writeAssertions**](#writeassertions) | **PUT** /stores/{store_id}/assertions/{authorization_model_id} | Upsert assertions for an authorization model ID |
+| [**writeAuthorizationModel**](#writeauthorizationmodel) | **POST** /stores/{store_id}/authorization-models | Create a new authorization model |
+| [**writeSettings**](#writesettings) | **PATCH** /stores/{store_id}/settings | Update the environment tag for a store |
+| [**writeTokenIssuer**](#writetokenissuer) | **POST** /stores/{store_id}/settings/token-issuers | Add 3rd party token issuer for Auth0 FGA read and write operations |
 
 #### check
 
@@ -429,8 +429,6 @@ const { tuples } = await auth0Fga.read(body);
  - [ReadRequestParams](#ReadRequestParams)
  - [ReadResponse](#ReadResponse)
  - [ReadSettingsResponse](#ReadSettingsResponse)
- - [ReadTuplesRequestParams](#ReadTuplesRequestParams)
- - [ReadTuplesResponse](#ReadTuplesResponse)
  - [Status](#Status)
  - [TokenIssuer](#TokenIssuer)
  - [Tuple](#Tuple)
@@ -628,6 +626,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuple_key** | [**TupleKey**](#TupleKey) |  | [optional] [default to undefined]
 **authorization_model_id** | **string** |  | [optional] [default to undefined]
+**page_size** | **number** |  | [optional] [default to undefined]
+**continuation_token** | **string** |  | [optional] [default to undefined]
 
 #### ReadResponse
 
@@ -636,6 +636,7 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuples** | [**Tuple**[]](#Tuple) |  | [optional] [default to undefined]
+**continuation_token** | **string** |  | [optional] [default to undefined]
 
 #### ReadSettingsResponse
 
@@ -645,24 +646,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **environment** | [**Environment**](#Environment) |  | [optional] [default to undefined]
 **token_issuers** | [**TokenIssuer**[]](#TokenIssuer) |  | [optional] [default to undefined]
-
-#### ReadTuplesRequestParams
-
-##### Properties
-
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**page_size** | **number** |  | [optional] [default to undefined]
-**continuation_token** | **string** |  | [optional] [default to undefined]
-
-#### ReadTuplesResponse
-
-##### Properties
-
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**tuples** | [**Tuple**[]](#Tuple) |  | [optional] [default to undefined]
-**continuation_token** | **string** |  | [optional] [default to undefined]
 
 #### Status
 
