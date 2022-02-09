@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.5.2...v0.6.0) (2022-02-09)
+
+- feat: update interfaces for latest api breaking changes
+- chore(deps): update dependencies
+
 ## [0.5.2](https://github.com/auth0-lab/fga-js-sdk/compare/v0.5.1...v0.5.2) (2022-01-05)
 
 - feat: expose better errors
