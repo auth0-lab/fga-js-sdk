@@ -237,7 +237,7 @@ const { tuples } = await auth0Fga.read(body);
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**check**](#check) | **POST** /stores/{store_id}/check | Check whether a user is authorized to access an object |
-| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /stores/{store_id}/settings/token-issuers/{id} | Remove 3rd party token issuer for Auth0 FGA read and write operation |
+| [**deleteTokenIssuer**](#deletetokenissuer) | **DELETE** /stores/{store_id}/settings/token-issuers/{id} | Remove 3rd party token issuer for Auth0 FGA read and write operations |
 | [**expand**](#expand) | **POST** /stores/{store_id}/expand | Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship |
 | [**read**](#read) | **POST** /stores/{store_id}/read | Get tuples from the store that matches a query, without following userset rewrite rules |
 | [**readAssertions**](#readassertions) | **GET** /stores/{store_id}/assertions/{authorization_model_id} | Read assertions for an authorization model ID |
