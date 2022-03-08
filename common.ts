@@ -21,6 +21,7 @@ import {
     Auth0FgaApiError,
     Auth0FgaApiInternalError,
     Auth0FgaAuthenticationError,
+    Auth0FgaApiNotFoundError,
     Auth0FgaApiRateLimitExceededError,
     Auth0FgaApiValidationError,
     Auth0FgaError
@@ -135,8 +136,10 @@ export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxi
                 }
                 if (err.response?.status === 400 || err.response?.status === 422) {
                     throw new Auth0FgaApiValidationError(err);
-                } else if (err.response?.status === 401) {
+                } else if (err.response?.status === 401 || err.response?.status === 403) {
                     throw new Auth0FgaAuthenticationError(err);
+                } else if (err.response?.status === 404) {
+                    throw new Auth0FgaApiNotFoundError(err);
                 } else if (err.response?.status === 429) {
                     if (i >= maxRetry) {
                         // We have reached the max retry limit

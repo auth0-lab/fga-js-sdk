@@ -1,4 +1,11 @@
 import { AxiosError, Method } from "axios";
+import {
+  AuthErrorCode,
+  ErrorCode,
+  InternalErrorCode,
+  NotFoundErrorCode,
+  ResourceExhaustedErrorCode,
+} from "./apiModel";
 
 /**
  *
@@ -25,16 +32,28 @@ function getRequestMetadataFromPath(path?: string): {
   storeId: string;
   endpointCategory: string;
 } {
-  // This function works because all paths start with /{storeId}/{type}
+  // This function works because all paths start with /stores/{storeId}/{type}
 
   let splitPath: string[] = (path || "").split("/");
-  if (splitPath.length < 3) {
+  if (splitPath.length < 4) {
     splitPath = [];
   }
-  const storeId = splitPath[1] || "";
-  const endpointCategory = splitPath[2] || "";
+  const storeId = splitPath[2] || "";
+  const endpointCategory = splitPath[3] || "";
 
   return { storeId, endpointCategory };
+}
+
+const cFGARequestId = "fga-request-id";
+
+function getResponseHeaders(err: AxiosError): any {
+  return err.response
+    ? Object.fromEntries(
+      Object.entries(err.response.headers).map(([k, v]) => [
+        k.toLowerCase(), v,
+      ])
+    )
+    : {};
 }
 
 /**
@@ -51,11 +70,11 @@ export class Auth0FgaApiError extends Auth0FgaError {
   public requestURL?: string;
   public storeId?: string;
   public endpointCategory?: string;
-  public apiErrorCode: number;
   public apiErrorMessage?: string;
   public requestData?: any;
   public responseData?: any;
   public responseHeader?: Record<string, string>;
+  public requestId?: string;
 
   constructor(err: AxiosError, msg?: string) {
     super(msg ? msg : err);
@@ -69,10 +88,12 @@ export class Auth0FgaApiError extends Auth0FgaError {
     );
     this.storeId = storeId;
     this.endpointCategory = endpointCategory;
-    this.apiErrorCode = err.response?.data?.code;
     this.apiErrorMessage = err.response?.data?.message;
     this.responseData = err.response?.data;
     this.responseHeader = err.response?.headers;
+    const errResponseHeaders = getResponseHeaders(err);
+    this.requestId = errResponseHeaders[cFGARequestId];
+
     if ((err as Error)?.stack) {
       this.stack = (err as Error).stack;
     }
@@ -87,15 +108,37 @@ export class Auth0FgaApiError extends Auth0FgaError {
  */
 export class Auth0FgaApiValidationError extends Auth0FgaApiError {
   name = "Auth0FgaApiValidationError";
+  public apiErrorCode: ErrorCode;
   constructor(err: AxiosError, msg?: string) {
     // If there is a better error message, use it instead of the default error
     super(err);
+    this.apiErrorCode = err.response?.data?.code;
     const { endpointCategory } = getRequestMetadataFromPath(err.request?.path);
     this.message = msg
       ? msg
       : err.response?.data?.message
-        ? `Auth0 FGA Validation Error: ${err.config?.method} ${endpointCategory}
-           : Error ${err.response?.data?.message}`
+        ? `Auth0 FGA Validation Error: ${err.config?.method} ${endpointCategory} : Error ${err.response?.data?.message}`
+        : (err as Error).message;
+  }
+}
+
+/**
+ *
+ * @export
+ * @class Auth0FgaApiNotFoundError
+ * @extends {Auth0FgaApiError}
+ */
+export class Auth0FgaApiNotFoundError extends Auth0FgaApiError {
+  name = "Auth0FgaApiNotFoundError";
+  public apiErrorCode: NotFoundErrorCode;
+  constructor(err: AxiosError, msg?: string) {
+    // If there is a better error message, use it instead of the default error
+    super(err);
+    this.apiErrorCode = err.response?.data?.code;
+    this.message = msg
+      ? msg
+      : err.response?.data?.message
+        ? `Auth0 FGA NotFound Error: ${err.config?.method} : Error ${err.response?.data?.message}`
         : (err as Error).message;
   }
 }
@@ -121,17 +164,18 @@ const cXRateLimitReset = "x-ratelimit-reset";
  */
 export class Auth0FgaApiRateLimitExceededError extends Auth0FgaApiError {
   name = "Auth0FgaApiRateLimitExceededError";
+  public apiErrorCode: ResourceExhaustedErrorCode;
+
   rateLimit?: number;
   rateUnit?: string;
   rateLimitResetEpoch?: number;
 
   constructor(err: AxiosError, msg?: string) {
     super(err);
+    this.apiErrorCode = err.response?.data?.code;
 
     const { endpointCategory } = getRequestMetadataFromPath(err.request?.path);
-    const errResponseHeaders = err.response? Object.fromEntries(
-      Object.entries(err.response.headers).map(([k, v]) => [k.toLowerCase(), v])
-    ): {};
+    const errResponseHeaders = getResponseHeaders(err);
     this.rateLimit = Number(errResponseHeaders[cXRateLimit]);
     this.rateUnit = getMaximumRateUnit(endpointCategory);
     this.rateLimitResetEpoch = Number(errResponseHeaders[cXRateLimitReset]);
@@ -149,10 +193,13 @@ export class Auth0FgaApiRateLimitExceededError extends Auth0FgaApiError {
  */
 export class Auth0FgaApiInternalError extends Auth0FgaApiError {
   name = "Auth0FgaApiInternalError";
+  public apiErrorCode: InternalErrorCode;
+
   constructor(err: AxiosError, msg?: string) {
     // If there is a better error message, use it instead of the default error
     super(err);
     const { endpointCategory } = getRequestMetadataFromPath(err.request?.path);
+    this.apiErrorCode = err.response?.data?.code;
 
     this.message = msg
       ? msg
@@ -179,6 +226,8 @@ export class Auth0FgaAuthenticationError extends Auth0FgaError {
   public grantType?: string;
   public responseData?: any;
   public responseHeader?: any;
+  public requestId?: string;
+  public apiErrorCode: AuthErrorCode;
 
   constructor(err: AxiosError) {
     super(`Auth0 FGA Authentication Error.  ${err.response?.statusText}`);
@@ -188,10 +237,17 @@ export class Auth0FgaAuthenticationError extends Auth0FgaError {
     this.method = err.config?.method;
     this.responseData = err.response?.data;
     this.responseHeader = err.response?.headers;
+    this.apiErrorCode = err.response?.data?.code;
+
+    const errResponseHeaders = getResponseHeaders(err);
+    this.requestId = errResponseHeaders[cFGARequestId];
+
     let data: any;
     try {
       data = JSON.parse(err.config?.data || "{}");
-    } catch (err) { /* do nothing */}
+    } catch (err) {
+      /* do nothing */
+    }
     this.clientId = data?.client_id;
     this.audience = data?.audience;
     this.grantType = data?.grant_type;

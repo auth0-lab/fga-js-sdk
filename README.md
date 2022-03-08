@@ -101,7 +101,7 @@ In the playground environment, you do not need to provide a client id and client
 > Note: The Auth0 FGA Playground, Dashboard and Documentation use a friendly syntax which gets translated to the API syntax seen below. Learn more about [the Auth0 FGA configuration language](https://docs.fga.dev/modeling/configuration-language).
 
 ```javascript
-const { id } = await auth0Fga.writeAuthorizationModel({
+const { authorization_model_id: id } = await auth0Fga.writeAuthorizationModel({
   type_definitions: [{
     type: "repo",
     relations: {
@@ -187,7 +187,7 @@ const { tree } = await auth0Fga.expand({
   },
 });
 
-// tree = {...}
+// tree  = { root: { name: "workspace:675bcac4-ad38-4fb1-a19a-94a5648c91d6#admin", leaf: { users: { users: ["anne", "beth"] } } } }
 ```
 
 #### Read
@@ -231,6 +231,7 @@ const { tuples } = await auth0Fga.read(body);
 // In all the above situations, the response will be of the form:
 // tuples = [{ key: { user, relation, object }, timestamp: ... }]
 ```
+
 
 ### API Endpoints
 
@@ -410,6 +411,8 @@ const { tuples } = await auth0Fga.read(body);
 
  - [Any](#Any)
  - [Assertion](#Assertion)
+ - [AuthErrorCode](#AuthErrorCode)
+ - [AuthenticationErrorMessageResponse](#AuthenticationErrorMessageResponse)
  - [AuthorizationModel](#AuthorizationModel)
  - [AuthorizationmodelDifference](#AuthorizationmodelDifference)
  - [AuthorizationmodelTupleToUserset](#AuthorizationmodelTupleToUserset)
@@ -417,18 +420,25 @@ const { tuples } = await auth0Fga.read(body);
  - [CheckResponse](#CheckResponse)
  - [Computed](#Computed)
  - [Environment](#Environment)
+ - [ErrorCode](#ErrorCode)
  - [ExpandRequestParams](#ExpandRequestParams)
  - [ExpandResponse](#ExpandResponse)
+ - [InternalErrorCode](#InternalErrorCode)
+ - [InternalErrorMessageResponse](#InternalErrorMessageResponse)
  - [Leaf](#Leaf)
  - [Node](#Node)
  - [Nodes](#Nodes)
+ - [NotFoundErrorCode](#NotFoundErrorCode)
  - [ObjectRelation](#ObjectRelation)
+ - [PathUnknownErrorMessageResponse](#PathUnknownErrorMessageResponse)
  - [ReadAssertionsResponse](#ReadAssertionsResponse)
  - [ReadAuthorizationModelResponse](#ReadAuthorizationModelResponse)
  - [ReadAuthorizationModelsResponse](#ReadAuthorizationModelsResponse)
  - [ReadRequestParams](#ReadRequestParams)
  - [ReadResponse](#ReadResponse)
  - [ReadSettingsResponse](#ReadSettingsResponse)
+ - [ResourceExhaustedErrorCode](#ResourceExhaustedErrorCode)
+ - [ResourceExhaustedErrorMessageResponse](#ResourceExhaustedErrorMessageResponse)
  - [Status](#Status)
  - [TokenIssuer](#TokenIssuer)
  - [Tuple](#Tuple)
@@ -442,6 +452,7 @@ const { tuples } = await auth0Fga.read(body);
  - [UsersetTreeDifference](#UsersetTreeDifference)
  - [UsersetTreeTupleToUserset](#UsersetTreeTupleToUserset)
  - [Usersets](#Usersets)
+ - [ValidationErrorMessageResponse](#ValidationErrorMessageResponse)
  - [WriteAssertionsRequestParams](#WriteAssertionsRequestParams)
  - [WriteAuthorizationModelResponse](#WriteAuthorizationModelResponse)
  - [WriteRequestParams](#WriteRequestParams)
@@ -467,6 +478,51 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuple_key** | [**TupleKey**](#TupleKey) |  | [default to undefined]
 **expectation** | **boolean** |  | [default to undefined]
+
+#### AuthErrorCode
+
+##### Enum
+
+
+* `NoAuthError` (value: `'no_auth_error'`)
+
+* `AuthFailure` (value: `'auth_failure'`)
+
+* `AuthFailedInvalidSubject` (value: `'auth_failed_invalid_subject'`)
+
+* `AuthFailedInvalidAudience` (value: `'auth_failed_invalid_audience'`)
+
+* `AuthFailedInvalidIssuer` (value: `'auth_failed_invalid_issuer'`)
+
+* `InvalidClaims` (value: `'invalid_claims'`)
+
+* `AuthFailedInvalidBearerToken` (value: `'auth_failed_invalid_bearer_token'`)
+
+* `MissingCustomerInBearerToken` (value: `'missing_customer_in_bearer_token'`)
+
+* `MissingStoreInBearerToken` (value: `'missing_store_in_bearer_token'`)
+
+* `StoreMismatchInBearerToken` (value: `'store_mismatch_in_bearer_token'`)
+
+* `CustomerMismatchInBearerToken` (value: `'customer_mismatch_in_bearer_token'`)
+
+* `BearerTokenMissing` (value: `'bearer_token_missing'`)
+
+* `Unauthenticated` (value: `'unauthenticated'`)
+
+* `InsufficientPermissions` (value: `'insufficient_permissions'`)
+
+* `UnauthorizedPrincipal` (value: `'unauthorized_principal'`)
+
+
+#### AuthenticationErrorMessageResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**code** | [**AuthErrorCode**](#AuthErrorCode) |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
 
 #### AuthorizationModel
 
@@ -536,6 +592,120 @@ Name | Type | Description | Notes
 * `Production` (value: `'PRODUCTION'`)
 
 
+#### ErrorCode
+
+##### Enum
+
+
+* `NoError` (value: `'no_error'`)
+
+* `ValidationError` (value: `'validation_error'`)
+
+* `AuthorizationModelNotFound` (value: `'authorization_model_not_found'`)
+
+* `AuthorizationModelResolutionTooComplex` (value: `'authorization_model_resolution_too_complex'`)
+
+* `InvalidWriteInput` (value: `'invalid_write_input'`)
+
+* `CannotAllowDuplicateTuplesInOneRequest` (value: `'cannot_allow_duplicate_tuples_in_one_request'`)
+
+* `CannotAllowDuplicateTypesInOneRequest` (value: `'cannot_allow_duplicate_types_in_one_request'`)
+
+* `CannotAllowMultipleReferencesToOneRelation` (value: `'cannot_allow_multiple_references_to_one_relation'`)
+
+* `InvalidContinuationToken` (value: `'invalid_continuation_token'`)
+
+* `InvalidTupleSet` (value: `'invalid_tuple_set'`)
+
+* `InvalidCheckInput` (value: `'invalid_check_input'`)
+
+* `InvalidExpandInput` (value: `'invalid_expand_input'`)
+
+* `UnsupportedUserSet` (value: `'unsupported_user_set'`)
+
+* `InvalidObjectFormat` (value: `'invalid_object_format'`)
+
+* `ImmutableStore` (value: `'immutable_store'`)
+
+* `MaxNumberTokenIssuers` (value: `'max_number_token_issuers'`)
+
+* `TokenIssuerAlreadyRegistered` (value: `'token_issuer_already_registered'`)
+
+* `TosAgreementAlreadySigned` (value: `'tos_agreement_already_signed'`)
+
+* `WriteFailedDueToInvalidInput` (value: `'write_failed_due_to_invalid_input'`)
+
+* `AuthorizationModelAssertionsNotFound` (value: `'authorization_model_assertions_not_found'`)
+
+* `SettingsNotFound` (value: `'settings_not_found'`)
+
+* `LatestAuthorizationModelNotFound` (value: `'latest_authorization_model_not_found'`)
+
+* `TypeNotFound` (value: `'type_not_found'`)
+
+* `RelationNotFound` (value: `'relation_not_found'`)
+
+* `EmptyRelationDefinition` (value: `'empty_relation_definition'`)
+
+* `TooManyTypes` (value: `'too_many_types'`)
+
+* `InvalidUser` (value: `'invalid_user'`)
+
+* `InvalidTokenIssuer` (value: `'invalid_token_issuer'`)
+
+* `InvalidTuple` (value: `'invalid_tuple'`)
+
+* `UnknownRelation` (value: `'unknown_relation'`)
+
+* `MaxClientsExceeded` (value: `'max_clients_exceeded'`)
+
+* `StoreIdInvalidLength` (value: `'store_id_invalid_length'`)
+
+* `IssuerUrlInvalidUri` (value: `'issuer_url_invalid_uri'`)
+
+* `IssuerUrlRequiredAbsolutePath` (value: `'issuer_url_required_absolute_path'`)
+
+* `AssertionsTooManyItems` (value: `'assertions_too_many_items'`)
+
+* `IdTooLong` (value: `'id_too_long'`)
+
+* `InvalidEnvironment` (value: `'invalid_environment'`)
+
+* `AuthorizationModelIdTooLong` (value: `'authorization_model_id_too_long'`)
+
+* `TupleKeyValueNotSpecified` (value: `'tuple_key_value_not_specified'`)
+
+* `TupleKeysTooManyOrTooFewItems` (value: `'tuple_keys_too_many_or_too_few_items'`)
+
+* `PageSizeInvalid` (value: `'page_size_invalid'`)
+
+* `ParamMissingValue` (value: `'param_missing_value'`)
+
+* `DifferenceBaseMissingValue` (value: `'difference_base_missing_value'`)
+
+* `SubtractBaseMissingValue` (value: `'subtract_base_missing_value'`)
+
+* `ObjectTooLong` (value: `'object_too_long'`)
+
+* `RelationTooLong` (value: `'relation_too_long'`)
+
+* `TypeDefinitionsTooFewItems` (value: `'type_definitions_too_few_items'`)
+
+* `TypeInvalidLength` (value: `'type_invalid_length'`)
+
+* `TypeInvalidPattern` (value: `'type_invalid_pattern'`)
+
+* `RelationsTooFewItems` (value: `'relations_too_few_items'`)
+
+* `RelationsTooLong` (value: `'relations_too_long'`)
+
+* `RelationsInvalidPattern` (value: `'relations_invalid_pattern'`)
+
+* `ObjectInvalidPattern` (value: `'object_invalid_pattern'`)
+
+* `QueryStringTypeContinuationTokenMismatch` (value: `'query_string_type_continuation_token_mismatch'`)
+
+
 #### ExpandRequestParams
 
 ##### Properties
@@ -552,6 +722,47 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tree** | [**UsersetTree**](#UsersetTree) |  | [optional] [default to undefined]
+
+#### InternalErrorCode
+
+##### Enum
+
+
+* `NoInternalError` (value: `'no_internal_error'`)
+
+* `InternalError` (value: `'internal_error'`)
+
+* `AuthInternalError` (value: `'auth_internal_error'`)
+
+* `AuthFailedErrorFetchingWellKnownJwks` (value: `'auth_failed_error_fetching_well_known_jwks'`)
+
+* `Cancelled` (value: `'cancelled'`)
+
+* `DeadlineExceeded` (value: `'deadline_exceeded'`)
+
+* `AlreadyExists` (value: `'already_exists'`)
+
+* `ResourceExhausted` (value: `'resource_exhausted'`)
+
+* `FailedPrecondition` (value: `'failed_precondition'`)
+
+* `Aborted` (value: `'aborted'`)
+
+* `OutOfRange` (value: `'out_of_range'`)
+
+* `Unavailable` (value: `'unavailable'`)
+
+* `DataLoss` (value: `'data_loss'`)
+
+
+#### InternalErrorMessageResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**code** | [**InternalErrorCode**](#InternalErrorCode) |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
 
 #### Leaf
 
@@ -583,6 +794,24 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **nodes** | [**Node**[]](#Node) |  | [optional] [default to undefined]
 
+#### NotFoundErrorCode
+
+##### Enum
+
+
+* `NoNotFoundError` (value: `'no_not_found_error'`)
+
+* `UndefinedEndpoint` (value: `'undefined_endpoint'`)
+
+* `CustomerIdNotFound` (value: `'customer_id_not_found'`)
+
+* `StoreIdNotFound` (value: `'store_id_not_found'`)
+
+* `StoreClientIdNotFound` (value: `'store_client_id_not_found'`)
+
+* `Unimplemented` (value: `'unimplemented'`)
+
+
 #### ObjectRelation
 
 ##### Properties
@@ -591,6 +820,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **object** | **string** |  | [optional] [default to undefined]
 **relation** | **string** |  | [optional] [default to undefined]
+
+#### PathUnknownErrorMessageResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**code** | [**NotFoundErrorCode**](#NotFoundErrorCode) |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
 
 #### ReadAssertionsResponse
 
@@ -646,6 +884,27 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **environment** | [**Environment**](#Environment) |  | [optional] [default to undefined]
 **token_issuers** | [**TokenIssuer**[]](#TokenIssuer) |  | [optional] [default to undefined]
+
+#### ResourceExhaustedErrorCode
+
+##### Enum
+
+
+* `NoResourceExhaustedError` (value: `'no_resource_exhausted_error'`)
+
+* `RateLimitExceeded` (value: `'rate_limit_exceeded'`)
+
+* `AuthRateLimitExceeded` (value: `'auth_rate_limit_exceeded'`)
+
+
+#### ResourceExhaustedErrorMessageResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**code** | [**ResourceExhaustedErrorCode**](#ResourceExhaustedErrorCode) |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
 
 #### Status
 
@@ -764,6 +1023,15 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **child** | [**Userset**[]](#Userset) |  | [optional] [default to undefined]
+
+#### ValidationErrorMessageResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**code** | [**ErrorCode**](#ErrorCode) |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
 
 #### WriteAssertionsRequestParams
 

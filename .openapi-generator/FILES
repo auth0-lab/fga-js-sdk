@@ -16,6 +16,7 @@ LICENSE
 README.md
 VERSION.txt
 api.ts
+apiModel.ts
 base.ts
 common.ts
 configuration.ts
