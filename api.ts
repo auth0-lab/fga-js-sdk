@@ -649,7 +649,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        async deleteTokenIssuer(id: string, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<object>> {
+        async deleteTokenIssuer(id: string, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTokenIssuer(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
@@ -738,7 +738,7 @@ export const Auth0FgaApiFp = function(configuration: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        async writeAssertions(authorizationModelId: string, body: WriteAssertionsRequestParams, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<object>> {
+        async writeAssertions(authorizationModelId: string, body: WriteAssertionsRequestParams, options?: any): Promise<(axios?: AxiosStatic) => PromiseResult<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.writeAssertions(authorizationModelId, body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, configuration);
         },
@@ -802,7 +802,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        deleteTokenIssuer(id: string, options?: any): PromiseResult<object> {
+        deleteTokenIssuer(id: string, options?: any): PromiseResult<void> {
             return localVarFp.deleteTokenIssuer(id, options).then((request) => request(axios));
         },
         /**
@@ -883,7 +883,7 @@ export const Auth0FgaApiFactory = function (configuration: Configuration, axios?
          * @param {*} [options] Override http request option.
          * @throws { Auth0FgaError }
          */
-        writeAssertions(authorizationModelId: string, body: WriteAssertionsRequestParams, options?: any): PromiseResult<object> {
+        writeAssertions(authorizationModelId: string, body: WriteAssertionsRequestParams, options?: any): PromiseResult<void> {
             return localVarFp.writeAssertions(authorizationModelId, body, options).then((request) => request(axios));
         },
         /**

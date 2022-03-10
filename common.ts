@@ -98,11 +98,13 @@ export const toPathString = function (url: URL) {
     return url.pathname + url.search + url.hash
 }
 
-export type CallResult<T extends {}> = T & {
+type ObjectOrVoid = {} | void;
+
+export type CallResult<T extends ObjectOrVoid> = T & {
     $response: AxiosResponse<T>
 };
 
-export type PromiseResult<T extends {}> = Promise<CallResult<T>>;
+export type PromiseResult<T extends ObjectOrVoid> = Promise<CallResult<T>>;
 
 function randomTime(loopCount: number, minWaitInMs: number): number {
     const min = Math.ceil(2 ** loopCount * minWaitInMs);

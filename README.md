@@ -272,7 +272,7 @@ const { tuples } = await auth0Fga.read(body);
 
 ##### Return type
 
-**object**
+ (empty response body)
 
 
 #### expand
@@ -368,7 +368,7 @@ const { tuples } = await auth0Fga.read(body);
 
 ##### Return type
 
-**object**
+ (empty response body)
 
 
 #### writeAuthorizationModel
