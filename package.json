@@ -18,7 +18,7 @@
   "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc --outDir dist/",
-    "prepublishOnly": "rm -r dist/ && npm run build",
+    "prepublishOnly": "rm -rf dist/ && npm run build",
     "test": "jest --config ./tests/jest.config.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "npm run lint -- --fix"
