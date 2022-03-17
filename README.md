@@ -23,6 +23,7 @@ Warning: This SDK comes with no SLAs and is not production-ready!
     - [Delete Tuples](#delete-tuples)
     - [Expand](#expand)
     - [Read](#read)
+    - [Read Changes (Watch)](#read-changes-watch)
   - [API Endpoints](#api-endpoints)
   - [Models](#models)
 - [Contributing](#contributing)
@@ -96,6 +97,8 @@ In the playground environment, you do not need to provide a client id and client
 
 #### Write Authorization Model
 
+[API Documentation](https://docs.fga.dev/api/service#/Store Models/auth0_fga_WriteAuthorizationModel)
+
 > Note: To learn how to build your authorization model, check the Docs at https://docs.fga.dev/
 
 > Note: The Auth0 FGA Playground, Dashboard and Documentation use a friendly syntax which gets translated to the API syntax seen below. Learn more about [the Auth0 FGA configuration language](https://docs.fga.dev/modeling/configuration-language).
@@ -125,6 +128,8 @@ const { authorization_model_id: id } = await auth0Fga.writeAuthorizationModel({
 
 #### Read a Single Authorization Model
 
+[API Documentation](https://docs.fga.dev/api/service#/Store Models/auth0_fga_ReadAuthorizationModel)
+
 ```javascript
 // Assuming `1uHxCSuTP0VKPYSnkq1pbb1jeZw` is an id of a single model
 const { authorization_model: authorizationModel } = await auth0Fga.readAuthorizationModel('1uHxCSuTP0VKPYSnkq1pbb1jeZw');
@@ -134,6 +139,8 @@ const { authorization_model: authorizationModel } = await auth0Fga.readAuthoriza
 
 #### Read Authorization Model IDs
 
+[API Documentation](https://docs.fga.dev/api/service#/Store Models/auth0_fga_ReadAuthorizationModels)
+
 ```javascript
 const { authorization_model_ids: authorizationModelIds } = await auth0Fga.readAuthorizationModels();
 
@@ -141,6 +148,9 @@ const { authorization_model_ids: authorizationModelIds } = await auth0Fga.readAu
 ```
 
 #### Check
+
+[API Documentation](https://docs.fga.dev/api/service#/Tuples/auth0_fga_Check)
+
 > Provide a tuple and ask the Auth0 FGA API to check for a relationship
 
 ```javascript
@@ -157,6 +167,8 @@ const result = await auth0Fga.check({
 
 #### Write Tuples
 
+[API Documentation](https://docs.fga.dev/api/service#/Tuples/auth0_fga_Write)
+
 ```javascript
 await auth0Fga.write({
   writes: {
@@ -168,6 +180,8 @@ await auth0Fga.write({
 
 #### Delete Tuples
 
+[API Documentation](https://docs.fga.dev/api/service#/Tuples/auth0_fga_Write)
+
 ```javascript
 await auth0Fga.write({
   deletes: {
@@ -178,6 +192,8 @@ await auth0Fga.write({
 ```
 
 #### Expand
+
+[API Documentation](https://docs.fga.dev/api/service#/Debugging/auth0_fga_Expand)
 
 ```javascript
 const { tree } = await auth0Fga.expand({
@@ -191,6 +207,8 @@ const { tree } = await auth0Fga.expand({
 ```
 
 #### Read
+
+[API Documentation](https://docs.fga.dev/api/service#/Tuples/auth0_fga_Read)
 
 ```javascript
 // Find if a relationship tuple stating that a certain user is an admin on a certain workspace
@@ -232,6 +250,23 @@ const { tuples } = await auth0Fga.read(body);
 // tuples = [{ key: { user, relation, object }, timestamp: ... }]
 ```
 
+#### Read Changes (Watch)
+
+[API Documentation](https://docs.fga.dev/api/service#/Tuples/auth0_fga_ReadChanges)
+
+```javascript
+const type = 'workspace';
+const pageSize = 25;
+const continuationToken = 'eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==';
+const response = await auth0Fga.readChanges(type, pageSize, continuationToken);
+
+// response.continuation_token = ...
+// response.changes = [
+//   { tuple_key: { user, relation, object }, operation: "write", timestamp: ... },
+//   { tuple_key: { user, relation, object }, operation: "delete", timestamp: ... }
+// ]
+```
+
 
 ### API Endpoints
 
@@ -244,6 +279,7 @@ const { tuples } = await auth0Fga.read(body);
 | [**readAssertions**](#readassertions) | **GET** /stores/{store_id}/assertions/{authorization_model_id} | Read assertions for an authorization model ID |
 | [**readAuthorizationModel**](#readauthorizationmodel) | **GET** /stores/{store_id}/authorization-models/{id} | Return a particular version of an authorization model |
 | [**readAuthorizationModels**](#readauthorizationmodels) | **GET** /stores/{store_id}/authorization-models | Return all the authorization model IDs for a particular store |
+| [**readChanges**](#readchanges) | **GET** /stores/{store_id}/changes | Return a list of all the tuple changes |
 | [**readSettings**](#readsettings) | **GET** /stores/{store_id}/settings | Return store settings, including the environment tag |
 | [**write**](#write) | **POST** /stores/{store_id}/write | Add or delete tuples from the store |
 | [**writeAssertions**](#writeassertions) | **PUT** /stores/{store_id}/assertions/{authorization_model_id} | Upsert assertions for an authorization model ID |
@@ -256,7 +292,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**CheckRequestParams**](#CheckRequestParams) |  | |
+| **params** | [**CheckRequestParams**](#CheckRequestParams) |  | |
 
 ##### Return type
 
@@ -280,7 +316,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**ExpandRequestParams**](#ExpandRequestParams) |  | |
+| **params** | [**ExpandRequestParams**](#ExpandRequestParams) |  | |
 
 ##### Return type
 
@@ -292,7 +328,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**ReadRequestParams**](#ReadRequestParams) |  | |
+| **params** | [**ReadRequestParams**](#ReadRequestParams) |  | |
 
 ##### Return type
 
@@ -335,6 +371,18 @@ const { tuples } = await auth0Fga.read(body);
 [**ReadAuthorizationModelsResponse**](#ReadAuthorizationModelsResponse)
 
 
+#### readChanges
+
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **type** | **string** |  | [default to undefined]|| **pageSize** | **number** |  | [default to undefined]|| **continuationToken** | **string** |  | [default to undefined]|
+
+##### Return type
+
+[**ReadChangesResponse**](#ReadChangesResponse)
+
+
 #### readSettings
 
 
@@ -352,7 +400,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**WriteRequestParams**](#WriteRequestParams) |  | |
+| **params** | [**WriteRequestParams**](#WriteRequestParams) |  | |
 
 ##### Return type
 
@@ -364,7 +412,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **authorizationModelId** | **string** |  | [default to undefined]|| **body** | [**WriteAssertionsRequestParams**](#WriteAssertionsRequestParams) |  | |
+| **authorizationModelId** | **string** |  | [default to undefined]|| **params** | [**WriteAssertionsRequestParams**](#WriteAssertionsRequestParams) |  | |
 
 ##### Return type
 
@@ -376,7 +424,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**TypeDefinitions**](#TypeDefinitions) |  | |
+| **typeDefinitions** | [**TypeDefinitions**](#TypeDefinitions) |  | |
 
 ##### Return type
 
@@ -388,7 +436,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**WriteSettingsRequestParams**](#WriteSettingsRequestParams) |  | |
+| **params** | [**WriteSettingsRequestParams**](#WriteSettingsRequestParams) |  | |
 
 ##### Return type
 
@@ -400,7 +448,7 @@ const { tuples } = await auth0Fga.read(body);
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **body** | [**WriteTokenIssuersRequestParams**](#WriteTokenIssuersRequestParams) |  | |
+| **params** | [**WriteTokenIssuersRequestParams**](#WriteTokenIssuersRequestParams) |  | |
 
 ##### Return type
 
@@ -434,6 +482,7 @@ const { tuples } = await auth0Fga.read(body);
  - [ReadAssertionsResponse](#ReadAssertionsResponse)
  - [ReadAuthorizationModelResponse](#ReadAuthorizationModelResponse)
  - [ReadAuthorizationModelsResponse](#ReadAuthorizationModelsResponse)
+ - [ReadChangesResponse](#ReadChangesResponse)
  - [ReadRequestParams](#ReadRequestParams)
  - [ReadResponse](#ReadResponse)
  - [ReadSettingsResponse](#ReadSettingsResponse)
@@ -442,8 +491,10 @@ const { tuples } = await auth0Fga.read(body);
  - [Status](#Status)
  - [TokenIssuer](#TokenIssuer)
  - [Tuple](#Tuple)
+ - [TupleChange](#TupleChange)
  - [TupleKey](#TupleKey)
  - [TupleKeys](#TupleKeys)
+ - [TupleOperation](#TupleOperation)
  - [TypeDefinition](#TypeDefinition)
  - [TypeDefinitions](#TypeDefinitions)
  - [Users](#Users)
@@ -476,7 +527,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tuple_key** | [**TupleKey**](#TupleKey) |  | [default to undefined]
+**tuple_key** | [**TupleKey**](#TupleKey) |  | [optional] [default to undefined]
 **expectation** | **boolean** |  | [default to undefined]
 
 #### AuthErrorCode
@@ -539,8 +590,8 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**base** | [**Userset**](#Userset) |  | [default to undefined]
-**subtract** | [**Userset**](#Userset) |  | [default to undefined]
+**base** | [**Userset**](#Userset) |  | [optional] [default to undefined]
+**subtract** | [**Userset**](#Userset) |  | [optional] [default to undefined]
 
 #### AuthorizationmodelTupleToUserset
 
@@ -705,6 +756,8 @@ Name | Type | Description | Notes
 
 * `QueryStringTypeContinuationTokenMismatch` (value: `'query_string_type_continuation_token_mismatch'`)
 
+* `WriteOperationsExceededBatchLimit` (value: `'write_operations_exceeded_batch_limit'`)
+
 
 #### ExpandRequestParams
 
@@ -856,6 +909,15 @@ Name | Type | Description | Notes
 **authorization_model_ids** | **string** |  | [optional] [default to undefined]
 **continuation_token** | **string** |  | [optional] [default to undefined]
 
+#### ReadChangesResponse
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**changes** | [**TupleChange**[]](#TupleChange) |  | [optional] [default to undefined]
+**continuation_token** | **string** |  | [optional] [default to undefined]
+
 #### ReadRequestParams
 
 ##### Properties
@@ -934,6 +996,16 @@ Name | Type | Description | Notes
 **key** | [**TupleKey**](#TupleKey) |  | [optional] [default to undefined]
 **timestamp** | **string** |  | [optional] [default to undefined]
 
+#### TupleChange
+
+##### Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**tuple_key** | [**TupleKey**](#TupleKey) |  | [optional] [default to undefined]
+**operation** | [**TupleOperation**](#TupleOperation) |  | [optional] [default to undefined]
+**timestamp** | **string** |  | [optional] [default to undefined]
+
 #### TupleKey
 
 ##### Properties
@@ -951,6 +1023,16 @@ Name | Type | Description | Notes
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tuple_keys** | [**TupleKey**[]](#TupleKey) |  | [default to undefined]
+
+#### TupleOperation
+
+##### Enum
+
+
+* `Write` (value: `'write'`)
+
+* `Delete` (value: `'delete'`)
+
 
 #### TypeDefinition
 
@@ -983,7 +1065,7 @@ Name | Type | Description | Notes
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**_this** | **object** | A DirectUserset is a sentinel message for referencing the direct members specified by an object/relation mapping. | [optional] [default to undefined]
+**this** | **object** | A DirectUserset is a sentinel message for referencing the direct members specified by an object/relation mapping. | [optional] [default to undefined]
 **computedUserset** | [**ObjectRelation**](#ObjectRelation) |  | [optional] [default to undefined]
 **tupleToUserset** | [**AuthorizationmodelTupleToUserset**](#AuthorizationmodelTupleToUserset) |  | [optional] [default to undefined]
 **union** | [**Usersets**](#Usersets) |  | [optional] [default to undefined]
@@ -1097,7 +1179,7 @@ Name | Type | Description | Notes
 
 ## Contributing
 
-### Issue Reporting
+### Issues
 
 If you have found a bug or if you have a feature request, please report them at this repository [issues](https://github.com/auth0-lab/fga-js-sdk/issues) section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
 

@@ -1,6 +1,6 @@
 {
   "name": "@auth0/fga",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "JavaScript and Node.js SDK for Auth0 Fine Grained Authorization (FGA)",
   "author": "Auth0Lab",
   "keywords": [

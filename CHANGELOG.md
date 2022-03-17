@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.6.3
+
+### [0.6.3](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.2...v0.6.3) (2022-03-17)
+
+#### Changes
+- chore: send user agent header in non-browser environments
+- feat: add support for the Watch API
+- fix: rename invalid "this" in tuple key to "this"
+
 ## v0.6.2
 
 ### [0.6.2](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.1...v0.6.2) (2022-03-09)

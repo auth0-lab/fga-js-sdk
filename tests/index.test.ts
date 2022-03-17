@@ -14,6 +14,7 @@ import {
   ExpandResponse,
   ReadAuthorizationModelResponse,
   ReadAuthorizationModelsResponse,
+  ReadChangesResponse,
   ReadResponse,
   TupleKey,
   TypeDefinitions,
@@ -133,6 +134,27 @@ const nocks = {
       .reply(200, {
         id: "some-new-id",
       } as ReadAuthorizationModelResponse);
+  },
+  readChanges: (storeId: string, type: string, pageSize: number, contToken: string, serverUrl = defaultConfiguration.serverUrl) => {
+    return nock(serverUrl)
+      .get(`/stores/${storeId}/changes`)
+      .query({
+        type,
+        page_size: pageSize,
+        continuation_token: contToken
+      })
+      .reply(200, {
+        changes: [{
+          tuple_key: {
+            user: "anne@auth0.com",
+            relation: "reader",
+            object: "repo:auth0/express-jwt"
+          },
+          operation: "write",
+          timestamp: "2000-01-01T00:00:00Z"
+        }],
+        "continuation_token": "eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ=="
+      } as ReadChangesResponse);
   },
 };
 
@@ -705,6 +727,22 @@ describe("auth0-fga-sdk", function () {
         expect(data).toMatchObject({
           configurations: expect.arrayContaining([]),
         });
+      });
+    });
+
+    describe("readChanges", () => {
+      it("should call the api and return the response", async () => {
+        const type = "repo";
+        const pageSize = 25;
+        const continuationToken = "eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==";
+
+        const scope = nocks.readChanges(AUTH0_FGA_STORE_ID, type, pageSize, continuationToken);
+
+        expect(scope.isDone()).toBe(false);
+        const response = await auth0FgaApi.readChanges(type, pageSize, continuationToken);
+
+        expect(scope.isDone()).toBe(true);
+        expect(response).toMatchObject({ changes: expect.arrayContaining([]) });
       });
     });
   });

@@ -40,7 +40,7 @@ export interface Assertion {
      * @type {TupleKey}
      * @memberof Assertion
      */
-    tuple_key: TupleKey;
+    tuple_key?: TupleKey;
     /**
      * 
      * @type {boolean}
@@ -121,13 +121,13 @@ export interface AuthorizationmodelDifference {
      * @type {Userset}
      * @memberof AuthorizationmodelDifference
      */
-    base: Userset;
+    base?: Userset;
     /**
      * 
      * @type {Userset}
      * @memberof AuthorizationmodelDifference
      */
-    subtract: Userset;
+    subtract?: Userset;
 }
 /**
  * 
@@ -219,7 +219,7 @@ export enum Environment {
 }
 
 /**
- * - no_error: no error  - validation_error: generic validation error.  - authorization_model_not_found: authorization model not found.  - authorization_model_resolution_too_complex: too many rewrite rules to be resolved.  - invalid_write_input: invalid write input.  - cannot_allow_duplicate_tuples_in_one_request: duplicate tuples in one request.  - cannot_allow_duplicate_types_in_one_request: duplicate types in one request.  - cannot_allow_multiple_references_to_one_relation: cannot use a relation to define itself.  - invalid_continuation_token: invalid continuation token.  - invalid_tuple_set: invalid tuple set.  - invalid_check_input: invalid check input.  - invalid_expand_input: invalid expand input.  - unsupported_user_set: unsupported user set.  - invalid_object_format: invalid object format.  - immutable_store: operation on immutable store.  - max_number_token_issuers: reaching maximum number of token issuers.  - token_issuer_already_registered: token issuers already registered.  - tos_agreement_already_signed: agreement already signed.  - write_failed_due_to_invalid_input: write request failed due to invalid input.  - authorization_model_assertions_not_found: no assertions found for authorization model.  - settings_not_found: settings not found.  - latest_authorization_model_not_found: latest authorization model not found.  - type_not_found: type not found.  - relation_not_found: relation not found.  - empty_relation_definition: empty relation definition.  - too_many_types: too many types.  - invalid_user: invalid user.  - invalid_token_issuer: invalid token issuer.  - invalid_tuple: invalid tuple.  - unknown_relation: unknown relation.  - max_clients_exceeded: maximum clients exceeded.  - store_id_invalid_length: store id has invalid length.  - issuer_url_invalid_uri: issuer url has invalid URI.  - issuer_url_required_absolute_path: issuer url is not absolute path.  - assertions_too_many_items: assertions have too many items.  - id_too_long: ID is too long.  - invalid_environment: invalid environment is specified.  - authorization_model_id_too_long: authorization model id is too long.  - tuple_key_value_not_specified: tuple key value is not specified.  - tuple_keys_too_many_or_too_few_items: tuple keys have too few or too many items.  - page_size_invalid: page size is outside of acceptable range.  - param_missing_value: params value is missing.  - difference_base_missing_value: difference\'s base value is missing.  - subtract_base_missing_value: subtract base value is missing.  - object_too_long: object length is too long.  - relation_too_long: relation length is too long.  - type_definitions_too_few_items: type definitions do not have enough item.  - type_invalid_length: type length is invalid.  - type_invalid_pattern: type does not match expected pattern.  - relations_too_few_items: relations have too few items.  - relations_too_long: relations\' length is too long.  - relations_invalid_pattern: relations do not match expected pattern.  - object_invalid_pattern: object does not match expected pattern.  - query_string_type_continuation_token_mismatch: type in the query string and the continuation token don\'t match.
+ * - no_error: no error  - validation_error: generic validation error.  - authorization_model_not_found: authorization model not found.  - authorization_model_resolution_too_complex: too many rewrite rules to be resolved.  - invalid_write_input: invalid write input.  - cannot_allow_duplicate_tuples_in_one_request: duplicate tuples in one request.  - cannot_allow_duplicate_types_in_one_request: duplicate types in one request.  - cannot_allow_multiple_references_to_one_relation: cannot use a relation to define itself.  - invalid_continuation_token: invalid continuation token.  - invalid_tuple_set: invalid tuple set.  - invalid_check_input: invalid check input.  - invalid_expand_input: invalid expand input.  - unsupported_user_set: unsupported user set.  - invalid_object_format: invalid object format.  - immutable_store: operation on immutable store.  - max_number_token_issuers: reaching maximum number of token issuers.  - token_issuer_already_registered: token issuers already registered.  - tos_agreement_already_signed: agreement already signed.  - write_failed_due_to_invalid_input: write request failed due to invalid input.  - authorization_model_assertions_not_found: no assertions found for authorization model.  - settings_not_found: settings not found.  - latest_authorization_model_not_found: latest authorization model not found.  - type_not_found: type not found.  - relation_not_found: relation not found.  - empty_relation_definition: empty relation definition.  - too_many_types: too many types.  - invalid_user: invalid user.  - invalid_token_issuer: invalid token issuer.  - invalid_tuple: invalid tuple.  - unknown_relation: unknown relation.  - max_clients_exceeded: maximum clients exceeded.  - store_id_invalid_length: store id has invalid length.  - issuer_url_invalid_uri: issuer url has invalid URI.  - issuer_url_required_absolute_path: issuer url is not absolute path.  - assertions_too_many_items: assertions have too many items.  - id_too_long: ID is too long.  - invalid_environment: invalid environment is specified.  - authorization_model_id_too_long: authorization model id is too long.  - tuple_key_value_not_specified: tuple key value is not specified.  - tuple_keys_too_many_or_too_few_items: tuple keys have too few or too many items.  - page_size_invalid: page size is outside of acceptable range.  - param_missing_value: params value is missing.  - difference_base_missing_value: difference\'s base value is missing.  - subtract_base_missing_value: subtract base value is missing.  - object_too_long: object length is too long.  - relation_too_long: relation length is too long.  - type_definitions_too_few_items: type definitions do not have enough item.  - type_invalid_length: type length is invalid.  - type_invalid_pattern: type does not match expected pattern.  - relations_too_few_items: relations have too few items.  - relations_too_long: relations\' length is too long.  - relations_invalid_pattern: relations do not match expected pattern.  - object_invalid_pattern: object does not match expected pattern.  - query_string_type_continuation_token_mismatch: type in the query string and the continuation token don\'t match.  - write_operations_exceeded_batch_limit: The number of write operations exceeded the write batch limit.
  * @export
  * @enum {string}
  */
@@ -278,7 +278,8 @@ export enum ErrorCode {
     RelationsTooLong = 'relations_too_long',
     RelationsInvalidPattern = 'relations_invalid_pattern',
     ObjectInvalidPattern = 'object_invalid_pattern',
-    QueryStringTypeContinuationTokenMismatch = 'query_string_type_continuation_token_mismatch'
+    QueryStringTypeContinuationTokenMismatch = 'query_string_type_continuation_token_mismatch',
+    WriteOperationsExceededBatchLimit = 'write_operations_exceeded_batch_limit'
 }
 
 /**
@@ -536,6 +537,25 @@ export interface ReadAuthorizationModelsResponse {
 /**
  * 
  * @export
+ * @interface ReadChangesResponse
+ */
+export interface ReadChangesResponse {
+    /**
+     * 
+     * @type {Array<TupleChange>}
+     * @memberof ReadChangesResponse
+     */
+    changes?: Array<TupleChange>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReadChangesResponse
+     */
+    continuation_token?: string;
+}
+/**
+ * 
+ * @export
  * @interface ReadRequestParams
  */
 export interface ReadRequestParams {
@@ -699,6 +719,31 @@ export interface Tuple {
 /**
  * 
  * @export
+ * @interface TupleChange
+ */
+export interface TupleChange {
+    /**
+     * 
+     * @type {TupleKey}
+     * @memberof TupleChange
+     */
+    tuple_key?: TupleKey;
+    /**
+     * 
+     * @type {TupleOperation}
+     * @memberof TupleChange
+     */
+    operation?: TupleOperation;
+    /**
+     * 
+     * @type {string}
+     * @memberof TupleChange
+     */
+    timestamp?: string;
+}
+/**
+ * 
+ * @export
  * @interface TupleKey
  */
 export interface TupleKey {
@@ -734,6 +779,17 @@ export interface TupleKeys {
      */
     tuple_keys: Array<TupleKey>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum TupleOperation {
+    Write = 'write',
+    Delete = 'delete'
+}
+
 /**
  * 
  * @export
