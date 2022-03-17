@@ -790,7 +790,7 @@ export interface Userset {
      * @type {object}
      * @memberof Userset
      */
-    _this?: object;
+    this?: object;
     /**
      * 
      * @type {ObjectRelation}

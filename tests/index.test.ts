@@ -658,7 +658,7 @@ describe("auth0-fga-sdk", function () {
       it("should call the api and return the response", async () => {
         const authorizationModel = {
           type_definitions: [
-            { type: "workspace", relations: { admin: { _this: {} } } },
+            { type: "workspace", relations: { admin: { this: {} } } },
           ],
         };
         const scope = nocks.writeAuthorizationModel(
