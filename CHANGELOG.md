@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.6.4
+
+### [0.6.4](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.3...v0.6.4) (2022-03-17)
+
+#### Changes
+- chore: upgrade dependencies
+  resolves [CVE-2021-44906](https://nvd.nist.gov/vuln/detail/CVE-2021-44906) in the `minimist` dev dependency
+
 ## v0.6.3
 
 ### [0.6.3](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.2...v0.6.3) (2022-03-17)

@@ -1,6 +1,6 @@
 {
   "name": "@auth0/fga",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "JavaScript and Node.js SDK for Auth0 Fine Grained Authorization (FGA)",
   "author": "Auth0Lab",
   "keywords": [
@@ -29,13 +29,13 @@
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",
-    "@typescript-eslint/eslint-plugin": "^5.15.0",
-    "@typescript-eslint/parser": "^5.15.0",
-    "eslint": "^8.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^8.12.0",
     "jest": "^27.5.1",
     "nock": "^13.2.4",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.6.2"
+    "ts-jest": "^27.1.4",
+    "typescript": "^4.6.3"
   },
   "files": [
     "README.md",

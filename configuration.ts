@@ -156,7 +156,7 @@ export class Configuration {
         baseOptions.headers = baseOptions.headers || {};
 
         if (typeof process === 'object' && process.title === 'node' && !baseOptions.headers['User-Agent']) {
-          baseOptions.headers['User-Agent'] = "auth0-fga-sdk {sdkId}/{packageVersion}".replace("{sdkId}", "js").replace("{packageVersion}", "0.6.3");
+          baseOptions.headers['User-Agent'] = "auth0-fga-sdk {sdkId}/{packageVersion}".replace("{sdkId}", "js").replace("{packageVersion}", "0.6.4");
         }
 
         this.serverUrl = `${environmentConfiguration.scheme}://${environmentConfiguration.host}`;
