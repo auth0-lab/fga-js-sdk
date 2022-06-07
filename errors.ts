@@ -10,17 +10,17 @@ import {
 /**
  *
  * @export
- * @class Auth0FgaError
+ * @class FgaError
  * @extends {Error}
  */
-export class Auth0FgaError extends Error {
-  name = "Auth0FgaError";
+export class FgaError extends Error {
+  name = "FgaError";
 
   constructor(err?: Error | string | unknown, msg?: string) {
     super(
       msg || typeof err === "string"
         ? (err as string)
-        : `Auth0 FGA Error${(err as Error)?.message ? `: ${(err as Error).message}` : ""}`
+        : `FGA Error${(err as Error)?.message ? `: ${(err as Error).message}` : ""}`
     );
     if ((err as Error)?.stack) {
       this.stack = (err as Error).stack;
@@ -59,11 +59,11 @@ function getResponseHeaders(err: AxiosError): any {
 /**
  *
  * @export
- * @class Auth0FgaApiError
- * @extends {Auth0FgaError}
+ * @class FgaApiError
+ * @extends { FgaError }
  */
-export class Auth0FgaApiError extends Auth0FgaError {
-  name = "Auth0FgaApiError";
+export class FgaApiError extends FgaError {
+  name = "FgaApiError";
   public statusCode?: number;
   public statusText?: string;
   public method?: Method;
@@ -82,13 +82,13 @@ export class Auth0FgaApiError extends Auth0FgaError {
     this.statusText = err.response?.statusText;
     this.requestData = err.config?.data;
     this.requestURL = err.config?.url;
-    this.method = err.config?.method;
+    this.method = err.config?.method as Method;
     const { storeId, endpointCategory } = getRequestMetadataFromPath(
       err.request?.path
     );
     this.storeId = storeId;
     this.endpointCategory = endpointCategory;
-    this.apiErrorMessage = err.response?.data?.message;
+    this.apiErrorMessage = (err.response?.data as any)?.message;
     this.responseData = err.response?.data;
     this.responseHeader = err.response?.headers;
     const errResponseHeaders = getResponseHeaders(err);
@@ -103,21 +103,21 @@ export class Auth0FgaApiError extends Auth0FgaError {
 /**
  *
  * @export
- * @class Auth0FgaApiValidationError
- * @extends {Auth0FgaApiError}
+ * @class FgaApiValidationError
+ * @extends { FgaApiError }
  */
-export class Auth0FgaApiValidationError extends Auth0FgaApiError {
-  name = "Auth0FgaApiValidationError";
+export class FgaApiValidationError extends FgaApiError {
+  name = "FgaApiValidationError";
   public apiErrorCode: ErrorCode;
   constructor(err: AxiosError, msg?: string) {
     // If there is a better error message, use it instead of the default error
     super(err);
-    this.apiErrorCode = err.response?.data?.code;
+    this.apiErrorCode = (err.response?.data as any)?.code;
     const { endpointCategory } = getRequestMetadataFromPath(err.request?.path);
     this.message = msg
       ? msg
-      : err.response?.data?.message
-        ? `Auth0 FGA Validation Error: ${err.config?.method} ${endpointCategory} : Error ${err.response?.data?.message}`
+      : (err.response?.data as any)?.message
+        ? `FGA API Validation Error: ${err.config?.method} ${endpointCategory} : Error ${(err.response?.data as any)?.message}`
         : (err as Error).message;
   }
 }
@@ -125,20 +125,20 @@ export class Auth0FgaApiValidationError extends Auth0FgaApiError {
 /**
  *
  * @export
- * @class Auth0FgaApiNotFoundError
- * @extends {Auth0FgaApiError}
+ * @class FgaApiNotFoundError
+ * @extends { FgaApiError }
  */
-export class Auth0FgaApiNotFoundError extends Auth0FgaApiError {
-  name = "Auth0FgaApiNotFoundError";
+export class FgaApiNotFoundError extends FgaApiError {
+  name = "FgaApiNotFoundError";
   public apiErrorCode: NotFoundErrorCode;
   constructor(err: AxiosError, msg?: string) {
     // If there is a better error message, use it instead of the default error
     super(err);
-    this.apiErrorCode = err.response?.data?.code;
+    this.apiErrorCode = (err.response?.data as any)?.code;
     this.message = msg
       ? msg
-      : err.response?.data?.message
-        ? `Auth0 FGA NotFound Error: ${err.config?.method} : Error ${err.response?.data?.message}`
+      : (err.response?.data as any)?.message
+        ? `FGA API NotFound Error: ${err.config?.method} : Error ${(err.response?.data as any)?.message}`
         : (err as Error).message;
   }
 }
@@ -159,11 +159,11 @@ const cXRateLimitReset = "x-ratelimit-reset";
 /**
  *
  * @export
- * @class Auth0FgaApiRateLimitExceededError
- * @extends {Auth0FgaApiError}
+ * @class FgaApiRateLimitExceededError
+ * @extends { FgaApiError }
  */
-export class Auth0FgaApiRateLimitExceededError extends Auth0FgaApiError {
-  name = "Auth0FgaApiRateLimitExceededError";
+export class FgaApiRateLimitExceededError extends FgaApiError {
+  name = "FgaApiRateLimitExceededError";
   public apiErrorCode: ResourceExhaustedErrorCode;
 
   rateLimit?: number;
@@ -172,7 +172,7 @@ export class Auth0FgaApiRateLimitExceededError extends Auth0FgaApiError {
 
   constructor(err: AxiosError, msg?: string) {
     super(err);
-    this.apiErrorCode = err.response?.data?.code;
+    this.apiErrorCode = (err.response?.data as any)?.code;
 
     const { endpointCategory } = getRequestMetadataFromPath(err.request?.path);
     const errResponseHeaders = getResponseHeaders(err);
@@ -181,30 +181,30 @@ export class Auth0FgaApiRateLimitExceededError extends Auth0FgaApiError {
     this.rateLimitResetEpoch = Number(errResponseHeaders[cXRateLimitReset]);
     this.message = msg
       ? msg
-      : `Auth0 FGA Rate Limit Error for ${this.method} ${endpointCategory} with API limit of ${this.rateLimit} requests per ${this.rateUnit}.`;
+      : `FGA API Rate Limit Error for ${this.method} ${endpointCategory} with API limit of ${this.rateLimit} requests per ${this.rateUnit}.`;
   }
 }
 
 /**
  *
  * @export
- * @class Auth0FgaApiInternalError
- * @extends {Auth0FgaApiError}
+ * @class FgaApiInternalError
+ * @extends { FgaApiError }
  */
-export class Auth0FgaApiInternalError extends Auth0FgaApiError {
-  name = "Auth0FgaApiInternalError";
+export class FgaApiInternalError extends FgaApiError {
+  name = "FgaApiInternalError";
   public apiErrorCode: InternalErrorCode;
 
   constructor(err: AxiosError, msg?: string) {
     // If there is a better error message, use it instead of the default error
     super(err);
     const { endpointCategory } = getRequestMetadataFromPath(err.request?.path);
-    this.apiErrorCode = err.response?.data?.code;
+    this.apiErrorCode = (err.response?.data as any)?.code;
 
     this.message = msg
       ? msg
-      : err.response?.data?.message
-        ? `Auth0 FGA Internal Error: ${err.config?.method} ${endpointCategory} : Error ${err.response?.data?.message}`
+      : (err.response?.data as any)?.message
+        ? `FGA API Internal Error: ${err.config?.method} ${endpointCategory} : Error ${(err.response?.data as any)?.message}`
         : (err as Error).message;
   }
 }
@@ -212,11 +212,11 @@ export class Auth0FgaApiInternalError extends Auth0FgaApiError {
 /**
  *
  * @export
- * @class Auth0FgaAuthenticationError
- * @extends {Auth0FgaApiError}
+ * @class FgaApiAuthenticationError
+ * @extends { FgaApiError }
  */
-export class Auth0FgaAuthenticationError extends Auth0FgaError {
-  name = "Auth0FgaApiAuthenticationError";
+export class FgaApiAuthenticationError extends FgaError {
+  name = "FgaApiAuthenticationError";
   public statusCode?: number;
   public statusText?: string;
   public method?: Method;
@@ -230,14 +230,14 @@ export class Auth0FgaAuthenticationError extends Auth0FgaError {
   public apiErrorCode: AuthErrorCode;
 
   constructor(err: AxiosError) {
-    super(`Auth0 FGA Authentication Error.  ${err.response?.statusText}`);
+    super(`FGA Authentication Error.${err.response?.statusText ? ` ${err.response.statusText}` : ""}`);
     this.statusCode = err.response?.status;
     this.statusText = err.response?.statusText;
     this.requestURL = err.config?.url;
-    this.method = err.config?.method;
+    this.method = err.config?.method as Method;
     this.responseData = err.response?.data;
     this.responseHeader = err.response?.headers;
-    this.apiErrorCode = err.response?.data?.code;
+    this.apiErrorCode = (err.response?.data as any)?.code;
 
     const errResponseHeaders = getResponseHeaders(err);
     this.requestId = errResponseHeaders[cFGARequestId];
@@ -260,11 +260,11 @@ export class Auth0FgaAuthenticationError extends Auth0FgaError {
 /**
  *
  * @export
- * @class Auth0FgaValidationError
- * @extends {Auth0FgaError}
+ * @class FgaValidationError
+ * @extends { FgaError }
  */
-export class Auth0FgaValidationError extends Auth0FgaError {
-  name = "Auth0FgaValidationError";
+export class FgaValidationError extends FgaError {
+  name = "FgaValidationError";
   constructor(public field: string, msg?: string) {
     super(msg);
   }
@@ -273,11 +273,11 @@ export class Auth0FgaValidationError extends Auth0FgaError {
 /**
  *
  * @export
- * @class Auth0FgaRequiredParamError
- * @extends {Auth0FgaValidationError}
+ * @class FgaRequiredParamError
+ * @extends { FgaValidationError }
  */
-export class Auth0FgaRequiredParamError extends Auth0FgaValidationError {
-  name = "Auth0FgaRequiredParamError";
+export class FgaRequiredParamError extends FgaValidationError {
+  name = "FgaRequiredParamError";
   constructor(public functionName: string, field: string, msg?: string) {
     super(field, msg);
   }
@@ -286,11 +286,11 @@ export class Auth0FgaRequiredParamError extends Auth0FgaValidationError {
 /**
  *
  * @export
- * @class Auth0FgaInvalidEnvironmentError
- * @extends {Auth0FgaValidationError}
+ * @class FgaInvalidEnvironmentError
+ * @extends { FgaValidationError }
  */
-export class Auth0FgaInvalidEnvironmentError extends Auth0FgaValidationError {
-  name = "InvalidEnvironmentError";
+export class FgaInvalidEnvironmentError extends FgaValidationError {
+  name = "FgaInvalidEnvironmentError";
   constructor(field: string, allowedEnvironments?: string[]) {
     super(
       field,

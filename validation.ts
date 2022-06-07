@@ -1,12 +1,12 @@
-import { Auth0FgaRequiredParamError } from "./errors";
+import { FgaRequiredParamError } from "./errors";
 
 /**
  *
- * @throws {Auth0FgaRequiredParamError}
+ * @throws { FgaRequiredParamError }
  * @export
  */
 export const assertParamExists = function (functionName: string, paramName: string, paramValue: unknown) {
   if (paramValue === null || paramValue === undefined) {
-    throw new Auth0FgaRequiredParamError(functionName, paramName, `Required parameter ${paramName} was null or undefined when calling ${functionName}.`);
+    throw new FgaRequiredParamError(functionName, paramName, `Required parameter ${paramName} was null or undefined when calling ${functionName}.`);
   }
 };

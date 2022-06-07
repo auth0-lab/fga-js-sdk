@@ -23,6 +23,7 @@ configuration.ts
 errors.ts
 git_push.sh
 index.ts
+package-lock.json
 package.json
 tests/index.test.ts
 tests/jest.config.js

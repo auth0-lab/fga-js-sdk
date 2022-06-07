@@ -1,5 +1,68 @@
 # Changelog
 
+## v0.7.0
+
+### [0.7.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.4...v0.7.0) (2022-06-07)
+
+#### Changes
+- feat!: [ReadAuthorizationModels](https://docs.fga.dev/api/service#/Store%20Models/ReadAuthorizationModels) now returns an array of Authorization Models instead of IDs [BREAKING CHANGE]
+
+    The response will become similar to:
+    ```json
+    {
+        "authorization_models": [
+            {
+              "id": (string),
+              "type_definitions": [...]
+            }
+        ]
+    }
+    ```
+- feat!: drop support for all settings endpoints [BREAKING CHANGE]
+- feat!: Simplify error prefix to `Fga` [BREAKING CHANGE]
+
+    Possible Errors:
+    - `FgaError`: All errors thrown by the SDK extend this error
+    - `FgaApiError`: All errors returned by the API extend this error
+    - `FgaApiValidationError`: 400 and 422 Validation Errors returned by the API
+    - `FgaApiNotFoundError`: 404 errors returned by the API
+    - `FgaApiRateLimitExceededError`: 429 errors returned by the API
+    - `FgaApiInternalError`: 5xx errors returned by the API
+    - `FgaApiAuthenticationError`: Error during authentication
+    - `FgaValidationError`: Error thrown by the SDK when validating input
+    - `FgaRequiredParamError`: Error thrown by the SDK when a required parameter is not provided
+    - `FgaInvalidEnvironmentError`: Error thrown by the SDK when the provided environment is invalid
+- feat!: drop `Params` postfix from the name of the request interface [BREAKING CHANGE]
+
+  e.g. `ReadRequestParams` will become `ReadRequest`
+- feat: add support for [contextual tuples](https://docs.fga.dev/intro/auth0-fga-concepts#what-are-contextual-tuples) in the [Check](https://docs.fga.dev/api/service#/Tuples/Check) request
+
+    You can call them like so:
+    ```js
+    const { allowed } = await fgaClient.check({
+      tuple_key: {
+        user: 'anne',
+        relation: 'can_view',
+        object: 'transaction:A',
+      },
+      contextual_tuples: {
+        tuple_keys: [
+          {
+            user: "anne",
+            relation: "user",
+            object: "ip-address-range:10.0.0.0/16"
+          },
+          {
+            user: "anne",
+            relation: "user",
+            object: "timeslot:18_19"
+          }
+        ]
+      }});
+    ```
+- chore: upgrade dependencies
+- chore: internal refactor
+
 ## v0.6.4
 
 ### [0.6.4](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.3...v0.6.4) (2022-03-17)
