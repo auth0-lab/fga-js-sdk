@@ -117,7 +117,7 @@ export class FgaApiValidationError extends FgaApiError {
     this.message = msg
       ? msg
       : (err.response?.data as any)?.message
-        ? `FGA API Validation Error: ${err.config?.method} ${endpointCategory} : Error ${(err.response?.data as any)?.message}`
+        ? `${err.config?.method} ${endpointCategory}: ${(err.response?.data as any)?.message}`
         : (err as Error).message;
   }
 }
