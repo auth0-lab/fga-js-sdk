@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.8.0
+
+### [0.8.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.7.0...v0.8.0) (2022-10-13)
+
+#### Changes
+- BREAKING: exported type `TypeDefinitions` is now `WriteAuthorizationModelRequest`
+    Note: This is only a breaking change on the SDK, not the API.
+- Support ListObjects
+    Support for [ListObjects API](https://docs.fga.dev/api/service#/Relationship%20Queries/ListObjects)
+
+    You call the API and receive the list of object ids from a particular type that the user has a certain relation with.
+
+    For example, to find the list of documents that Anne can read:
+
+    ```javascript
+    const response = await auth0FgaApi.listObjects({
+      user: "user:anne",
+      relation: "can_read",
+      type: "document"
+    });
+
+    // response.object_ids = ["roadmap"]
+    ```
+- Use [OpenFGA JS SDK](https://github.com/openfga/js-sdk) as the base SDK
+- bump dependencies
+
 ## v0.7.0
 
 ### [0.7.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.6.4...v0.7.0) (2022-06-07)
