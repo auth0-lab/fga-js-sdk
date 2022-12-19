@@ -176,6 +176,22 @@ const nocks = {
 };
 
 describe("Auth0Fga SDK", function () {
+  describe("Environment Configurations", () => {
+    it("should be able to parse the environment configurations", () => {
+      expect(
+        () => Configuration.environmentConfigurations
+      ).not.toThrowError();
+    });
+
+    it("should be able to parse the environment configurations", () => {
+      const config = Configuration.getEnvironmentConfiguration("playground");
+      expect(config).toMatchObject({
+        apiScheme: "https",
+        apiHost: "api.playground.fga.dev",
+      });
+    });
+  });
+
   describe("initializing the sdk", () => {
     it("should require storeId in configuration", () => {
       expect(
@@ -764,7 +780,7 @@ describe("Auth0Fga SDK", function () {
 
     describe("listObjects", () => {
       it("should call the api and return the response", async () => {
-        const mockedResponse = { object_ids: ["roadmap"] };
+        const mockedResponse = { objects: ["document:roadmap"] };
         const scope = nocks.listObjects(baseConfig.storeId!, mockedResponse);
 
         expect(scope.isDone()).toBe(false);
@@ -788,8 +804,8 @@ describe("Auth0Fga SDK", function () {
         });
 
         expect(scope.isDone()).toBe(true);
-        expect(response.object_ids).toHaveLength(mockedResponse.object_ids.length);
-        expect(response.object_ids).toEqual(expect.arrayContaining(mockedResponse.object_ids));
+        expect(response.objects).toHaveLength(mockedResponse.objects.length);
+        expect(response.objects).toEqual(expect.arrayContaining(mockedResponse.objects));
       });
     });
   });

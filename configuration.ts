@@ -53,30 +53,6 @@ export interface EnvironmentConfiguration {
 }
 
 const environmentConfigurationString = "{\"default\":{\"apiAudience\":\"https://api.us1.fga.dev/\",\"apiTokenIssuer\":\"fga.us.auth0.com\",\"apiScheme\":\"https\",\"apiHost\":\"api.us1.fga.dev\"},\"us\":{\"apiAudience\":\"https://api.us1.fga.dev/\",\"apiTokenIssuer\":\"fga.us.auth0.com\",\"apiScheme\":\"https\",\"apiHost\":\"api.us1.fga.dev\"},\"playground\":{\"allowNoAuth\":true,\"apiAudience\":\"https://api.playground.fga.dev/\",\"apiTokenIssuer\":\"sandcastle-dev.us.auth0.com\",\"apiScheme\":\"https\",\"apiHost\":\"api.playground.fga.dev\"},\"staging\":{\"apiAudience\":\"https://api.staging.fga.dev/\",\"apiTokenIssuer\":\"sandcastle-dev.us.auth0.com\",\"apiScheme\":\"https\",\"apiHost\":\"api.staging.fga.dev\"}}";
-/**
- *
- * @throws {FgaInvalidEnvironmentError}
- * @param environment - Environment from user config
- * @return EnvironmentConfiguration
- */
-const getEnvironmentConfiguration = function (environment = "default"): EnvironmentConfiguration {
-  let environmentConfigs;
-  try {
-    environmentConfigs = JSON.parse(environmentConfigurationString);
-  } catch (err) {
-    throw new FgaInvalidEnvironmentError(environment);
-  }
-
-  const environmentConfig = environmentConfigs[environment];
-
-  if (environmentConfig) {
-    return environmentConfig;
-  }
-
-  const allowedEnvs = Object.keys(environmentConfigs);
-
-  throw new FgaInvalidEnvironmentError(environment, allowedEnvs);
-};
 
 export class Configuration extends OpenFgaConfiguration {
   /**
@@ -86,7 +62,7 @@ export class Configuration extends OpenFgaConfiguration {
      * @type {string}
      * @memberof Configuration
      */
-  private static auth0SdkVersion = "0.8.0";
+  private static auth0SdkVersion = "0.9.0";
 
   /**
    * Client ID
@@ -117,9 +93,29 @@ export class Configuration extends OpenFgaConfiguration {
    */
   private apiAudience?: string;
 
+  public static environmentConfigurations = JSON.parse(environmentConfigurationString);
+
   constructor(params: UserConfigurationParams = {} as unknown as UserConfigurationParams, axios?: AxiosInstance) {
     super(Configuration.validateAndCastToOpenFgaParams(params), axios);
   }
+
+  /**
+   *
+   * @throws {FgaInvalidEnvironmentError}
+   * @param environment - Environment from user config
+   * @return EnvironmentConfiguration
+   */
+  public static getEnvironmentConfiguration = function (environment = "default"): EnvironmentConfiguration {
+    const environmentConfig = Configuration.environmentConfigurations[environment];
+
+    if (environmentConfig) {
+      return environmentConfig;
+    }
+
+    const allowedEnvs = Object.keys(Configuration.environmentConfigurations);
+
+    throw new FgaInvalidEnvironmentError(environment, allowedEnvs);
+  };
 
   private static validateAndCastToOpenFgaParams(params: UserConfigurationParams): OpenFgaConfigurationParams {
 
@@ -127,7 +123,7 @@ export class Configuration extends OpenFgaConfiguration {
 
     assertParamExists("Configuration", "storeId", params.storeId);
 
-    const environmentConfiguration = getEnvironmentConfiguration(params.environment);
+    const environmentConfiguration = Configuration.getEnvironmentConfiguration(params.environment);
 
     if (!environmentConfiguration.allowNoAuth) {
       assertParamExists("Configuration", "clientId", params.clientId);

@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.9.0
+
+### [0.9.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.8.0...v0.9.0) (2022-12-16)
+
+Changes:
+- [BREAKING] feat(list-objects)!: response has been changed to include the object type
+    e.g. response that was `{"object_ids":["roadmap"]}`, will now be `{"objects":["document:roadmap"]}`
+- feat(configuration): expose environment configurations
+
+Fixes:
+- [BREAKING] fix(models)!: update interfaces that had incorrectly optional fields to make them required
+
+Chore:
+- chore(deps): update `@openfga/sdk` to `v0.2.0`
+- chore(deps): update dev dependencies
+
 ## v0.8.0
 
 ### [0.8.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.7.0...v0.8.0) (2022-10-13)
