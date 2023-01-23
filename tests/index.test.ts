@@ -253,6 +253,29 @@ describe("Auth0Fga SDK", function () {
       nock.cleanAll();
     });
 
+    it("should cache the bearer token and not issue a network call to get the token at the second request", async () => {
+      let scope = nocks.tokenExchange(AUTH0_FGA_API_TOKEN_ISSUER);
+      nocks.readAuthorizationModels(baseConfig.storeId!);
+
+      const auth0FgaApi = new Auth0FgaApi(baseConfig);
+      expect(scope.isDone()).toBe(false);
+
+      await auth0FgaApi.readAuthorizationModels();
+
+      expect(scope.isDone()).toBe(true);
+
+      nock.cleanAll();
+      scope = nocks.tokenExchange(AUTH0_FGA_API_TOKEN_ISSUER);
+      nocks.readAuthorizationModels(baseConfig.storeId!);
+      expect(scope.isDone()).toBe(false);
+
+      await auth0FgaApi.readAuthorizationModels();
+
+      expect(scope.isDone()).toBe(false);
+
+      nock.cleanAll();
+    });
+
     it("should not issue a network call to get the token at the first request if the clientId is not provided", async () => {
       const scope = nocks.tokenExchange(AUTH0_FGA_API_TOKEN_ISSUER);
       nocks.readAuthorizationModels(baseConfig.storeId);

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.9.1
+
+### [0.9.1](https://github.com/auth0-lab/fga-js-sdk/compare/v0.9.0...v0.9.1) (2023-01-23)
+
+Fixes:
+- fix(deps): update `@openfga/sdk` to `v0.2.2` to resolve an issue with caching the client credentials token
+
+Chore:
+- chore(deps): update dev dependencies
+
 ## v0.9.0
 
 ### [0.9.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.8.0...v0.9.0) (2022-12-16)

@@ -62,7 +62,7 @@ export class Configuration extends OpenFgaConfiguration {
      * @type {string}
      * @memberof Configuration
      */
-  private static auth0SdkVersion = "0.9.0";
+  private static auth0SdkVersion = "0.9.1";
 
   /**
    * Client ID

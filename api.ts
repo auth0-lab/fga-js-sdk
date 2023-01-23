@@ -42,11 +42,11 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public check(body: CheckRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).check(body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).check(body, options).then((request) => request(this.axios));
   }
 
   /**
-     * The Expand API will return all users and usersets that have certain relationship with an object in a certain store. This is different from the `/stores/{store_id}/read` API in that both users and computed usersets are returned. Body parameters `tuple_key.object` and `tuple_key.relation` are all required. The response will return a tree whose leaves are the specific users and usersets. Union, intersection and difference operator are located in the intermediate nodes.  ## Example To expand all users that have the `reader` relationship with object `document:2021-budget`, use the Expand API with the following request body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"user:bob\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
+     * The Expand API will return all users and usersets that have certain relationship with an object in a certain store. This is different from the `/stores/{store_id}/read` API in that both users and computed usersets are returned. Body parameters `tuple_key.object` and `tuple_key.relation` are all required. The response will return a tree whose leaves are the specific users and usersets. Union, intersection and difference operator are located in the intermediate nodes.  ## Example To expand all users that have the `reader` relationship with object `document:2021-budget`, use the Expand API with the following request body ```json {   \"tuple_key\": {     \"object\": \"document:2021-budget\",     \"relation\": \"reader\"   } } ``` Auth0 FGA\'s response will be a userset tree of the users and computed usersets that have read access to the document. ```json {   \"tree\":{     \"root\":{       \"type\":\"document:2021-budget#reader\",       \"union\":{         \"nodes\":[           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"users\":{                 \"users\":[                   \"user:bob\"                 ]               }             }           },           {             \"type\":\"document:2021-budget#reader\",             \"leaf\":{               \"computed\":{                 \"userset\":\"document:2021-budget#writer\"               }             }           }         ]       }     }   } } ``` The caller can then call expand API for the `writer` relationship for the `document:2021-budget`.
      * @summary Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship
      * @param {ExpandRequest} body 
      * @param {*} [options] Override http request option.
@@ -54,7 +54,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public expand(body: ExpandRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).expand(body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).expand(body, options).then((request) => request(this.axios));
   }
 
   /**
@@ -66,7 +66,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public listObjects(body: ListObjectsRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).listObjects(body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).listObjects(body, options).then((request) => request(this.axios));
   }
 
   /**
@@ -78,7 +78,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public read(body: ReadRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).read(body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).read(body, options).then((request) => request(this.axios));
   }
 
   /**
@@ -90,7 +90,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public readAssertions(authorizationModelId: string, options?: any) {
-    return OpenFgaApiFp(this.configuration).readAssertions(authorizationModelId, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).readAssertions(authorizationModelId, options).then((request) => request(this.axios));
   }
 
   /**
@@ -102,12 +102,12 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public readAuthorizationModel(id: string, options?: any) {
-    return OpenFgaApiFp(this.configuration).readAuthorizationModel(id, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).readAuthorizationModel(id, options).then((request) => request(this.axios));
   }
 
   /**
-     * The ReadAuthorizationModels API will return all the authorization models for a certain store. Auth0 FGA\'s response will contain an array of all authorization models, sorted in descending order of creation.  ## Example Assume that a store\'s authorization model has been configured twice. To get all the authorization models that have been created in this store, call GET authorization-models. The API will return a response that looks like: ```json {   \"authorization_models\": [     {       \"id\": \"01G50QVV17PECNVAHX1GG4Y5NC\",       \"type_definitions\": [...]     },     {       \"id\": \"01G4ZW8F4A07AKQ8RHSVG9RW04\",       \"type_definitions\": [...]     },   ] } ``` If there are more authorization models available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_models\": [     {       \"id\": \"01G50QVV17PECNVAHX1GG4Y5NC\",       \"type_definitions\": [...]     },     {       \"id\": \"01G4ZW8F4A07AKQ8RHSVG9RW04\",       \"type_definitions\": [...]     },   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
-     * @summary Return all the authorization model IDs for a particular store
+     * The ReadAuthorizationModels API will return all the authorization models for a certain store. Auth0 FGA\'s response will contain an array of all authorization models, sorted in descending order of creation.  ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - Each response can contain up to **50** authorization model IDs. ## Example Assume that a store\'s authorization model has been configured twice. To get all the authorization models that have been created in this store, call GET authorization-models. The API will return a response that looks like: ```json {   \"authorization_models\": [     {       \"id\": \"01G50QVV17PECNVAHX1GG4Y5NC\",       \"type_definitions\": [...]     },     {       \"id\": \"01G4ZW8F4A07AKQ8RHSVG9RW04\",       \"type_definitions\": [...]     },   ] } ``` If there are more authorization models available, the response will contain an extra field `continuation_token`: ```json {   \"authorization_models\": [     {       \"id\": \"01G50QVV17PECNVAHX1GG4Y5NC\",       \"type_definitions\": [...]     },     {       \"id\": \"01G4ZW8F4A07AKQ8RHSVG9RW04\",       \"type_definitions\": [...]     },   ],   \"continuation_token\": \"eyJwayI6IkxBVEVTVF9OU0NPTkZJR19hdXRoMHN0b3JlIiwic2siOiIxem1qbXF3MWZLZExTcUoyN01MdTdqTjh0cWgifQ==\" } ``` 
+     * @summary Return all the authorization models for a particular store
      * @param {number} [pageSize] 
      * @param {string} [continuationToken] 
      * @param {*} [options] Override http request option.
@@ -115,11 +115,11 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public readAuthorizationModels(pageSize?: number, continuationToken?: string, options?: any) {
-    return OpenFgaApiFp(this.configuration).readAuthorizationModels(pageSize, continuationToken, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).readAuthorizationModels(pageSize, continuationToken, options).then((request) => request(this.axios));
   }
 
   /**
-     * The ReadChanges API will return a paginated list of tuple changes (additions and deletions) that occurred in a given store, sorted by ascending time. The response will include a continuation token that is used to get the next set of changes. If there are no changes after the provided continuation token, the same token will be returned in order for it to be used when new changes are recorded. If the store never had any tuples added or removed, this token will be empty. You can use the `type` parameter to only get the list of tuple changes that affect objects of that type. 
+     * The ReadChanges API will return a paginated list of tuple changes (additions and deletions) that occurred in a given store, sorted by ascending time. The response will include a continuation token that is used to get the next set of changes. If there are no changes after the provided continuation token, the same token will be returned in order for it to be used when new changes are recorded. If the store never had any tuples added or removed, this token will be empty. You can use the `type` parameter to only get the list of tuple changes that affect objects of that type. ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - Each store has a limit of **5** requests per second (RPS).
      * @summary Return a list of all the tuple changes
      * @param {string} [type] 
      * @param {number} [pageSize] 
@@ -129,11 +129,11 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public readChanges(type?: string, pageSize?: number, continuationToken?: string, options?: any) {
-    return OpenFgaApiFp(this.configuration).readChanges(type, pageSize, continuationToken, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).readChanges(type, pageSize, continuationToken, options).then((request) => request(this.axios));
   }
 
   /**
-     * The Write API will update the tuples for a certain store. Tuples and type definitions allow OpenFGA to determine whether a relationship exists between an object and an user. In the body, `writes` adds new tuples while `deletes` removes existing tuples. The API is not idempotent: if, later on, you try to add the same tuple, or if you try to delete a non-existing tuple, it will throw an error. An `authorization_model_id` may be specified in the body. If it is, it will be used to assert that each written tuple (not deleted) is valid for the model specified. If it is not specified, the latest authorization model ID will be used. ## Example ### Adding relationships To add `user:anne` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"user:anne\",         \"relation\": \"writer\",         \"object\": \"document:2021-budget\"       }     ]   } } ``` ### Removing relationships To remove `user:bob` as a `reader` for `document:2021-budget`, call write API with the following  ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"user:bob\",         \"relation\": \"reader\",         \"object\": \"document:2021-budget\"       }     ]   } } ``` 
+     * The Write API will update the tuples for a certain store. Tuples and type definitions allow Auth0 FGA to determine whether a relationship exists between an object and an user. In the body, `writes` adds new tuples while `deletes` removes existing tuples. An `authorization_model_id` may be specified in the body. If it is, it will be used to assert that each written tuple (not deleted) is valid for the model specified. If it is not specified, the latest authorization model ID will be used. ## [Limits](https://docs.fga.dev/intro/dashboard#limitations) - Each write API call allows at most **10** tuples. - Each store has a limit of **50000** tuples. ## Example ### Adding relationships To add `user:anne` as a `writer` for `document:2021-budget`, call write API with the following  ```json {   \"writes\": {     \"tuple_keys\": [       {         \"user\": \"user:anne\",         \"relation\": \"writer\",         \"object\": \"document:2021-budget\"       }     ]   } } ``` ### Removing relationships To remove `user:bob` as a `reader` for `document:2021-budget`, use the Write API with the following request body ```json {   \"deletes\": {     \"tuple_keys\": [       {         \"user\": \"user:bob\",         \"relation\": \"reader\",         \"object\": \"document:2021-budget\"       }     ]   } } ``` 
      * @summary Add or delete tuples from the store
      * @param {WriteRequest} body 
      * @param {*} [options] Override http request option.
@@ -141,7 +141,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public write(body: WriteRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).write(body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).write(body, options).then((request) => request(this.axios));
   }
 
   /**
@@ -154,7 +154,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public writeAssertions(authorizationModelId: string, body: WriteAssertionsRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).writeAssertions(authorizationModelId, body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).writeAssertions(authorizationModelId, body, options).then((request) => request(this.axios));
   }
 
   /**
@@ -166,7 +166,7 @@ export class Auth0FgaApi extends BaseAPI {
      * @memberof Auth0FgaApi
      */
   public writeAuthorizationModel(body: WriteAuthorizationModelRequest, options?: any) {
-    return OpenFgaApiFp(this.configuration).writeAuthorizationModel(body, options).then((request) => request(this.axios));
+    return OpenFgaApiFp(this.configuration, this.credentials).writeAuthorizationModel(body, options).then((request) => request(this.axios));
   }
 }
 

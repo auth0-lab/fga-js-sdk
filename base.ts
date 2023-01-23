@@ -11,7 +11,8 @@
  */
 
 
-import { AxiosStatic } from "axios";
+import globalAxios, { AxiosStatic } from "axios";
+import { BaseAPI as BaseOpenFgaApi } from "@openfga/sdk/dist/base";
 
 import { Configuration, UserConfigurationParams } from "./configuration";
 
@@ -20,15 +21,16 @@ import { Configuration, UserConfigurationParams } from "./configuration";
  * @export
  * @class BaseAPI
  */
-export class BaseAPI {
-  protected configuration: Configuration;
+export class BaseAPI extends BaseOpenFgaApi {
 
-  constructor(configuration: UserConfigurationParams | Configuration, protected axios?: AxiosStatic) {
+  constructor(configuration: UserConfigurationParams | Configuration, protected axios: AxiosStatic = globalAxios) {
+    let config;
     if (configuration instanceof Configuration) {
-      this.configuration = configuration;
+      config = configuration;
     } else {
-      this.configuration = new Configuration(configuration, axios);
+      config = new Configuration(configuration, axios);
     }
-    this.configuration.isValid();
+    config.isValid();
+    super(config);
   }
 }

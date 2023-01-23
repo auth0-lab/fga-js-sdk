@@ -322,7 +322,7 @@ const response = await auth0Fga.listObjects({
 | [**read**](#read) | **POST** /stores/{store_id}/read | Get tuples from the store that matches a query, without following userset rewrite rules |
 | [**readAssertions**](#readassertions) | **GET** /stores/{store_id}/assertions/{authorization_model_id} | Read assertions for an authorization model ID |
 | [**readAuthorizationModel**](#readauthorizationmodel) | **GET** /stores/{store_id}/authorization-models/{id} | Return a particular version of an authorization model |
-| [**readAuthorizationModels**](#readauthorizationmodels) | **GET** /stores/{store_id}/authorization-models | Return all the authorization model IDs for a particular store |
+| [**readAuthorizationModels**](#readauthorizationmodels) | **GET** /stores/{store_id}/authorization-models | Return all the authorization models for a particular store |
 | [**readChanges**](#readchanges) | **GET** /stores/{store_id}/changes | Return a list of all the tuple changes |
 | [**write**](#write) | **POST** /stores/{store_id}/write | Add or delete tuples from the store |
 | [**writeAssertions**](#writeassertions) | **PUT** /stores/{store_id}/assertions/{authorization_model_id} | Upsert assertions for an authorization model ID |
