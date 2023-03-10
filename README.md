@@ -39,7 +39,7 @@ Warning: This SDK comes with no SLAs and is not production-ready!
 
 ## About
 
-[Auth0 Fine Grained Authorization (FGA)](https://fga.dev) is an open source Fine-Grained Authorization solution inspired by [Google's Zanzibar paper](https://research.google/pubs/pub48190/). It was created by the FGA team at [Auth0](https://auth0.com) based on [Auth0 Fine-Grained Authorization (FGA)](https://fga.dev), available under [a permissive license (Apache-2)](https://github.com/auth0-lab/rfcs/blob/main/LICENSE) and welcomes community contributions.
+[Auth0 Fine Grained Authorization (FGA)](https://fga.dev) is Auth0's Fine-Grained Authorization at scale SaaS based on Google's Zanzibar.
 
 Auth0 Fine Grained Authorization (FGA) is designed to make it easy for application builders to model their permission layer, and to add and integrate fine-grained authorization into their applications. Auth0 Fine Grained Authorization (FGA)’s design is optimized for reliability and low latency at a high scale.
 
