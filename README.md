@@ -318,7 +318,7 @@ const response = await auth0Fga.listObjects({
 | ------------- | ------------- | ------------- |
 | [**check**](#check) | **POST** /stores/{store_id}/check | Check whether a user is authorized to access an object |
 | [**expand**](#expand) | **POST** /stores/{store_id}/expand | Expand all relationships in userset tree format, and following userset rewrite rules.  Useful to reason about and debug a certain relationship |
-| [**listObjects**](#listobjects) | **POST** /stores/{store_id}/list-objects | [EXPERIMENTAL] Get all objects of the given type that the user has a relation with |
+| [**listObjects**](#listobjects) | **POST** /stores/{store_id}/list-objects | Get all objects of the given type that the user has a relation with |
 | [**read**](#read) | **POST** /stores/{store_id}/read | Get tuples from the store that matches a query, without following userset rewrite rules |
 | [**readAssertions**](#readassertions) | **GET** /stores/{store_id}/assertions/{authorization_model_id} | Read assertions for an authorization model ID |
 | [**readAuthorizationModel**](#readauthorizationmodel) | **GET** /stores/{store_id}/authorization-models/{id} | Return a particular version of an authorization model |
