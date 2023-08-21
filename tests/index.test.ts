@@ -71,7 +71,7 @@ const nocks = {
   readAuthorizationModels: (
     storeId: string,
     basePath = defaultConfiguration.getBasePath(),
-    authorizationModels: AuthorizationModel[] = [{ id: "some-id", type_definitions: [] }],
+    authorizationModels: AuthorizationModel[] = [{ schema_version: "1.1", id: "some-id", type_definitions: [] }],
   ) => {
     return nock(basePath)
       .get(`/stores/${storeId}/authorization-models`)
@@ -135,8 +135,8 @@ const nocks = {
     return nock(basePath)
       .get(`/stores/${storeId}/authorization-models/${configId}`)
       .reply(200, {
-        authorization_model: { id: "some-id", type_definitions: [] },
-      } as AuthorizationModel);
+        authorization_model: { id: "some-id", schema_version: "1.1", type_definitions: [] },
+      } as ReadAuthorizationModelResponse);
   },
   writeAuthorizationModel: (
     storeId: string,
@@ -807,7 +807,7 @@ describe("Auth0Fga SDK", function () {
 
     describe("readAuthorizationModels", () => {
       it("should call the api and return the response", async () => {
-        const scope = nocks.readAuthorizationModels(baseConfig.storeId!, defaultConfiguration.getBasePath(), [{ id: "1", type_definitions: []}]);
+        const scope = nocks.readAuthorizationModels(baseConfig.storeId!, defaultConfiguration.getBasePath(), [{ id: "1", schema_version: "1.1", type_definitions: []}]);
 
         expect(scope.isDone()).toBe(false);
         const data = await fgaApi.readAuthorizationModels();
