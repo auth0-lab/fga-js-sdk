@@ -43,11 +43,29 @@ Warning: This SDK comes with no SLAs and is not production-ready!
 
 Auth0 Fine Grained Authorization (FGA) is designed to make it easy for application builders to model their permission layer, and to add and integrate fine-grained authorization into their applications. Auth0 Fine Grained Authorization (FGA)’s design is optimized for reliability and low latency at a high scale.
 
-It allows in-memory data storage for quick development, as well as pluggable database modules - with initial support for PostgreSQL.
+If you are interested in learning more about our plans, please reach out via our <a target="_blank" href="https://discord.gg/8naAwJfWN6" rel="noreferrer">Discord chat</a>.
 
-It offers an [HTTP API](https://docs.fga.dev/api/service) and has SDKs for programming languages including [Node.js/JavaScript](https://github.com/auth0-lab/js-sdk), [GoLang](https://github.com/auth0-lab/go-sdk) and [.NET](https://github.com/auth0-lab/dotnet-sdk).
+We recommend using the [OpenFGA JS SDK](https://github.com/openfga/js-sdk) with the following configuration instead of this SDK:
 
-More SDKs and integrations such as Rego are planned for the future.
+```js
+const { CredentialsMethod, OpenFgaClient } = require('@openfga/sdk'); // OR import { CredentialsMethod, OpenFgaClient } from '@openfga/sdk';
+
+const fgaClient = new OpenFgaClient({
+    apiScheme: "https",
+    apiHost: "api.us1.fga.dev",
+    storeId: process.env.FGA_STORE_ID,
+    authorizationModelId: process.env.FGA_MODEL_ID,
+    credentials: { // Credentials are not needed if connecting to the Playground API
+      method: CredentialsMethod.ClientCredentials,
+      config: {
+        apiTokenIssuer: "fga.us.auth0.com",
+        apiAudience: "https://api.us1.fga.dev/",
+        clientId: process.env.FGA_CLIENT_ID,
+        clientSecret: process.env.FGA_CLIENT_SECRET,
+      },
+    }
+});
+```
 
 ## Resources
 
