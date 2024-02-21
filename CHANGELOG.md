@@ -1,5 +1,44 @@
 # Changelog
 
+## v0.10.0
+
+### [0.10.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.9.1...v0.10.0) (2023-12-23)
+
+[Breaking]
+
+Changed:
+- `Auth0FgaApi` and `Auth0FgaClient` are now just simple wrappers on top of `OpenFgaFgaApi` and `OpenFgaFgaClient`
+
+Chore:
+- chore(ci): enable dependabot
+- chore(deps): update dependencies
+
+Note: As of this point this SDK is no longer auto-generated and is instead just a simple wrapper on top of [@openfga/sdk](https://github.com/openfga/js-sdk)
+
+For the time being, we have decided to deprecate the `@auth0/fga` SDK as it duplicates the functionality of `@openfga/sdk`.
+
+We strongly recommend you use the `@openfga/sdk` directly instead with the following configuration:
+
+```js
+const { CredentialsMethod, OpenFgaClient } = require('@openfga/sdk'); // OR import { CredentialsMethod, OpenFgaClient } from '@openfga/sdk';
+
+const fgaClient = new OpenFgaClient({
+    apiScheme: "https",
+    apiHost: "api.us1.fga.dev",
+    storeId: process.env.FGA_STORE_ID,
+    authorizationModelId: process.env.FGA_MODEL_ID,
+    credentials: { // Credentials are not needed if connecting to the Playground API
+      method: CredentialsMethod.ClientCredentials,
+      config: {
+        apiTokenIssuer: "fga.us.auth0.com",
+        apiAudience: "https://api.us1.fga.dev/",
+        clientId: process.env.FGA_CLIENT_ID,
+        clientSecret: process.env.FGA_CLIENT_SECRET,
+      },
+    }
+});
+```
+
 ## v0.9.1
 
 ### [0.9.1](https://github.com/auth0-lab/fga-js-sdk/compare/v0.9.0...v0.9.1) (2023-01-23)
