@@ -9,15 +9,12 @@
  *
  */
 
-import { OpenFgaApi } from "@openfga/sdk";
-import { Configuration, UserConfigurationParams } from "./configuration";
+import { OpenFgaClient } from "@openfga/sdk";
+import { Configuration, UserClientConfigurationParams } from "./configuration";
 import { AxiosInstance } from "axios";
 
-export class Auth0FgaApi extends OpenFgaApi {
-  constructor(
-    configuration: Configuration | UserConfigurationParams,
-    protected axios?: AxiosInstance,
-  ) {
+export class Auth0FgaClient extends OpenFgaClient {
+  constructor(configuration: Configuration | UserClientConfigurationParams, protected axios?: AxiosInstance) {
     let config = configuration;
     if (!(config instanceof Configuration)) {
       config = new Configuration(config);
@@ -27,4 +24,4 @@ export class Auth0FgaApi extends OpenFgaApi {
   }
 }
 
-export class OktaFgaApi extends Auth0FgaApi {}
+export class OktaFgaClient extends Auth0FgaClient {}
