@@ -4,8 +4,6 @@
 
 ### [0.10.0](https://github.com/auth0-lab/fga-js-sdk/compare/v0.9.1...v0.10.0) (2023-12-23)
 
-This SDK is now
-
 [Breaking]
 
 Changed:
