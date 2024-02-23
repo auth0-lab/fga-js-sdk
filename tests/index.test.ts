@@ -14,16 +14,16 @@ import * as nock from "nock";
 import { CallResult } from "@openfga/sdk/dist/common";
 import { ClientCredentialsConfig } from "@openfga/sdk/dist/credentials";
 import {
-  FgaApiInternalError,
   FgaApiNotFoundError,
   FgaApiRateLimitExceededError,
   FgaApiValidationError,
   FgaApiAuthenticationError,
   CheckResponse,
   ErrorCode,
+  GetDefaultRetryParams,
 } from "@openfga/sdk";
 
-import { Auth0FgaApi, Configuration, GetDefaultRetryParams } from "../";
+import { Auth0FgaApi, Configuration } from "../";
 import { getNocks } from "./helpers";
 
 nock.disableNetConnect();
@@ -49,14 +49,9 @@ const nocks = getNocks(nock);
 describe("Auth0Fga SDK", function () {
   describe("Environment Configurations", () => {
     it("should be able to parse the environment configurations", () => {
-      expect(() => Configuration.environmentConfigurations).not.toThrowError();
-    });
-
-    it("should be able to parse the environment configurations", () => {
       const config = Configuration.getEnvironmentConfiguration("playground");
       expect(config).toMatchObject({
-        apiScheme: "https",
-        apiHost: "api.playground.fga.dev",
+        apiUrl: "https://api.playground.fga.dev",
       });
     });
   });

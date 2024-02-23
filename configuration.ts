@@ -31,8 +31,7 @@ export type UserClientConfigurationParams = UserConfigurationParams & {
 };
 
 export interface EnvironmentConfiguration {
-  apiScheme: string;
-  apiHost: string;
+  apiUrl: string;
   apiTokenIssuer: string;
   apiAudience: string;
   allowNoAuth?: boolean;
@@ -46,7 +45,7 @@ export class Configuration extends OpenFgaConfiguration {
    * @type {string}
    * @memberof Configuration
    */
-  private static auth0SdkVersion = "0.9.1";
+  private static auth0SdkVersion = "0.10.0";
 
   /**
    * Client ID
@@ -93,25 +92,34 @@ export class Configuration extends OpenFgaConfiguration {
       case "us":
       case FgaEnvironment.US1:
         return {
+          apiUrl: "https://api.us1.fga.dev",
           apiAudience: "https://api.us1.fga.dev/",
           apiTokenIssuer: "fga.us.auth0.com",
-          apiScheme: "https",
-          apiHost: "api.us1.fga.dev",
+        };
+      case FgaEnvironment.EU1:
+        return {
+          apiUrl: "https://api.eu1.fga.dev",
+          apiAudience: "https://api.eu1.fga.dev/",
+          apiTokenIssuer: "fga.us.auth0.com",
+        };
+      case FgaEnvironment.AU1:
+        return {
+          apiUrl: "https://api.au1.fga.dev",
+          apiAudience: "https://api.au1.fga.dev/",
+          apiTokenIssuer: "fga.us.auth0.com",
         };
       case FgaEnvironment.Playground:
         return {
+          apiUrl: "https://api.playground.fga.dev",
           apiAudience: "https://api.playground.fga.dev/",
           apiTokenIssuer: "sandcastle-dev.us.auth0.com",
-          apiScheme: "https",
-          apiHost: "api.playground.fga.dev",
           allowNoAuth: true,
         };
       case FgaEnvironment.Staging:
         return {
+          apiUrl: "https://api.staging.fga.dev",
           apiAudience: "https://api.staging.fga.dev/",
           apiTokenIssuer: "sandcastle-dev.us.auth0.com",
-          apiScheme: "https",
-          apiHost: "api.staging.fga.dev",
         };
       default:
         throw new FgaInvalidEnvironmentError(environment, ["us1", "playground"]);
@@ -130,8 +138,7 @@ export class Configuration extends OpenFgaConfiguration {
       assertParamExists("Configuration", "clientSecret", params.clientSecret);
     }
 
-    openFgaConfig.apiScheme = environmentConfiguration.apiScheme;
-    openFgaConfig.apiHost = environmentConfiguration.apiHost!;
+    openFgaConfig.apiUrl = environmentConfiguration.apiUrl!;
     openFgaConfig.storeId = params.storeId!;
 
     if (params.clientId || params.clientSecret) {
